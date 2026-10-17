@@ -8,7 +8,6 @@ export const PM25_BANDS = [
     className: 'normal',
     index: 1,
     shortLabel: 'Can go as usual',
-    scaleLabel: 'Usual plans',
   },
   {
     limit: 150,
@@ -16,7 +15,6 @@ export const PM25_BANDS = [
     className: 'elevated',
     index: 2,
     shortLabel: 'Take it easy',
-    scaleLabel: 'Take it easy',
   },
   {
     limit: 250,
@@ -24,7 +22,6 @@ export const PM25_BANDS = [
     className: 'high',
     index: 3,
     shortLabel: 'Workout indoors',
-    scaleLabel: 'Skip hard exercise',
   },
   {
     limit: Infinity,
@@ -32,7 +29,6 @@ export const PM25_BANDS = [
     className: 'very-high',
     index: 4,
     shortLabel: 'Stay indoors',
-    scaleLabel: 'Stay indoors',
   },
 ];
 
