@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f1">
+  <meta name="description" content="Singapore haze readings made useful. See official NEA 1-hour PM2.5 and 24-hour PSI by region, with clear next steps and a practical mask guide.">
+  <meta property="og:title" content="Air, Actually — Singapore haze guide">
+  <meta property="og:description" content="Official local readings. Clear advice for the next hour.">
+  <meta property="og:type" content="website">
+  <title>Air, Actually — Singapore haze guide</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="Air, Actually — home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M6 27c9-10 16-10 25-1 4 4 7 4 11 0M6 35c9-10 16-10 25-1 4 4 7 4 11 0M9 17c6-6 13-7 20-1"/></svg></span>
+        <span>air, actually<span class="brand-dot">.</span></span>
+      </a>
+      <nav aria-label="Main navigation"><a href="#readings">Readings</a><a href="#what-to-do">What to do</a><a href="#explained">The guide</a></nav>
+      <a class="header-source" href="#sources">Our sources <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> MADE FOR SINGAPORE, LAH</div>
+          <h1 id="hero-title">Know the air.<br><em>Make your move.</em></h1>
+          <p>Haze numbers can be confusing. Here’s what the air is like in your part of Singapore, and what that means for your next hour outside.</p>
+          <a class="hero-cta" href="#readings">Check your area <span aria-hidden="true">↗</span></a>
+          <div class="hero-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v6m0-9h.01"/></svg><span>Live readings from Singapore’s National Environment Agency</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="art-ring ring-one"></div><div class="art-ring ring-two"></div><div class="art-hill hill-back"></div><div class="art-hill hill-front"></div><div class="art-caption">A clearer way to see the day.</div></div>
+      </div>
+    </section>
+
+    <section class="readings-section" id="readings" aria-labelledby="readings-title">
+      <div class="shell">
+        <div class="section-heading"><div><p class="kicker">01 / THE AIR RIGHT NOW</p><h2 id="readings-title">Your area, at a glance.</h2></div><p>Choose a region for official readings and practical next steps.</p></div>
+        <div class="region-toolbar"><label for="region">I’m in</label><select id="region" aria-label="Singapore region"><option value="north">North</option><option value="south">South</option><option value="east">East</option><option value="west">West</option><option value="central" selected>Central</option></select><span class="toolbar-spacer"></span><button class="refresh-button" id="refresh" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2 6m2 2v-6h-6"/></svg> Refresh</button></div>
+        <div class="readings-grid">
+          <article class="reading-card primary-card" id="pm-card"><div class="reading-top"><span class="reading-label">1-HOUR PM2.5</span><span class="band-pill" id="pm-band">Checking…</span></div><div class="reading-value"><span id="pm-value">—</span><span class="unit">µg/m³</span></div><p class="reading-caption">Fine particles averaged over the past hour</p><div class="reading-divider"></div><p class="reading-foot">Use this for <strong>what to do in the next hour.</strong></p></article>
+          <article class="reading-card psi-card"><div class="reading-top"><span class="reading-label">24-HOUR PSI</span><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17h18M5 12h14M8 7h8"/></svg></span></div><div class="reading-value"><span id="psi-value">—</span></div><p class="reading-caption" id="psi-band">Checking…</p><div class="reading-divider"></div><p class="reading-foot">Use this for <strong>the bigger picture and planning ahead.</strong></p></article>
+        </div>
+        <div class="data-status" role="status" aria-live="polite"><span class="status-dot" id="status-dot"></span><span id="data-status-text">Checking official NEA readings…</span><span class="status-source">Source: <a href="https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view" target="_blank" rel="noopener noreferrer">NEA via data.gov.sg ↗</a></span></div>
+        <div class="regional-block"><div><h3>Across the island</h3><p>Tap a region to see its advice.</p></div><div class="regional-list" id="regional-list" aria-label="One-hour PM2.5 by region"></div></div>
+      </div>
+    </section>
+
+    <section class="action-section" id="what-to-do" aria-labelledby="action-title"><div class="shell action-grid"><div class="action-intro"><p class="kicker">02 / YOUR NEXT MOVE</p><h2 id="action-title">So, what should<br><em>I actually do?</em></h2><p>Advice follows Singapore’s official 1-hour PM2.5 bands. Check your own health needs and the latest advisory too.</p><a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">See the official haze advisory <span aria-hidden="true">↗</span></a></div><div class="action-panel"><div class="action-panel-head"><span class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M18.4 5.6l-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg></span><span id="action-region">CENTRAL · NEXT HOUR</span></div><div class="action-body"><p class="action-status" id="action-status">Waiting for a reading</p><h3 id="action-main">We’ll show advice when the latest reading arrives.</h3><p class="action-detail" id="action-detail">If the feed is unavailable, use the official haze site before deciding on outdoor activity.</p><div class="vulnerable-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3h.01"/></svg><div><strong>If you’re more vulnerable</strong><p id="action-vulnerable">This includes children, older adults, pregnant people, and those with chronic heart or lung conditions.</p></div></div></div></div></div></section>
+
+    <section class="explainer-section" id="explained" aria-labelledby="explained-title"><div class="shell"><div class="section-heading"><div><p class="kicker">03 / THE SHORT GUIDE</p><h2 id="explained-title">Less jargon. More clarity.</h2></div><p>Three things worth knowing before you head out.</p></div><div class="guide-grid"><article class="guide-card"><span class="guide-number">01</span><div class="guide-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 13v11l8 5"/></svg></div><h3>PM2.5 for right now</h3><p>These tiny particles can get deep into your lungs. The <strong>1-hour reading</strong> tells you how much was in the air over the past hour. It can change quickly, so check again before heading out.</p></article><article class="guide-card"><span class="guide-number">02</span><div class="guide-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M9 36V16m10 20V9m10 27V22m10 14V13M5 36h38"/></svg></div><h3>PSI for the bigger picture</h3><p>Singapore’s <strong>24-hour PSI</strong> combines several pollutants over a longer period. It is useful for planning, but it may respond more slowly to a sudden change outside your window.</p></article><article class="guide-card"><span class="guide-number">03</span><div class="guide-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 33c5-6 9-6 14 0s9 6 14 0M10 24c5-6 9-6 14 0s9 6 14 0M10 15c5-6 9-6 14 0s9 6 14 0"/></svg></div><h3>There isn’t one global AQI</h3><p>Different countries calculate “AQI” differently. We show <strong>NEA’s original Singapore readings</strong> and official bands, so you can see exactly what each number means here.</p></article></div></div></section>
+
+    <section class="mask-section" aria-labelledby="mask-title"><div class="shell mask-grid"><div class="mask-visual" aria-hidden="true"><svg viewBox="0 0 320 250"><path class="mask-strap" d="M85 80C29 62 27 187 88 174M235 80c56-18 58 107-3 94"/><path class="mask-body" d="M83 75c36-29 93-31 154 0v82c-34 48-99 67-154 0V75Z"/><path class="mask-seam" d="M83 88c50-26 100-28 154 0M83 146c50 26 100 28 154 0M160 67v139"/></svg><span>THE MASK, EXPLAINED</span></div><div class="mask-copy"><p class="kicker">04 / A QUICK MASK CHECK</p><h2 id="mask-title">Do I need a mask?</h2><p>For a short commute or while indoors, MOH says an N95 is generally unnecessary. If you must spend extended time outdoors when readings are high, a well-fitting respirator can reduce exposure.</p><ul><li><span class="check-icon" aria-hidden="true">✓</span><span><strong>Look for N95 or equivalent.</strong> KN95, FFP2 and KF94 are comparable categories, according to MOH.</span></li><li><span class="check-icon" aria-hidden="true">✓</span><span><strong>Fit matters.</strong> It needs a close seal around your nose and mouth. A loose surgical mask is not the same protection against fine particles.</span></li><li><span class="check-icon" aria-hidden="true">✓</span><span><strong>Put health first.</strong> If breathing is difficult, take a break. People with severe heart or lung conditions, older adults and pregnant people should check with a doctor before using one.</span></li></ul><a href="https://www.moh.gov.sg/others/haze/" target="_blank" rel="noopener noreferrer">Read MOH’s full mask advice <span aria-hidden="true">↗</span></a></div></div></section>
+
+    <section class="tips-section" aria-labelledby="tips-title"><div class="shell"><div class="section-heading"><div><p class="kicker">05 / SMALL, USEFUL MOVES</p><h2 id="tips-title">A little less exposure.</h2></div></div><div class="tips-grid"><div class="tip"><span class="tip-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 15h24M8 15V6h16v9M8 15v12h16V15m-8-9v21"/></svg></span><h3>Move the workout in</h3><p>Swap the run for an indoor session when the air is elevated or high.</p></div><div class="tip"><span class="tip-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 27h24M8 27V7h16v20M8 16h16m-8-9v20"/></svg></span><h3>Make indoors more comfortable</h3><p>During sustained haze, close windows and use air filtration if available.</p></div><div class="tip"><span class="tip-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v14m-7-7 7 7 7-7M5 26h22"/></svg></span><h3>Check again before leaving</h3><p>Haze can shift within hours. A fresh reading is more useful than a screenshot from earlier.</p></div></div></div></section>
+
+    <section class="sources-section" id="sources" aria-labelledby="sources-title"><div class="shell sources-grid"><div><p class="kicker">THE FINE PRINT, MADE CLEAR</p><h2 id="sources-title">Where the numbers<br>come from.</h2><p>No secret formulas and no hidden sensors. Readings come directly from Singapore’s NEA through data.gov.sg’s public real-time API. Advice and bands follow NEA and MOH guidance.</p></div><div class="source-list"><a href="https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view" target="_blank" rel="noopener noreferrer"><span><strong>1-hour PM2.5 data</strong><small>NEA · data.gov.sg</small></span><span aria-hidden="true">↗</span></a><a href="https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view" target="_blank" rel="noopener noreferrer"><span><strong>24-hour PSI data</strong><small>NEA · data.gov.sg</small></span><span aria-hidden="true">↗</span></a><a href="https://www.haze.gov.sg/resources/1-hr-pm2.5-readings" target="_blank" rel="noopener noreferrer"><span><strong>PM2.5 bands & activity guide</strong><small>NEA · haze.gov.sg</small></span><span aria-hidden="true">↗</span></a><a href="https://www.moh.gov.sg/others/haze/" target="_blank" rel="noopener noreferrer"><span><strong>Health & mask guidance</strong><small>Ministry of Health</small></span><span aria-hidden="true">↗</span></a></div></div></section>
+  </main>
+  <footer class="site-footer"><div class="shell footer-inner"><span class="footer-brand">air, actually<span>.</span></span><p>Made for clearer decisions in Singapore. Independent project; not an official government website.</p><a href="#top">Back to top ↑</a></div></footer>
+</body>
+</html>
