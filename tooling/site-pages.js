@@ -61,9 +61,8 @@ export function homePath(page) {
   return page.path ? '../'.repeat(page.path.split('/').filter(Boolean).length) : './';
 }
 
-export function renderMetadata(page) {
+export function createPageSchema(page) {
   const url = new URL(page.path, SITE.url).href;
-  const image = new URL('social-card.png', SITE.url).href;
   const graph = [
     {
       '@type': 'WebPage',
@@ -91,6 +90,12 @@ export function renderMetadata(page) {
       ],
     });
   }
+  return { '@context': 'https://schema.org', '@graph': graph };
+}
+
+export function renderMetadata(page) {
+  const url = new URL(page.path, SITE.url).href;
+  const image = new URL('social-card.png', SITE.url).href;
   const meta = (attribute, name, content) =>
     `<meta ${attribute}="${name}" content="${escapeHtml(content)}" />`;
   return [
@@ -114,7 +119,7 @@ export function renderMetadata(page) {
     meta('name', 'twitter:description', page.description),
     meta('name', 'twitter:image', image),
     meta('name', 'twitter:image:alt', 'Air, Actually: Singapore haze guide'),
-    `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replaceAll('<', '\\u003c')}</script>`,
+    `<script type="application/ld+json">${JSON.stringify(createPageSchema(page)).replaceAll('<', '\\u003c')}</script>`,
   ].join('\n');
 }
 

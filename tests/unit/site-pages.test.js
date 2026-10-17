@@ -9,6 +9,7 @@ import {
   renderMetadata,
   renderSitemap,
   renderPageFragments,
+  createPageSchema,
 } from '../../tooling/site-pages.js';
 
 test('every canonical page has a real entry and unique search metadata', () => {
@@ -19,7 +20,7 @@ test('every canonical page has a real entry and unique search metadata', () => {
     assert.ok(existsSync(new URL(`../../src/${pageFile(page)}`, import.meta.url)));
     const html = renderMetadata(page);
     assert.ok(html.includes(`rel="canonical" href="${new URL(page.path, SITE.url).href}"`));
-    const json = JSON.parse(html.match(/<script[^>]*>(.*?)<\/script>/is)[1]);
+    const json = createPageSchema(page);
     assert.equal(json['@graph'][0]['@type'], 'WebPage');
     assert.equal(json['@graph'].length, page.path ? 2 : 1);
   }
@@ -30,7 +31,7 @@ test('metadata escapes markup and never exposes executable JSON-LD text', () => 
   const html = renderMetadata(page);
   assert.ok(html.includes('&quot;&lt;/script&gt;'));
   assert.equal((html.match(/<script/g) || []).length, 1);
-  const json = JSON.parse(html.match(/<script[^>]*>(.*?)<\/script>/is)[1]);
+  const json = createPageSchema(page);
   assert.equal(json['@graph'][0].name, page.title);
 });
 
