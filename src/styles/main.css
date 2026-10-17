@@ -10,6 +10,7 @@
 @import url('./components/explainer.css') layer(site);
 @import url('./components/masks.css') layer(site);
 @import url('./components/tips.css') layer(site);
+@import url('./components/purifier.css') layer(site);
 @import url('./components/sources-footer.css') layer(site);
 @import url('./responsive.css') layer(site);
 @import url('./guide-components.css') layer(site);

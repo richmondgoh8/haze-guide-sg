@@ -115,6 +115,7 @@ test('expanded guides fit phone, tablet, desktop and enlarged text', async ({ pa
   await page.locator('#mask-comparison-details > summary').click();
   await page.locator('#mask-comparison-details .mask-details > summary').click();
   await page.locator('#mask-band-details > summary').click();
+  await page.locator('#purifier-setup-details > summary').click();
   for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     expect(
@@ -127,6 +128,22 @@ test('expanded guides fit phone, tablet, desktop and enlarged text', async ({ pa
     document.documentElement.style.fontSize = '200%';
   });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('purifier setup is keyboard accessible and links back to ventilation advice', async ({
+  page,
+}) => {
+  await page.goto('/#purifier-guide');
+  const setup = page.locator('#purifier-setup-details');
+  await expect(setup).not.toHaveAttribute('open');
+  await setup.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(setup).toHaveAttribute('open', '');
+  await expect(
+    setup.getByRole('heading', { name: 'Check smoke CADR, not just “HEPA”' }),
+  ).toBeVisible();
+  await page.locator('#purifier-guide a[href="#window-guide"]').click();
+  await expect(page).toHaveURL(/#window-guide$/);
 });
 
 test('blocked browser storage still allows region selection', async ({ page }) => {
@@ -149,6 +166,13 @@ test('guides and SEO metadata are present without JavaScript', async ({ browser,
   await page.goto('/');
   await expect(page.locator('#window-guide')).toContainText('CO₂');
   await expect(page.locator('#masks')).toContainText('N95');
+  await expect(page.locator('#purifier-guide')).toContainText('intake and outlet');
+  await page.locator('#purifier-setup-details > summary').click();
+  await expect(page.locator('#purifier-setup-details')).toContainText('94 m³/h');
+  await expect(page.locator('#purifier-guide a').filter({ hasText: 'EPA home' })).toHaveAttribute(
+    'href',
+    'https://www.epa.gov/indoor-air-quality-iaq/guide-air-cleaners-home',
+  );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
     'https://richmondgoh8.github.io/haze-guide-sg/',

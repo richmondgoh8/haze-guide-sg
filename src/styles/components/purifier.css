@@ -1,0 +1,132 @@
+.purifier-section {
+  padding-block: clamp(48px, 6vw, 80px);
+  border-bottom: 1px solid var(--line);
+}
+
+.purifier-intro {
+  max-width: 48rem;
+  line-height: 1.7;
+}
+
+.purifier-placement,
+.purifier-setup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 32px;
+}
+
+.purifier-placement {
+  margin-top: 32px;
+  align-items: start;
+}
+
+.purifier-room {
+  margin: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--cream);
+}
+
+.purifier-room-plan {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 16px;
+  padding: 0 16px 24px;
+  border: 3px solid var(--ink);
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.purifier-room-window {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: -3px;
+  padding: 8px 16px;
+  border: 3px double var(--ink);
+  border-top: 0;
+  background: var(--mint);
+}
+
+.purifier-room-bed {
+  align-self: start;
+  padding: 36px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.purifier-room-unit {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 8px;
+  padding: 16px 4px;
+  border: 2px dashed var(--ink);
+  border-radius: 24px;
+  background: var(--mint);
+}
+
+.purifier-room-unit svg {
+  width: 48px;
+  height: 48px;
+}
+
+.purifier-room-gap {
+  grid-column: 1 / -1;
+}
+
+.purifier-room figcaption,
+.purifier-rules p,
+.purifier-setup-grid p,
+.purifier-sources {
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.purifier-room figcaption {
+  margin-top: 16px;
+}
+
+.purifier-rules article + article {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.purifier-section h3 {
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.purifier-rules p,
+.purifier-setup-grid p {
+  margin-block: 0 12px;
+}
+
+.purifier-details {
+  margin-top: 32px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--cream);
+}
+
+.purifier-details summary {
+  padding: 20px 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.purifier-setup-grid {
+  padding: 8px 24px 24px;
+}
+
+.purifier-sources {
+  margin-top: 24px;
+  font-size: 0.9rem;
+}
+
+.purifier-section a {
+  text-underline-offset: 4px;
+}

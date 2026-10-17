@@ -15,20 +15,21 @@ The [architecture guide](docs/ARCHITECTURE.md) explains the data flow and module
 
 ## Where to make common changes
 
-| Change                                           | Start here                                                     |
-| ------------------------------------------------ | -------------------------------------------------------------- |
-| Activity wording or indoor alternatives          | `src/scripts/content/advice.js`                                |
-| Window-card wording                              | `src/scripts/content/window-advice.js`                         |
-| Band titles, short labels or official thresholds | `src/scripts/domain/air-quality.js`                            |
-| Window/PSI/PM2.5 interpretation                  | Domain rules, model tests, and the cited sources               |
-| Default region or town examples                  | `src/scripts/config.js`; static controls rebuild automatically |
-| API URL, response shape or timeout handling      | `src/scripts/services/nea-client.js`                           |
-| Refresh interval or stale-reading policy         | `src/scripts/config.js`                                        |
-| Mask guide or source links                       | `src/sections/masks/` or `src/sections/sources.html`           |
-| Typography, shared colours or font scale         | `src/styles/theme.css`                                         |
-| Dashboard layout, scale or window card           | `src/styles/dashboard.css`                                     |
-| Canonical URL or social metadata                 | `src/partials/head.html`                                       |
-| Favicon, sharing image or sitemap                | `public/`                                                      |
+| Change                                           | Start here                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------- |
+| Activity wording or indoor alternatives          | `src/scripts/content/advice.js`                                       |
+| Window-card wording                              | `src/scripts/content/window-advice.js`                                |
+| Band titles, short labels or official thresholds | `src/scripts/domain/air-quality.js`                                   |
+| Window/PSI/PM2.5 interpretation                  | Domain rules, model tests, and the cited sources                      |
+| Default region or town examples                  | `src/scripts/config.js`; static controls rebuild automatically        |
+| API URL, response shape or timeout handling      | `src/scripts/services/nea-client.js`                                  |
+| Refresh interval or stale-reading policy         | `src/scripts/config.js`                                               |
+| Mask guide or source links                       | `src/sections/masks/` or `src/sections/sources.html`                  |
+| Purifier placement and sizing guide              | `src/sections/purifier.html` and `src/styles/components/purifier.css` |
+| Typography, shared colours or font scale         | `src/styles/theme.css`                                                |
+| Dashboard layout, scale or window card           | `src/styles/dashboard.css`                                            |
+| Canonical URL or social metadata                 | `src/partials/head.html`                                              |
+| Favicon, sharing image or sitemap                | `public/`                                                             |
 
 Keep the conversational tone in explanatory copy. Keep measurements, official categories, warnings and source attribution precise. For health-content changes, verify the official guidance, update the linked source/review date, and check the static guides as well as the dynamic advice. A threshold update can affect both.
 
