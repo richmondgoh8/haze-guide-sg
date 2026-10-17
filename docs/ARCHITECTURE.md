@@ -95,3 +95,5 @@ Window advice is an editorial interpretation of the cited household guidance. It
 `tooling/site-pages.js` is the registry for the dashboard and dedicated guides. It provides page-specific metadata, guide introductions, relative navigation links and the sitemap. Vite builds every registered HTML entry. Guide entries reuse the sourced content sections but do not load the dashboard script. Shared placeholders are expanded before Vite handles asset paths; metadata is escaped for HTML and JSON-LD. See [SEO.md](SEO.md) for Search Console setup and editorial/ranking policies.
 
 Vite emits hashed JavaScript and CSS filenames into `dist/`. Treat that directory as disposable build output and never edit or commit it.
+
+`tooling/security-policy.js` adds the production CSP after HTML assembly and asset rewriting. Inline structured metadata is hashed from the final document. Fonts are local, licensed assets under `src/assets/fonts/`; their distribution licences are copied from `public/licenses/`. The development server does not inject this production policy. See [SECURITY.md](../SECURITY.md) for the threat model, scan gates and header-only hosting limits.

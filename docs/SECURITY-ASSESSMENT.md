@@ -1,6 +1,6 @@
 # Security assessment — 17 October 2026
 
-Status: application hardening and functional checks passed. The independent passive scan has open hosting/header findings; this is **not an all-clear**. CodeQL's initial test-assertion findings have been corrected and are awaiting the final rescan. This is not a certified or comprehensive manual VAPT.
+Status: application hardening, secret scanning, dependency auditing, the zero-finding CodeQL gate and functional checks passed. The passive scan has open hosting/header findings; this is **not an all-clear**. This is not a certified or comprehensive manual VAPT.
 
 ## Scope
 
@@ -37,7 +37,7 @@ Anti-framing remains an open defence-in-depth gap. This informational site has n
 
 ## Independent and live results
 
-The [first Security checks run](https://github.com/richmondgoh8/haze-guide-sg/actions/runs/38999175714) completed Gitleaks, CodeQL and ZAP 2.17.0. The unfiltered ZAP artifact contains **0 high, 2 medium, 5 low and 3 informational alert types**. Counts are alert types, not affected-URL counts. The high-risk CI gate passed, but the medium/low findings remain open:
+The [gated deployment and final application scan](https://github.com/richmondgoh8/haze-guide-sg/actions/runs/39020534775) completed successfully for commit `49d4025`. CodeQL's raw SARIF contains **zero findings**, Gitleaks found no secrets, and 34 unit plus 22 browser tests passed. ZAP 2.17.0's unfiltered artifact contains **0 high, 2 medium, 5 low and 3 informational alert types**. Counts are alert types, not affected-URL counts. The high-risk CI gate passed, but the medium/low findings remain open:
 
 | Risk   | Finding                                                 | Rule  |
 | ------ | ------------------------------------------------------- | ----- |
@@ -51,7 +51,7 @@ The framing findings describe related gaps, not two independent exploits. Frame-
 
 The three informational alerts concern JavaScript/no-JavaScript behaviour and cacheability. Static public guides can be cached; they do not contain personalised data. The local preview's HTTP headers are not identical to GitHub Pages, so local cache/HSTS observations must not be blindly reported as production vulnerabilities.
 
-CodeQL initially reported three high-severity rule matches in test code: an unanchored URL assertion and two case-sensitive tag extraction expressions. These are not demonstrated exploitable production findings. The URL assertion now compares the parsed origin exactly, and the metadata expressions match case-insensitively. The tests were corrected instead of excluding the files or dismissing the alerts.
+CodeQL initially reported three high-severity rule matches in test code: an unanchored URL assertion and two tag extraction expressions. These are not demonstrated exploitable production findings. The URL assertion now compares the parsed origin exactly. Unit tests now exercise a pure structured-data model instead of parsing HTML with regular expressions; browser tests still parse the actual rendered JSON-LD. No source files were excluded and no alerts were manually dismissed. The [original standalone scan context was rerun](https://github.com/richmondgoh8/haze-guide-sg/actions/runs/39020655864) as well, so earlier results were resolved by fresh analysis rather than deleted. The repository's code-scanning API returned zero open alerts after these rescans.
 
 After deployment, all four public pages loaded with the production policy, no CSP violations during normal use, no JavaScript errors and no mobile overflow. East readings loaded from the real public API. `.env`, `.git/config`, `package.json` and the development source path returned 404. Header-only findings remain as described above.
 
