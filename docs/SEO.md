@@ -19,9 +19,9 @@ The full guides also remain on the dashboard to preserve existing links and read
 This needs the owner's Google account. It has not been done by a code deployment.
 
 1. Open [Google Search Console](https://search.google.com/search-console).
-2. Add a **URL-prefix** property: `https://richmondgoh8.github.io/haze-guide-sg/`. A Domain property for `github.io` is not appropriate: we do not control that domain's DNS.
+2. Add a **URL-prefix** property: `https://hazelah.me/haze-guide-sg/`.
 3. Choose HTML-tag verification. Put the exact tag Google supplies in `src/partials/head.html`, deploy, then verify. The token is intentionally public; do not share a Google password, session cookie or OAuth credential. Alternatively, put Google's supplied HTML verification file unchanged under `public/`.
-4. Submit `https://richmondgoh8.github.io/haze-guide-sg/sitemap.xml` in Sitemaps.
+4. Submit `https://hazelah.me/haze-guide-sg/sitemap.xml` in Sitemaps.
 5. Inspect the homepage and each guide URL. Test the live URL, check the rendered content and selected canonical, then request indexing if appropriate. Repeated requests are not a ranking technique.
 6. Watch Pages indexing and crawl errors. A successful deployment or sitemap submission is not confirmation that Google has indexed a page.
 

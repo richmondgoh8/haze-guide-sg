@@ -2,7 +2,7 @@
 
 A static Singapore haze dashboard using NEA data. It shows what the current reading means for outdoor activity, exercise, masks and windows.
 
-Live site: https://richmondgoh8.github.io/haze-guide-sg/
+Live site: https://hazelah.me/haze-guide-sg/
 
 ## Start developing
 
@@ -89,7 +89,7 @@ If Chromium is already installed locally, `CHROMIUM_PATH=/path/to/chromium npm r
 
 GitHub Pages serves the generated `dist/` directory. Pushes to `main`, manual runs and the 15-minute schedule run the existing verification and security gates before deployment. Browser tests use fixtures and do not depend on NEA availability. The publication step then collects the real snapshot; a failed collection uses validated prior readings or stops deployment if none exist. Scan artifacts are retained for one day to limit storage from scheduled runs. Standard hosted runner execution is free for public repositories; this does not promise unlimited storage or permanent free-tier terms.
 
-The free URL is `https://richmondgoh8.github.io/haze-guide-sg/`. Relative build asset paths also support GitHub project URLs. A custom domain can be added later in the repository's Pages settings.
+The site is served at `https://hazelah.me/haze-guide-sg/`. Relative build asset paths also support GitHub project URLs.
 
 ## Privacy and security
 

@@ -1,5 +1,5 @@
 export const SITE = {
-  url: 'https://richmondgoh8.github.io/haze-guide-sg/',
+  url: 'https://hazelah.me/haze-guide-sg/',
   name: 'Air, Actually',
   reviewed: '2026-10-17',
 };

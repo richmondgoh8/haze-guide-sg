@@ -51,7 +51,7 @@ test('collector makes fixed upstream requests, uses published snapshot on feed f
     fetchImpl: async (input) => {
       const url = new URL(input);
       requests.push(url);
-      if (url.hostname === 'richmondgoh8.github.io') return { ok: true, json: async () => payload };
+      if (url.hostname === 'hazelah.me') return { ok: true, json: async () => payload };
       if (url.pathname.endsWith('/pm25')) return { ok: false, status: 503 };
       return { ok: true, json: async () => neaPayload('psi', 100) };
     },

@@ -466,7 +466,7 @@ test('guides and SEO metadata are present without JavaScript', async ({ browser,
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
-    'https://richmondgoh8.github.io/haze-guide-sg/',
+    'https://hazelah.me/haze-guide-sg/',
   );
   expect(await page.locator('script[type="application/ld+json"]').textContent()).toContain(
     'WebPage',
