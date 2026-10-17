@@ -1,0 +1,16 @@
+@layer site;
+
+/* All imports share a layer so component specificity keeps the established cascade. */
+@import url('./theme.css') layer(site);
+@import url('./base.css') layer(site);
+@import url('./components/header.css') layer(site);
+@import url('./components/hero.css') layer(site);
+@import url('./components/readings.css') layer(site);
+@import url('./components/advice.css') layer(site);
+@import url('./components/explainer.css') layer(site);
+@import url('./components/masks.css') layer(site);
+@import url('./components/tips.css') layer(site);
+@import url('./components/sources-footer.css') layer(site);
+@import url('./responsive.css') layer(site);
+@import url('./guide-components.css') layer(site);
+@import url('./dashboard.css') layer(site);

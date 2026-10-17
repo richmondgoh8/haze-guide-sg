@@ -1,0 +1,14 @@
+:root {
+  --base-font-size: 18px;
+  --paper: #f7f6f1;
+  --ink: #173b34;
+  --ink-deep: #12342e;
+  --muted: #60736b;
+  --line: #dce3d9;
+  --mint: #deede4;
+  --cream: #fffdf8;
+  --yellow: #f6d589;
+  --orange: #e6a86f;
+  --font-body: 'DM Sans', Arial, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+}

@@ -1,60 +1,13 @@
-const HOUR_MS = 60 * 60 * 1000;
-
-export const PM25_BANDS = [
-  {
-    limit: 55,
-    name: 'Normal',
-    className: 'normal',
-    index: 1,
-    title: 'Can head out as usual',
-    shortLabel: 'Can go as usual',
-  },
-  {
-    limit: 150,
-    name: 'Elevated',
-    className: 'elevated',
-    index: 2,
-    title: 'Go easy outdoors, lah',
-    shortLabel: 'Take it easy',
-  },
-  {
-    limit: 250,
-    name: 'High',
-    className: 'high',
-    index: 3,
-    title: 'Outdoor workout? Postpone first',
-    shortLabel: 'Workout indoors',
-  },
-  {
-    limit: Infinity,
-    name: 'Very high',
-    className: 'very-high',
-    index: 4,
-    title: 'Stay in, skip optional trips',
-    shortLabel: 'Stay indoors',
-  },
-];
-
-export function classifyPm25(value) {
-  if (!Number.isFinite(value) || value < 0) return null;
-  return PM25_BANDS.find((band) => value <= band.limit);
-}
-
-export function describePsi(value) {
-  if (!Number.isFinite(value) || value < 0) return 'Unavailable';
-  if (value <= 50) return 'Good';
-  if (value <= 100) return 'Moderate';
-  if (value <= 200) return 'Unhealthy';
-  if (value <= 300) return 'Very unhealthy';
-  return 'Hazardous';
-}
-
-export function isCurrentReading(timestamp, now = Date.now()) {
-  if (!timestamp) return false;
-  const age = now - Date.parse(timestamp);
-  // Allow publication delay and minor clock differences, but never advise from old data.
-  return Number.isFinite(age) && age >= -20 * 60 * 1000 && age <= 2 * HOUR_MS;
-}
+export const UNAVAILABLE_ACTIVITY = {
+  main: 'Check the latest reading before heading out.',
+  detail: 'The feed is missing or out of date. Check haze.gov.sg for current advice.',
+  vulnerable: 'Follow your care plan and check the official advisory.',
+  walk: 'Check haze.gov.sg before heading out.',
+  exercise: 'A current reading is needed for activity advice.',
+  mask: 'Check the official advisory and the mask guide below.',
+  exerciseTitle: 'Check before exercising outside',
+  alternative: 'Check the latest reading before choosing an activity.',
+};
 
 export const ACTIVITY_GUIDANCE = {
   1: {
@@ -107,32 +60,3 @@ export const ACTIVITY_GUIDANCE = {
       'Avoid all outdoor activity for the next hour. Seek medical advice if you feel unwell.',
   },
 };
-
-export function getWindowAdvice(pm25, timestamp, now = Date.now()) {
-  const band = classifyPm25(pm25);
-  if (!band || !isCurrentReading(timestamp, now)) {
-    return {
-      state: 'unknown',
-      title: 'Check the air first',
-      detail:
-        'The reading is missing or out of date. Check haze.gov.sg and conditions outside your home.',
-    };
-  }
-
-  // NEA has no one-hour opening threshold. This is a cautious household suggestion.
-  if (band.index === 1) {
-    return {
-      state: 'check',
-      title: 'Can consider airing the room',
-      detail:
-        'The reading is in NEA’s Normal band. If outdoor air has improved, take the chance to air the room. Check local conditions too; Normal does not mean pollution-free.',
-    };
-  }
-
-  return {
-    state: 'reduce',
-    title: 'Mostly closed while it’s hazy',
-    detail:
-      'Limit haze coming in; air the room when outdoor air improves, even temporarily. If it gets hot or stuffy, don’t just tahan. Use the options below.',
-  };
-}

@@ -1,0 +1,82 @@
+.mask-section {
+  background: #f1eee5;
+  padding: 95px 0;
+}
+.mask-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 9%;
+  align-items: center;
+}
+.mask-visual {
+  min-height: 520px;
+  background: #d9e6d5;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  overflow: hidden;
+}
+.mask-visual svg {
+  width: min(80%, 320px);
+  filter: drop-shadow(0 18px 20px #6f998744);
+}
+.mask-strap {
+  stroke: #a06448;
+  stroke-width: 8;
+}
+.mask-body {
+  fill: #f8f0dc;
+  stroke: #bf8e6c;
+  stroke-width: 3;
+}
+.mask-seam {
+  stroke: #d3a782;
+  stroke-width: 2;
+}
+.mask-visual span {
+  font-size: 0.72rem;
+  letter-spacing: 0.17em;
+  font-weight: 700;
+}
+.mask-copy h2 {
+  margin-bottom: 22px;
+}
+.mask-copy > p:not(.kicker) {
+  color: #596b60;
+  line-height: 1.7;
+}
+.mask-copy ul {
+  padding: 0;
+  margin: 26px 0 3px;
+  list-style: none;
+}
+.mask-copy li {
+  display: flex;
+  gap: 12px;
+  border-top: 1px solid #d5d9cf;
+  padding: 17px 0;
+  color: #52665b;
+  font-size: 0.92rem;
+}
+.mask-copy li strong {
+  color: var(--ink);
+}
+.check-icon {
+  width: 23px;
+  height: 23px;
+  flex: none;
+  border-radius: 50%;
+  background: #cfe3d4;
+  color: #235944;
+  text-align: center;
+  line-height: 23px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.mask-copy > a {
+  color: #87583b;
+  margin-top: 14px;
+}

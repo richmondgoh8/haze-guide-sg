@@ -1,0 +1,107 @@
+.action-section {
+  background: #173f36;
+  color: #f6f4e9;
+  padding: 100px 0;
+}
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10%;
+  align-items: center;
+}
+.action-intro .kicker {
+  color: #e5ba82;
+}
+.action-intro h2 {
+  font-size: clamp(2.7rem, 4.5vw, 4.5rem);
+  margin-bottom: 22px;
+}
+.action-intro h2 em {
+  color: #f0c78e;
+}
+.action-intro > p:not(.kicker) {
+  color: #c1d5c7;
+  max-width: 420px;
+  line-height: 1.7;
+}
+.action-intro > a,
+.mask-copy > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  color: #f3d7a2;
+  font-weight: 700;
+  text-underline-offset: 6px;
+  margin-top: 18px;
+}
+.action-panel {
+  background: #f8f7ef;
+  color: var(--ink);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 26px 55px #0e2e2740;
+}
+.action-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--line);
+  padding: 18px 27px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+}
+.action-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #dbe9dc;
+  display: grid;
+  place-items: center;
+}
+.action-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.action-body {
+  padding: 29px 32px 32px;
+}
+.action-status {
+  color: #a36a3b;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.action-body h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 13px;
+}
+.action-detail {
+  color: #536b60;
+  line-height: 1.65;
+  min-height: 52px;
+}
+.vulnerable-note {
+  display: flex;
+  gap: 15px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin-top: 22px;
+}
+.vulnerable-note svg {
+  width: 23px;
+  height: 23px;
+  flex: none;
+  color: #b97742;
+}
+.vulnerable-note strong {
+  font-size: 0.88rem;
+}
+.vulnerable-note p {
+  color: #596c61;
+  font-size: 0.87rem;
+  margin: 4px 0 0;
+}

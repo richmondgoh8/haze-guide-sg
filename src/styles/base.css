@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: var(--base-font-size);
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+button,
+select {
+  font: inherit;
+}
+a {
+  color: inherit;
+}
+button,
+a,
+select {
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+}
+svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+h1,
+h2,
+h3 {
+  line-height: 1.12;
+}
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+h2 {
+  font-size: clamp(2.25rem, 4.1vw, 3.55rem);
+}
+h3 {
+  font-size: 1.2rem;
+}
+.shell {
+  width: min(100% - 48px, 1180px);
+  margin-inline: auto;
+}
+.skip-link {
+  position: absolute;
+  z-index: 50;
+  top: -100px;
+  left: 16px;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: white;
+}
+.skip-link:focus {
+  top: 12px;
+}
+:focus-visible {
+  outline: 3px solid #a15c20;
+  outline-offset: 4px;
+}
+section {
+  scroll-margin-top: 80px;
+}

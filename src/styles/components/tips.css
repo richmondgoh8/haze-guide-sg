@@ -1,0 +1,36 @@
+.tips-section {
+  padding: 95px 0;
+}
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+.tip {
+  padding: 29px 32px 0 0;
+}
+.tip + .tip {
+  border-left: 1px solid var(--line);
+  padding-left: 32px;
+}
+.tip-icon {
+  display: block;
+  color: #458068;
+  height: 66px;
+}
+.tip-icon svg {
+  width: 33px;
+  height: 33px;
+}
+.tip h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 11px;
+}
+.tip p {
+  color: #5b6e64;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  margin: 0;
+}

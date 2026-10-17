@@ -5,7 +5,7 @@ import {
   describePsi,
   getWindowAdvice,
   isCurrentReading,
-} from '../dist/air-quality.js';
+} from '../../src/scripts/domain/air-quality.js';
 
 const now = Date.parse('2026-10-17T10:00:00+08:00');
 const current = '2026-10-17T10:00:00+08:00';

@@ -1,0 +1,156 @@
+<section class="readings-section" id="readings" aria-labelledby="readings-title">
+  <div class="shell">
+    <div class="section-heading">
+      <div>
+        <p class="kicker">01 / THE AIR RIGHT NOW</p>
+        <h2 id="readings-title">The air in your area</h2>
+      </div>
+      <p>Choose a region for official readings and practical next steps.</p>
+    </div>
+    <noscript
+      ><p>
+        Live readings need JavaScript.
+        <a href="https://www.haze.gov.sg/">Check the current readings at haze.gov.sg.</a> You can
+        still read the activity and mask guides below.
+      </p></noscript
+    >
+    <div class="region-toolbar">
+      <label for="region">I’m in</label
+      ><select id="region" aria-label="Singapore region">
+        <!-- regions: options --></select
+      ><span class="toolbar-spacer"></span
+      ><button class="refresh-button" id="refresh" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 11a8 8 0 1 0-2 6m2 2v-6h-6" />
+        </svg>
+        Refresh
+      </button>
+    </div>
+    <p class="region-hint">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z" />
+        <circle cx="12" cy="10" r="2.5" /></svg
+      ><span id="region-towns"><!-- regions: hint --></span
+      ><a
+        href="https://www.nea.gov.sg/our-services/pollution-control/air-pollution/faqs"
+        target="_blank"
+        rel="noopener noreferrer"
+        >NEA’s region guide ↗</a
+      >
+    </p>
+    <div class="readings-grid">
+      <article class="reading-card primary-card" id="pm-card">
+        <div class="reading-top">
+          <span class="reading-label">AIR OUTSIDE · PAST HOUR</span
+          ><span class="band-pill" id="pm-band">Checking the air…</span>
+        </div>
+        <div class="reading-value"><span id="pm-value">—</span><span class="unit">µg/m³</span></div>
+        <p class="reading-caption">1-hour PM2.5 · Fine particles in the air</p>
+        <p id="pm-category" class="official-category">Waiting for the NEA reading</p>
+        <div class="reading-divider"></div>
+        <p class="reading-foot">
+          Higher numbers mean <strong>more fine particles to breathe in.</strong>
+        </p>
+      </article>
+      <article class="reading-card psi-card">
+        <div class="reading-top">
+          <span class="reading-label">24-HOUR PSI</span
+          ><span class="mini-icon" aria-hidden="true"
+            ><svg viewBox="0 0 24 24"><path d="M3 17h18M5 12h14M8 7h8" /></svg
+          ></span>
+        </div>
+        <div class="reading-value"><span id="psi-value">—</span></div>
+        <p class="reading-caption" id="psi-band">Checking…</p>
+        <div class="reading-divider"></div>
+        <p class="reading-foot">A rolling reading, <strong>not tomorrow’s forecast.</strong></p>
+      </article>
+    </div>
+    <p class="reading-method">
+      Hourly source readings; this page checks every 15 minutes. For tomorrow’s plans,
+      <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer"
+        >check NEA’s PSI forecast ↗</a
+      >.
+    </p>
+    <div class="data-status" role="status" aria-live="polite">
+      <span class="status-dot" id="status-dot"></span
+      ><span id="data-status-text">Checking official NEA readings…</span
+      ><span class="status-source"
+        >Source:
+        <a
+          href="https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view"
+          target="_blank"
+          rel="noopener noreferrer"
+          >NEA via data.gov.sg ↗</a
+        ></span
+      >
+    </div>
+    <div class="haze-level">
+      <p id="level-caption">Checking the current haze level…</p>
+      <ol
+        class="severity-scale"
+        role="list"
+        aria-label="Four haze levels, from normal to very high"
+      >
+        <!-- haze: scale -->
+      </ol>
+      <p class="scale-note">
+        Ranges are 1-hour PM2.5 in µg/m³. The actions are for generally healthy adults; people at
+        higher risk need extra care.
+      </p>
+    </div>
+    <div class="outdoor-summary" id="outdoor-summary">
+      <div>
+        <span class="summary-label">GO OUT, CAN OR NOT?</span>
+        <p id="outdoor-verdict">Checking the next-hour recommendation for East…</p>
+        <small>For generally healthy adults. Higher-risk guidance is below.</small>
+      </div>
+      <a href="#what-to-do">See activity & mask advice <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="daily-decisions">
+      <article class="decision-card" id="window-card">
+        <div class="decision-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <path d="M5 4h22v24H5zM16 4v24M5 16h22m-11-5-5-2v14l5-2" />
+          </svg>
+        </div>
+        <p class="decision-label">WINDOWS CAN OPEN?</p>
+        <h3 id="window-verdict">Check the air before opening</h3>
+        <p id="window-detail">Waiting for the latest outdoor reading.</p>
+        <p class="window-comfort">
+          <strong>Room getting hot or stuffy?</strong> No air-con and cannot stay cool? Move to a
+          cooler indoor place if possible. If you must open windows for cooling, close them once
+          comfortable and run a purifier if available.
+        </p>
+        <p class="decision-source">
+          Our cautious suggestion, based on the outdoor regional reading.
+        </p>
+        <a href="#window-guide">Window and ventilation guide ↗</a>
+      </article>
+      <article class="decision-card">
+        <div class="decision-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <circle cx="20" cy="5" r="3" />
+            <path d="m10 13 5-5 6 7 6 1M17 11l-4 9-7 7m8-10 8 5 2 6M4 13h6" />
+          </svg>
+        </div>
+        <p class="decision-label">OUTDOOR WORKOUT STILL ON?</p>
+        <h3 id="exercise-verdict">Check before exercising outside</h3>
+        <p id="exercise-detail">Waiting for the latest activity advice.</p>
+        <p class="activity-alternative">
+          <strong>Or change plans a bit</strong
+          ><span id="exercise-alternative">An alternative will appear with a current reading.</span>
+        </p>
+        <a href="#what-to-do">Walking, exercise and mask advice ↗</a>
+      </article>
+    </div>
+    <div class="regional-block">
+      <div>
+        <h3>Across the island</h3>
+        <p>Tap a region to see its advice.</p>
+      </div>
+      <div class="regional-list" id="regional-list" aria-label="One-hour PM2.5 by region">
+        <!-- regions: cards -->
+      </div>
+    </div>
+  </div>
+</section>

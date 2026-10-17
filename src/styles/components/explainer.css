@@ -1,0 +1,47 @@
+.explainer-section {
+  padding: 103px 0;
+}
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.guide-card {
+  background: #fffefa;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 27px;
+  min-height: 310px;
+}
+.guide-number {
+  color: #a87953;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.guide-icon {
+  height: 105px;
+  display: flex;
+  align-items: center;
+  color: #44806b;
+}
+.guide-icon svg {
+  width: 49px;
+  height: 49px;
+  stroke-width: 1.4;
+}
+.guide-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 13px;
+}
+.guide-card p {
+  font-size: 0.92rem;
+  color: #5c6d63;
+  line-height: 1.67;
+  margin: 0;
+}
+.guide-card p strong {
+  color: var(--ink);
+}

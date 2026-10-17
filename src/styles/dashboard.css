@@ -1,7 +1,3 @@
-html {
-  font-size: 18px;
-}
-
 .hero-grid {
   min-height: 0;
   grid-template-columns: minmax(0, 1fr) 260px;
