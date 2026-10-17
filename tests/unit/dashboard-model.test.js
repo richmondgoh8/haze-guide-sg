@@ -44,6 +44,8 @@ test('missing PM2.5 withholds activity guidance even when PSI is available', () 
 test('aging readings retain reported values but remove actionable advice and regional recommendations', () => {
   const result = model(snapshot(), 'east', TEST_TIME + 3 * 60 * 60 * 1000);
   assert.equal(result.pm25.value, 140);
+  assert.equal(result.pm25.reportedLevel, 2);
+  assert.equal(result.pm25.current, false);
   assert.match(result.pm25.category, /Last reported/);
   assert.equal(result.severity.activeLevel, null);
   assert.equal(result.windows.state, 'unknown');
@@ -66,6 +68,8 @@ test('PM2.5 and PSI colors are independent; old PSI keeps its value but not a cu
   assert.equal(stale.psi.value, 143);
   assert.equal(stale.psi.className, '');
   assert.equal(stale.psi.activeLevel, null);
+  assert.equal(stale.psi.reportedLevel, 3);
+  assert.equal(stale.psi.current, false);
   assert.equal(stale.psi.label, 'Unhealthy · Last reported');
   assert.equal(stale.pm25.className, 'normal');
 });

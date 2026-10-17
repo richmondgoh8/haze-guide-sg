@@ -324,6 +324,11 @@
 .scale-marker {
   fill: var(--ink);
 }
+.band-scale[data-freshness='reported'] .scale-marker {
+  fill: var(--cream);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
 .scale-marker[hidden] {
   display: none;
 }

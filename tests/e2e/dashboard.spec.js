@@ -260,8 +260,12 @@ test('stale readings keep reported values but remove current advice', async ({ p
   await page.goto('/');
   await expect(page.locator('#pm-value')).toHaveText('140');
   await expect(page.locator('#pm-category')).toContainText('Last reported');
-  await expect(page.locator('#pm-scale .scale-marker')).not.toBeVisible();
-  await expect(page.locator('#pm-scale')).toHaveAttribute('aria-label', 'No current reading.');
+  await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();
+  await expect(page.locator('#pm-scale')).toHaveAttribute('data-freshness', 'reported');
+  await expect(page.locator('#pm-scale')).toHaveAttribute(
+    'aria-label',
+    'Last reported: 140 µg/m³, Elevated.',
+  );
   await expect(page.locator('#pm-card')).toHaveAttribute('data-band', '');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'unknown');
   await expect(page.locator('[data-region="east"] .region-band')).toHaveText('Old reading');
@@ -303,7 +307,38 @@ test('all band boundaries update the scale and window state', async ({ page }) =
   }
 });
 
-test('PSI meter covers every category and hides its pointer when only PSI is stale', async ({
+test('last-reported arrows become current on refresh and disappear only when values are missing', async ({
+  page,
+}) => {
+  const payload = snapshotPayload(159, new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString());
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
+  await page.goto('/');
+  await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();
+  await expect(page.locator('#pm-scale .scale-marker')).toHaveAttribute(
+    'transform',
+    'translate(250 0)',
+  );
+  await expect(page.locator('#pm-scale')).toHaveAttribute(
+    'aria-label',
+    'Last reported: 159 µg/m³, High.',
+  );
+  await expect(page.locator('#pm-band')).toHaveText('Current advice unavailable');
+  await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'unknown');
+  payload.readings.pm25.timestamp = TEST_TIMESTAMP;
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(page.locator('#pm-scale')).toHaveAttribute('data-freshness', 'current');
+  await expect(page.locator('#pm-scale')).toHaveAttribute('aria-label', 'Now: 159 µg/m³, High.');
+  payload.readings.pm25 = null;
+  payload.readings.psi = null;
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  for (const id of ['pm-scale', 'psi-scale']) {
+    await expect(page.locator(`#${id} .scale-marker`)).not.toBeVisible();
+    await expect(page.locator(`#${id}`)).toHaveAttribute('data-freshness', 'unavailable');
+    await expect(page.locator(`#${id}`)).toHaveAttribute('aria-label', 'No reading available.');
+  }
+});
+
+test('PSI meter covers every category and labels its last-reported pointer when stale', async ({
   page,
 }) => {
   const payload = snapshotPayload();
@@ -332,7 +367,12 @@ test('PSI meter covers every category and hides its pointer when only PSI is sta
   }
   payload.readings.psi.timestamp = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
   await page.getByRole('button', { name: 'Refresh', exact: true }).click();
-  await expect(page.locator('#psi-scale .scale-marker')).not.toBeVisible();
+  await expect(page.locator('#psi-scale .scale-marker')).toBeVisible();
+  await expect(page.locator('#psi-scale')).toHaveAttribute('data-freshness', 'reported');
+  await expect(page.locator('#psi-scale')).toHaveAttribute(
+    'aria-label',
+    'Last reported: 2000, Hazardous.',
+  );
   await expect(page.locator('#psi-band')).toContainText('Last reported');
   await expect(page.locator('#psi-card')).toHaveAttribute('data-band', '');
   await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();

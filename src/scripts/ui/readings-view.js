@@ -45,8 +45,8 @@ export function createReadingsView(root) {
       elements.psiValue.textContent = model.psi.value;
       elements.psiLabel.textContent = model.psi.label;
       elements.psiCard.dataset.band = model.psi.className;
-      pmScale.render(model.severity.activeLevel, `${model.pm25.value} µg/m³`);
-      psiScale.render(model.psi.activeLevel, model.psi.value);
+      pmScale.render({ ...model.pm25, value: `${model.pm25.value} µg/m³` });
+      psiScale.render(model.psi);
       elements.statusDot.className = `status-dot ${model.status.warning ? 'warn' : 'ok'}`;
       elements.statusText.textContent = model.status.text;
       const position = model.severity.position;

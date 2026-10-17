@@ -41,6 +41,8 @@ export function createDashboardModel({ readings, region, loading = false }, now 
     region: selectedRegion,
     pm25: {
       value: band ? pm25 : '—',
+      reportedLevel: band?.index ?? null,
+      current,
       title: activeBand?.title || 'Current advice unavailable',
       className: activeBand?.className || '',
       category: band
@@ -49,6 +51,8 @@ export function createDashboardModel({ readings, region, loading = false }, now 
     },
     psi: {
       value: psiBand ? psi : '—',
+      reportedLevel: psiBand?.index ?? null,
+      current: psiCurrent,
       label: psiBand ? `${psiBand.name}${psiCurrent ? '' : ' · Last reported'}` : 'Unavailable',
       className: psiCurrent ? psiBand.className : '',
       activeLevel: psiCurrent ? psiBand.index : null,

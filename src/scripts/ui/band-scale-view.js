@@ -7,11 +7,14 @@ export function createBandScaleView(root, selector, bands) {
   const chart = requireElement(figure, 'svg');
 
   return {
-    render(level, value) {
-      const band = bands.find(({ index }) => index === level);
+    render({ reportedLevel, value, current }) {
+      const band = bands.find(({ index }) => index === reportedLevel);
       marker.toggleAttribute('hidden', !band);
       figure.dataset.level = band ? String(band.index) : '';
-      const label = band ? `Now: ${value}, ${band.name}.` : 'No current reading.';
+      figure.dataset.freshness = band ? (current ? 'current' : 'reported') : 'unavailable';
+      const label = band
+        ? `${current ? 'Now' : 'Last reported'}: ${value}, ${band.name}.`
+        : 'No reading available.';
       figure.setAttribute('aria-label', label);
       chart.setAttribute('aria-label', `${label} NEA bands, lower to higher.`);
       if (band) marker.setAttribute('transform', `translate(${(band.index - 0.5) * 100} 0)`);
