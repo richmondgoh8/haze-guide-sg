@@ -1,5 +1,8 @@
 /* Shared infographic primitives. Icons are decorative; every verdict has a text label. */
-.level-number .guide-icon {
+.visual-icon {
+  color: #44806b;
+}
+.level-number .visual-icon {
   width: 23px;
   height: 23px;
   color: inherit;
@@ -28,7 +31,7 @@
   margin: 0;
   line-height: 1.55;
 }
-.visual-card .guide-icon {
+.visual-card .visual-icon {
   display: block;
   width: 44px;
   height: 44px;
@@ -73,7 +76,7 @@
   border-radius: 12px;
   background: #ffffff80;
 }
-.device-strip .guide-icon {
+.device-strip .visual-icon {
   width: 36px;
   height: 36px;
   flex: 0 0 36px;
@@ -94,7 +97,7 @@
   grid-template-columns: 44px 1fr;
   column-gap: 16px;
 }
-.mask-snapshot .visual-card--caution .guide-icon {
+.mask-snapshot .visual-card--caution .visual-icon {
   grid-row: span 4;
 }
 .mask-snapshot .visual-card--caution h3 {
@@ -135,7 +138,7 @@
   gap: 8px;
   align-items: center;
 }
-.placement-panel .guide-icon {
+.placement-panel .visual-icon {
   width: 24px;
   height: 24px;
 }
@@ -148,7 +151,7 @@
   border-radius: 14px;
   background: #f8e9dc;
 }
-.blocked-airflow .guide-icon {
+.blocked-airflow .visual-icon {
   width: 64px;
   height: 64px;
 }

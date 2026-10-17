@@ -17,7 +17,7 @@ const paths = {
 
 export function renderIcon(name) {
   if (!Object.hasOwn(paths, name)) throw new Error(`Unknown guide icon: ${name}`);
-  return `<svg class="guide-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name]}</svg>`;
+  return `<svg class="visual-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name]}</svg>`;
 }
 
 export function renderIcons(html) {
