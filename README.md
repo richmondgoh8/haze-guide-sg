@@ -10,6 +10,21 @@ Live site: https://richmondgoh8.github.io/haze-guide-sg/
 - NEA's **24-hour PSI** for the selected region. This is a different measure and is useful for the broader picture; the site does not invent or convert it into a one-hour “AQI.”
 - Plain-language activity advice following the [NEA personal guide](https://www.haze.gov.sg/resources/1-hr-pm2.5-readings), including guidance for vulnerable people.
 - A short mask guide based on the [Ministry of Health haze guidance](https://www.moh.gov.sg/others/haze/).
+- East is the default region on a first visit. An explicitly chosen region is remembered on that browser.
+- A next-hour outdoor activity recommendation, with separate everyday activity, strenuous exercise, mask and higher-risk guidance. Unavailable, stale and invalid timestamps withhold the recommendation.
+- A mobile-friendly comparison of cloth, surgical/KF-AD, N95, KN95, KF94 and FFP2 masks, plus KF80, N99/FFP3/KF99, N100/P100, reusable and valved options. The ratings describe laboratory filtration, not guaranteed personal protection.
+
+## Mask comparison and value guidance
+
+Filtration and fit information comes from [HSA](https://www.hsa.gov.sg/announcements/guide-to-masks-and-respirators/), [NIOSH](https://www.cdc.gov/niosh/ppe/respirators/ffr.html), [3M's standards comparison](https://multimedia.3m.com/mws/media/1791500O/comparison-ffp2-kn95-n95-filtering-facepiece-respirator-classes-tb.pdf), [MFDS](https://www.mfds.go.kr/webzine/202002/sub05.html), and [HSE's FFP3 comparison](https://www.hse.gov.uk/research/assets/docs/personal-protective-equipment-selection-for-healthcare-settings.pdf).
+
+The cost guidance is editorial: compare price per mask after testing fit, buy genuine products, and avoid unnecessary premium features. It does not quote live retail prices or assume that one certification is always cheaper. Activity and mask guidance was reviewed on 17 October 2026.
+
+## Mobile and search
+
+The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and native disclosures for less common mask categories. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript.
+
+SEO includes a descriptive title and description, canonical URL, WebPage structured data, a sitemap, and Open Graph/Twitter metadata with a 1200×630 share image. The sitemap is at `/haze-guide-sg/sitemap.xml`. This prepares the page for indexing; it does not guarantee search rankings or submit the site to Search Console. GitHub project sites do not control the domain-root `robots.txt`; no project-level robots file is used as a substitute.
 
 ## Sources and accuracy
 

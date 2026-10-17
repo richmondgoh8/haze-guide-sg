@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#eaf0e5"/>
+  <circle cx="1000" cy="290" r="270" fill="#f6d589"/>
+  <circle cx="1000" cy="290" r="195" fill="#f0c392"/>
+  <circle cx="1000" cy="290" r="125" fill="#edab79"/>
+  <path d="M745 526Q940 335 1200 440V630H745Z" fill="#779d82"/>
+  <path d="M786 630Q980 445 1200 539V630Z" fill="#285b4d"/>
+  <rect x="64" y="53" width="48" height="48" rx="13" fill="#173b34"/>
+  <path d="M73 76q10-13 23 0t10 0M73 85q10-13 23 0t10 0" fill="none" stroke="#f6d589" stroke-width="2"/>
+  <text x="128" y="87" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#173b34">air, actually.</text>
+  <text x="64" y="170" font-family="Arial,sans-serif" font-size="17" letter-spacing="3" font-weight="700" fill="#52665b">SINGAPORE HAZE &amp; AIR QUALITY</text>
+  <text x="58" y="290" font-family="Georgia,serif" font-size="93" fill="#173b34">Know the air.</text>
+  <text x="58" y="390" font-family="Georgia,serif" font-size="84" font-style="italic" fill="#a76035">Make your move.</text>
+  <text x="64" y="468" font-family="Arial,sans-serif" font-size="23" fill="#435d52">Official NEA readings. Clear outdoor advice.</text>
+  <text x="64" y="505" font-family="Arial,sans-serif" font-size="23" fill="#435d52">Practical mask choices for Singapore.</text>
+  <text x="64" y="579" font-family="Arial,sans-serif" font-size="17" fill="#60736b">1-hour PM2.5  /  24-hour PSI  /  Mask guide</text>
+</svg>
