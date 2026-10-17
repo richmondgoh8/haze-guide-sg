@@ -87,21 +87,6 @@
   margin-left: 18px;
 }
 
-.haze-level {
-  margin-block: 16px 28px;
-}
-
-#level-caption {
-  font-weight: 700;
-  margin-bottom: 14px;
-}
-
-.scale-note {
-  font-size: 0.85rem;
-  color: #52665b;
-  margin: 15px 0 0;
-}
-
 .daily-decisions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

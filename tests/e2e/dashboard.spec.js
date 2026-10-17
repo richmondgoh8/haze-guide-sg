@@ -24,7 +24,12 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#psi-value')).toHaveText('143');
   await expect(page.locator('#pm-card')).toHaveAttribute('data-band', 'elevated');
   await expect(page.locator('#psi-card')).toHaveAttribute('data-band', 'unhealthy');
-  await expect(page.locator('.psi-step[aria-current]')).toHaveAttribute('data-level', '3');
+  await expect(page.locator('#psi-scale')).toHaveAttribute('data-level', '3');
+  await expect(page.locator('#psi-scale .scale-marker')).toHaveAttribute(
+    'transform',
+    'translate(250 0)',
+  );
+  await expect(page.locator('#psi-scale')).toHaveAttribute('aria-label', 'Now: 143, Unhealthy.');
   await expect(page.locator('#pm-category')).toContainText('Band 2');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'reduce');
   await expect(page.locator('#region-towns')).toContainText('Bedok');
@@ -35,7 +40,7 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#activity-walk-short')).toHaveText(
     'Gentle pace. Watch for irritation.',
   );
-  await expect(page.locator('#activity-exercise-short')).toHaveText('Reduce hard outdoor exercise');
+  await expect(page.locator('#exercise-verdict')).toHaveText('Reduce hard outdoor exercise');
   await expect(page.locator('#action-vulnerable')).toBeVisible();
   await expect(page.locator('#activity-reasoning')).not.toHaveAttribute('open');
   await expect(page.locator('#band-position-title')).toHaveText('Closer to High');
@@ -51,6 +56,42 @@ test('dropdown choice is remembered without cookies', async ({ page, context }) 
   await expect(page.locator('#region')).toHaveValue('west');
   await expect(page.locator('#pm-value')).toHaveText('80');
   expect(await context.cookies()).toEqual([]);
+});
+
+test('readings use joined colour bars and the oversized activity section is gone', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(
+    page.locator('.action-section, .action-intro, .reading-scale, #band-position-meter'),
+  ).toHaveCount(0);
+  await expect(page.getByText('Still going out?', { exact: false })).toHaveCount(0);
+  await expect(page.locator('#pm-scale .scale-track > rect')).toHaveCount(4);
+  await expect(page.locator('#psi-scale .scale-track > rect')).toHaveCount(5);
+  await expect(page.locator('#action-vulnerable')).toBeVisible();
+  await expect(page.locator('#activity-walk-short')).toBeVisible();
+  await expect(page.locator('#activity-mask-short')).toBeVisible();
+  const ranges = page.locator('#pm-scale .scale-ranges');
+  await expect(ranges).not.toHaveAttribute('open');
+  await ranges.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(ranges).toContainText('High: 151–250');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page
+    .getByRole('navigation', { name: 'Page sections' })
+    .getByRole('link', { name: 'Outdoors', exact: true })
+    .click();
+  await expect(page).toHaveURL(/#what-to-do$/u);
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+    for (const id of ['pm-scale', 'psi-scale']) {
+      const dimensions = await page.locator(`#${id} svg`).boundingBox();
+      expect(dimensions.height).toBeLessThan(60);
+    }
+  }
 });
 
 test('section navigation stays available and anchors clear it, including enlarged text', async ({
@@ -219,7 +260,9 @@ test('stale readings keep reported values but remove current advice', async ({ p
   await page.goto('/');
   await expect(page.locator('#pm-value')).toHaveText('140');
   await expect(page.locator('#pm-category')).toContainText('Last reported');
-  await expect(page.locator('.severity-step[aria-current]')).toHaveCount(0);
+  await expect(page.locator('#pm-scale .scale-marker')).not.toBeVisible();
+  await expect(page.locator('#pm-scale')).toHaveAttribute('aria-label', 'No current reading.');
+  await expect(page.locator('#pm-card')).toHaveAttribute('data-band', '');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'unknown');
   await expect(page.locator('[data-region="east"] .region-band')).toHaveText('Old reading');
   await expect(page.locator('#band-position')).not.toBeVisible();
@@ -243,23 +286,56 @@ test('all band boundaries update the scale and window state', async ({ page }) =
     pm25 = value;
     await page.getByRole('button', { name: 'Refresh', exact: true }).click();
     await expect(page.locator('#pm-value')).toHaveText(String(value));
-    await expect(page.locator('.severity-step[aria-current]')).toHaveAttribute(
-      'data-level',
-      String(level),
-    );
+    await expect(page.locator('#pm-scale')).toHaveAttribute('data-level', String(level));
     await expect(page.locator('#window-guide')).toHaveAttribute(
       'data-state',
       level === 1 ? 'check' : 'reduce',
     );
     await expect(page.locator('#band-position')).toBeVisible();
     if (level === 4) {
-      await expect(page.locator('#band-position-meter')).not.toBeVisible();
       await expect(page.locator('#band-position-title')).toHaveText('Already in the highest band');
-    } else {
-      await expect(page.locator('#band-position-meter')).toBeVisible();
-      await expect(page.locator('#band-position-meter')).toHaveJSProperty('value', value);
     }
+    await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();
+    await expect(page.locator('#pm-scale .scale-marker')).toHaveAttribute(
+      'transform',
+      `translate(${(level - 0.5) * 100} 0)`,
+    );
   }
+});
+
+test('PSI meter covers every category and hides its pointer when only PSI is stale', async ({
+  page,
+}) => {
+  const payload = snapshotPayload();
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
+  await page.goto('/');
+  for (const [value, level] of [
+    [0, 1],
+    [50, 1],
+    [51, 2],
+    [100, 2],
+    [101, 3],
+    [200, 3],
+    [201, 4],
+    [300, 4],
+    [301, 5],
+    [2000, 5],
+  ]) {
+    payload.readings.psi.values.east = value;
+    await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+    await expect(page.locator('#psi-value')).toHaveText(String(value));
+    await expect(page.locator('#psi-scale')).toHaveAttribute('data-level', String(level));
+    await expect(page.locator('#psi-scale .scale-marker')).toHaveAttribute(
+      'transform',
+      `translate(${(level - 0.5) * 100} 0)`,
+    );
+  }
+  payload.readings.psi.timestamp = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(page.locator('#psi-scale .scale-marker')).not.toBeVisible();
+  await expect(page.locator('#psi-band')).toContainText('Last reported');
+  await expect(page.locator('#psi-card')).toHaveAttribute('data-band', '');
+  await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();
 });
 
 test('expanded guides fit phone, tablet, desktop and enlarged text', async ({ page }) => {

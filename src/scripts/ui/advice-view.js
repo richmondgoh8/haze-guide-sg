@@ -2,17 +2,10 @@ import { getElements } from './dom.js';
 
 export function createAdviceView(root) {
   const elements = getElements(root, {
-    region: '#action-region',
-    status: '#action-status',
-    main: '#action-main',
-    detail: '#action-detail',
     vulnerable: '#action-vulnerable',
-    summary: '#outdoor-verdict',
-    summaryCard: '#outdoor-summary',
     walk: '#activity-walk',
     walkShort: '#activity-walk-short',
     maskShort: '#activity-mask-short',
-    exerciseShort: '#activity-exercise-short',
     exercise: '#activity-exercise',
     mask: '#activity-mask',
     exerciseTitle: '#exercise-verdict',
@@ -24,14 +17,9 @@ export function createAdviceView(root) {
   });
 
   return {
-    render({ activity, windows, region }) {
-      elements.region.textContent = `${region.name} · Next hour`;
+    render({ activity, windows }) {
       for (const key of [
-        'status',
-        'main',
-        'detail',
         'vulnerable',
-        'summary',
         'walk',
         'walkShort',
         'maskShort',
@@ -41,8 +29,6 @@ export function createAdviceView(root) {
       ]) {
         elements[key].textContent = activity[key];
       }
-      elements.summaryCard.dataset.band = activity.className;
-      elements.exerciseShort.textContent = activity.exerciseTitle;
       elements.alternative.textContent = activity.alternativeShort;
       elements.exerciseDetail.textContent = activity.exerciseDetail;
       elements.windowCard.dataset.state = windows.state;

@@ -28,21 +28,39 @@ export function renderStaticFragments(html) {
       <span class="region-band">Checking…</span><span class="region-arrow" aria-hidden="true">↗</span>
     </button>`;
   }).join('\n');
-  const renderScale = (bands, stepClass) =>
-    bands
+  const renderScale = (bands, id) => {
+    const description = bands
       .map((band, index) => {
         const lower = index === 0 ? 0 : bands[index - 1].limit + 1;
         const range = Number.isFinite(band.limit) ? `${lower}–${band.limit}` : `≥${lower}`;
-        return `<li class="${stepClass}" data-level="${band.index}" data-band="${band.className}"><strong>${escapeHtml(band.name)}</strong><span>${range}</span><small class="level-marker"></small></li>`;
+        return `${band.name}: ${range}`;
       })
-      .join('\n');
+      .join('; ');
+    const segments = bands
+      .map(
+        (band, index) =>
+          `<rect x="${index * 100}" y="18" width="100" height="12" data-band="${band.className}" />`,
+      )
+      .join('');
+    return `<figure class="band-scale" id="${id}" aria-label="${escapeHtml(description)}. No current reading.">
+      <svg viewBox="0 0 ${bands.length * 100} 36" preserveAspectRatio="none" role="img" aria-label="NEA bands, lower to higher">
+        <defs><clipPath id="${id}-track"><rect x="0" y="18" width="${bands.length * 100}" height="12" rx="6" /></clipPath></defs>
+        <g class="scale-track" clip-path="url(#${id}-track)">${segments}</g>
+        <path class="scale-marker" d="M-6 2H6L0 12Z" hidden />
+      </svg>
+      <figcaption>
+        <div class="scale-labels"><span>${escapeHtml(bands[0].name)}</span><span>${escapeHtml(bands.at(-1).name)}</span></div>
+        <details class="scale-ranges"><summary>Band ranges</summary><p>${escapeHtml(description)}. Equal-width bands, not a linear numeric axis.</p></details>
+      </figcaption>
+    </figure>`;
+  };
   const region = REGIONS.find(({ id }) => id === DEFAULT_REGION);
   const fragments = {
     'regions: options': regionOptions,
     'regions: cards': regionCards,
     'regions: hint': escapeHtml(`${region.name} includes ${region.towns}.`),
-    'haze: scale': renderScale(PM25_BANDS, 'severity-step'),
-    'psi: scale': renderScale(PSI_BANDS, 'psi-step'),
+    'haze: scale': renderScale(PM25_BANDS, 'pm-scale'),
+    'psi: scale': renderScale(PSI_BANDS, 'psi-scale'),
   };
   return html.replace(
     /<!--\s*(regions: (?:options|cards|hint)|(?:haze|psi): scale)\s*-->/g,

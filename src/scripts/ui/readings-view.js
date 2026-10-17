@@ -1,4 +1,6 @@
 import { REGIONS } from '../config.js';
+import { PM25_BANDS, PSI_BANDS } from '../domain/air-quality.js';
+import { createBandScaleView } from './band-scale-view.js';
 import { getElements, requireElement } from './dom.js';
 
 export function createReadingsView(root) {
@@ -14,21 +16,13 @@ export function createReadingsView(root) {
     psiCard: '#psi-card',
     statusDot: '#status-dot',
     statusText: '#data-status-text',
-    levelCaption: '#level-caption',
     position: '#band-position',
     positionTitle: '#band-position-title',
-    positionCurrent: '#band-position-current',
-    positionMeter: '#band-position-meter',
-    positionLower: '#band-position-lower',
-    positionUpper: '#band-position-upper',
     positionDown: '#band-distance-down',
     positionUp: '#band-distance-up',
   });
-  const steps = [...root.querySelectorAll('.severity-step')].map((element) => ({
-    element,
-    level: Number(element.dataset.level),
-    marker: requireElement(element, '.level-marker'),
-  }));
+  const pmScale = createBandScaleView(root, '#pm-scale', PM25_BANDS);
+  const psiScale = createBandScaleView(root, '#psi-scale', PSI_BANDS);
   const regionButtons = new Map(
     REGIONS.map(({ id }) => {
       const button = requireElement(root, `[data-region="${id}"]`);
@@ -38,11 +32,6 @@ export function createReadingsView(root) {
       ];
     }),
   );
-  const psiSteps = [...root.querySelectorAll('.psi-step')].map((element) => ({
-    element,
-    level: Number(element.dataset.level),
-    marker: requireElement(element, '.level-marker'),
-  }));
 
   return {
     render(model) {
@@ -56,43 +45,17 @@ export function createReadingsView(root) {
       elements.psiValue.textContent = model.psi.value;
       elements.psiLabel.textContent = model.psi.label;
       elements.psiCard.dataset.band = model.psi.className;
-      for (const { element, level, marker } of psiSteps) {
-        const selected = level === model.psi.activeLevel;
-        if (selected) element.setAttribute('aria-current', 'step');
-        else element.removeAttribute('aria-current');
-        marker.textContent = selected ? '▲ Now' : '';
-      }
+      pmScale.render(model.severity.activeLevel, `${model.pm25.value} µg/m³`);
+      psiScale.render(model.psi.activeLevel, model.psi.value);
       elements.statusDot.className = `status-dot ${model.status.warning ? 'warn' : 'ok'}`;
       elements.statusText.textContent = model.status.text;
-      elements.levelCaption.textContent = model.severity.caption;
       const position = model.severity.position;
       elements.position.hidden = !position;
-      elements.position.dataset.band = model.pm25.className;
       elements.positionTitle.textContent = position?.nearest ?? '';
-      elements.positionCurrent.textContent = position?.current ?? '';
       elements.positionDown.textContent = position?.down ?? '';
       elements.positionUp.textContent = position?.up ?? '';
       elements.positionDown.hidden = !position?.down;
       elements.positionUp.hidden = !position?.up;
-      elements.positionLower.textContent = position?.lowerLabel ?? '';
-      elements.positionUpper.textContent = position?.upperLabel ?? '';
-      elements.positionMeter.hidden = !position || position.upper === null;
-      if (position && position.upper !== null) {
-        elements.positionMeter.min = position.lower;
-        elements.positionMeter.max = position.upper;
-        elements.positionMeter.value = position.value;
-        elements.positionMeter.setAttribute(
-          'aria-valuetext',
-          `${position.value} µg/m³. ${position.nearest}.`,
-        );
-      }
-
-      for (const { element, level, marker } of steps) {
-        const selected = level === model.severity.activeLevel;
-        if (selected) element.setAttribute('aria-current', 'step');
-        else element.removeAttribute('aria-current');
-        marker.textContent = selected ? '▲ Now' : '';
-      }
 
       for (const region of model.regions) {
         const { button, value, label } = regionButtons.get(region.id);

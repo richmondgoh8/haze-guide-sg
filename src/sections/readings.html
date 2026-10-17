@@ -59,13 +59,14 @@
         <div class="reading-value"><span id="pm-value">—</span><span class="unit">µg/m³</span></div>
         <p class="reading-caption">1-hour PM2.5 · Fine particles in the air</p>
         <p id="pm-category" class="official-category">Waiting for the NEA reading</p>
-        <ol
-          class="reading-scale severity-scale"
-          role="list"
-          aria-label="PM2.5 bands from Normal to Very high, in micrograms per cubic metre"
-        >
-          <!-- haze: scale -->
-        </ol>
+        <!-- haze: scale -->
+        <div class="band-position" id="band-position" hidden>
+          <strong id="band-position-title"></strong>
+          <div class="band-distances">
+            <span id="band-distance-up"></span><span id="band-distance-down"></span>
+          </div>
+          <small>Distance to a band, not a trend or safety margin.</small>
+        </div>
         <div class="reading-divider"></div>
         <p class="reading-foot">
           Higher numbers mean <strong>more fine particles to breathe in.</strong>
@@ -80,13 +81,7 @@
         </div>
         <div class="reading-value"><span id="psi-value">—</span></div>
         <p class="reading-caption" id="psi-band">Checking…</p>
-        <ol
-          class="reading-scale psi-scale"
-          role="list"
-          aria-label="PSI categories from Good to Hazardous"
-        >
-          <!-- psi: scale -->
-        </ol>
+        <!-- psi: scale -->
         <div class="reading-divider"></div>
         <p class="reading-foot">A rolling reading, <strong>not tomorrow’s forecast.</strong></p>
       </article>
@@ -111,38 +106,52 @@
         ></span
       >
     </div>
-    <div class="haze-level">
-      <p id="level-caption">Checking the current haze level…</p>
-      <div class="band-position" id="band-position" hidden>
-        <strong id="band-position-title"></strong>
-        <span id="band-position-current"></span>
-        <meter
-          id="band-position-meter"
-          min="0"
-          max="56"
-          value="0"
-          aria-label="Current PM2.5 between adjacent band boundaries"
-        ></meter>
-        <div class="band-endpoints">
-          <span id="band-position-lower"></span><span id="band-position-upper"></span>
+    <div class="outdoor-advice" id="what-to-do" role="region" aria-label="Outdoor activity advice">
+      <div class="outdoor-summary" id="outdoor-summary">
+        <div>
+          <!-- icon: walk -->
+          <div>
+            <strong>Walk / errands</strong>
+            <p id="activity-walk-short">Check the current reading first.</p>
+          </div>
         </div>
-        <div class="band-distances">
-          <span id="band-distance-down"></span><span id="band-distance-up"></span>
+        <div>
+          <!-- icon: mask -->
+          <div>
+            <strong>Mask</strong>
+            <p id="activity-mask-short">Check the official advisory first.</p>
+          </div>
         </div>
-        <small>Band distance, not a trend or safety margin. Units: µg/m³.</small>
       </div>
-      <p class="scale-note">
-        Ranges are 1-hour PM2.5 in µg/m³. The actions are for generally healthy adults; people at
-        higher risk need extra care.
+      <p class="vulnerable-note">
+        <strong>Higher risk?</strong>
+        <span id="action-vulnerable">Use the official guidance and your own care plan.</span>
       </p>
-    </div>
-    <div class="outdoor-summary" id="outdoor-summary">
-      <div>
-        <span class="summary-label">GO OUT, CAN OR NOT?</span>
-        <p id="outdoor-verdict">Checking the next-hour recommendation for East…</p>
-        <small>For generally healthy adults. Higher-risk guidance is below.</small>
-      </div>
-      <a href="#what-to-do">See activity & mask advice <span aria-hidden="true">↗</span></a>
+      <details class="visual-details" id="activity-reasoning">
+        <summary>Activity advice & who needs extra care</summary>
+        <p>
+          For generally healthy adults, using the latest 1-hour PM2.5. Recheck before leaving. A
+          mask does not make strenuous exercise advisable in poor air.
+        </p>
+        <p>
+          Higher-risk groups include children, older adults, pregnant people, and people with
+          chronic heart or lung conditions.
+        </p>
+        <dl class="activity-list">
+          <div>
+            <dt>Walking & everyday activity</dt>
+            <dd id="activity-walk">Check the official reading before heading out.</dd>
+          </div>
+          <div>
+            <dt>Running, cycling & sport</dt>
+            <dd id="activity-exercise">Check the official activity guide before starting.</dd>
+          </div>
+          <div>
+            <dt>Mask choice</dt>
+            <dd id="activity-mask">Advice appears with a fresh reading.</dd>
+          </div>
+        </dl>
+      </details>
     </div>
     <div class="daily-decisions">
       <article class="decision-card" id="window-guide">

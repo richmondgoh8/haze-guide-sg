@@ -54,7 +54,6 @@
     margin-top: 15px;
   }
   .readings-grid,
-  .action-grid,
   .guide-grid,
   .sources-grid {
     grid-template-columns: 1fr;
@@ -82,15 +81,6 @@
   .status-source {
     width: 100%;
     margin-left: 18px;
-  }
-  .action-section {
-    padding: 75px 0;
-  }
-  .action-grid {
-    gap: 35px;
-  }
-  .action-intro h2 br {
-    display: none;
   }
   .mask-section {
     padding: 0 0 70px;
@@ -125,12 +115,6 @@
   }
   .guide-card {
     min-height: 0;
-  }
-  .action-body {
-    padding: 25px 23px;
-  }
-  .action-panel-head {
-    padding: 16px 23px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

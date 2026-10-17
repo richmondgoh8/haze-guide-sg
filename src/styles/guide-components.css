@@ -6,7 +6,6 @@ main,
 section,
 article,
 .shell,
-.action-grid > *,
 .sources-grid > * {
   min-width: 0;
 }
@@ -30,47 +29,6 @@ select {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-}
-.outdoor-summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  border: 1px solid var(--line);
-  border-left: 4px solid var(--ink);
-  border-radius: 7px;
-  background: var(--cream);
-  padding: 22px 26px;
-  margin-top: 16px;
-}
-.summary-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  font-weight: 700;
-}
-.outdoor-summary p {
-  margin: 7px 0;
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-.outdoor-summary small {
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-.outdoor-summary a {
-  font-size: 0.9rem;
-  font-weight: 700;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-  text-underline-offset: 4px;
-}
-.outdoor-summary[data-band='high'],
-.outdoor-summary[data-band='very-high'] {
-  border-left-color: #a94e30;
 }
 .activity-list {
   margin: 25px 0;
@@ -211,12 +169,6 @@ select {
   .header-inner {
     gap: 20px;
   }
-  .outdoor-summary {
-    align-items: flex-start;
-  }
-  .outdoor-summary a {
-    flex-shrink: 1;
-  }
   .mask-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -259,24 +211,8 @@ select {
   .data-status {
     font-size: 0.85rem;
   }
-  .outdoor-summary {
-    display: block;
-    padding: 21px;
-  }
-  .outdoor-summary a {
-    margin-top: 12px;
-  }
   .regional-block {
     margin-top: 26px;
-  }
-  .action-grid {
-    gap: 28px;
-  }
-  .action-intro h2 {
-    font-size: clamp(2.3rem, 1.5rem + 4vw, 3.5rem);
-  }
-  .action-body h3 {
-    font-size: 1.9rem;
   }
   .activity-list dt,
   .activity-list dd {

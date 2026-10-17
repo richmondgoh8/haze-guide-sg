@@ -37,8 +37,13 @@ test('static region controls and scale use the same configuration as the client'
   assert.match(result, /value="east" selected/);
   assert.match(result, /data-region="east" aria-pressed="true"/);
   assert.match(result, /East includes Bedok/);
-  assert.equal((result.match(/class="severity-step"/g) || []).length, 4);
-  assert.equal((result.match(/class="psi-step"/g) || []).length, 5);
+  assert.equal((result.match(/<figure class="band-scale"/g) || []).length, 2);
+  assert.equal((result.match(/height="12" data-band=/g) || []).length, 9);
+  assert.match(result, /id="pm-scale"/);
+  assert.match(result, /id="psi-scale"/);
+  assert.match(result, /Very high: ≥251/);
+  assert.match(result, /Hazardous: ≥301/);
+  assert.equal((result.match(/class="scale-marker"[^>]* hidden/g) || []).length, 2);
   assert.ok(result.includes('Hazardous'));
   assert.ok(!result.includes('<!--'));
 });

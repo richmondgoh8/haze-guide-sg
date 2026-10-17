@@ -38,9 +38,6 @@
   line-height: 1.65;
   margin-bottom: 0;
 }
-.action-intro h2 em {
-  font-weight: 500;
-}
 .hero-note {
   display: flex;
   gap: 10px;
