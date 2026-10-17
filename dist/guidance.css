@@ -2,6 +2,101 @@ html {
   font-size: 18px;
 }
 
+.hero-grid {
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 40px;
+}
+
+.hero-copy {
+  padding: 34px 0;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 1.5rem + 2vw, 3.3rem);
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.hero-copy > p {
+  max-width: 680px;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.hero-art {
+  height: 190px;
+  margin-block: 24px;
+}
+
+.hero-art .sun {
+  width: 90px;
+  height: 90px;
+  top: 32px;
+}
+
+.hero-art .art-caption {
+  display: none;
+}
+
+.hero-note {
+  margin-top: 15px;
+}
+
+.readings-section {
+  padding-top: 42px;
+}
+
+.region-hint {
+  display: grid;
+  grid-template-columns: 19px minmax(0, 1fr) auto;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #52665b;
+  margin: 12px 0 22px;
+}
+
+.region-hint svg {
+  flex: none;
+  width: 19px;
+  height: 19px;
+  margin-top: 2px;
+}
+
+.region-hint a {
+  text-underline-offset: 3px;
+}
+
+.reading-method {
+  color: #52665b;
+  font-size: 0.85rem;
+  margin: 16px 0 0;
+}
+
+.activity-alternative {
+  padding: 15px;
+  border-radius: 5px;
+  background: #eaf0e3;
+}
+
+.activity-alternative strong,
+.activity-alternative span {
+  display: block;
+}
+
+.activity-alternative span {
+  margin-top: 6px;
+}
+
+.comparison-body {
+  padding: 8px 22px 22px;
+}
+
+.mask-comparison .mask-details .mask-details {
+  margin-top: 20px;
+}
+
 .primary-card .reading-top {
   flex-direction: column;
   align-items: flex-start;
@@ -361,6 +456,56 @@ html {
 }
 
 @media (max-width: 760px) {
+  .header-source {
+    display: none;
+  }
+
+  .hero-copy {
+    padding-block: 24px;
+  }
+
+  .hero-note,
+  .hero-copy .eyebrow {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero-copy > p {
+    font-size: 0.95rem;
+  }
+
+  .readings-section {
+    padding-top: 28px;
+  }
+
+  .readings-section .section-heading {
+    margin-bottom: 20px;
+  }
+
+  .readings-section .section-heading > p {
+    display: none;
+  }
+
+  .region-hint {
+    grid-template-columns: 19px minmax(0, 1fr);
+  }
+
+  .region-hint a {
+    grid-column: 2;
+    margin-left: 0;
+  }
+
+  .mask-visual {
+    display: none;
+  }
+
+  .comparison-body {
+    padding-inline: 14px;
+  }
+
   .severity-scale {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;

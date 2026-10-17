@@ -8,6 +8,13 @@ import {
 
 const API_ROOT = 'https://api-open.data.gov.sg/v2/real-time/api';
 const REGIONS = ['north', 'south', 'east', 'west', 'central'];
+const REGION_TOWNS = {
+  north: 'Woodlands, Sembawang, Yishun, Punggol and Sengkang',
+  south: 'Queenstown, Bukit Merah, Orchard, the city and Sentosa',
+  east: 'Bedok, Tampines, Pasir Ris, Simei and East Coast',
+  west: 'Jurong, Clementi, Bukit Batok, Choa Chu Kang and Tuas',
+  central: 'Ang Mo Kio, Bishan, Toa Payoh, Thomson and Serangoon Gardens',
+};
 const REGION_STORAGE_KEY = 'air-actually-region';
 const REFRESH_INTERVAL_MS = 15 * 60 * 1000;
 const REQUEST_TIMEOUT_MS = 12_000;
@@ -108,6 +115,8 @@ function renderActivity(band, current, region) {
     advice?.exerciseTitle || 'Check before exercising outside';
   getElement('exercise-detail').textContent =
     advice?.exercise || 'Wait for a current reading or check haze.gov.sg.';
+  getElement('exercise-alternative').textContent =
+    advice?.alternative || 'Check the latest reading before choosing an activity.';
   getElement('plan-outdoors-detail').textContent =
     advice?.exerciseTitle || 'A current reading is needed.';
 }
@@ -167,6 +176,8 @@ function render() {
   const band = classifyPm25(pm25);
   const current = isCurrentReading(readings.pm25?.timestamp);
 
+  getElement('region-towns').textContent =
+    `${regionName(region)} includes ${REGION_TOWNS[region]}.`;
   getElement('pm-value').textContent = band ? pm25 : '—';
   getElement('psi-value').textContent = describePsi(psi) !== 'Unavailable' ? psi : '—';
   getElement('psi-band').textContent = describePsi(psi);

@@ -11,6 +11,7 @@ Live site: https://richmondgoh8.github.io/haze-guide-sg/
 - Plain-language activity advice following the [NEA personal guide](https://www.haze.gov.sg/resources/1-hr-pm2.5-readings), including guidance for vulnerable people.
 - A short mask guide based on the [Ministry of Health haze guidance](https://www.moh.gov.sg/others/haze/).
 - East is the default region on a first visit. An explicitly chosen region is remembered on that browser.
+- The region selector includes town examples from NEA's published region guide. These are reporting regions, not a street-level air-quality estimate.
 - A next-hour outdoor activity recommendation, with separate everyday activity, strenuous exercise, mask and higher-risk guidance. Unavailable, stale and invalid timestamps withhold the recommendation.
 - A mobile-friendly comparison of cloth, surgical/KF-AD, N95, KN95, KF94 and FFP2 masks, plus KF80, N99/FFP3/KF99, N100/P100, reusable and valved options. The ratings describe laboratory filtration, not guaranteed personal protection.
 - A four-step haze scale, with the current level marked in text and colour. The scale uses NEA's existing bands; it is not a separate risk score.
@@ -32,7 +33,7 @@ The cost guidance is editorial: compare price per mask after testing fit, buy ge
 
 ## Mobile and search
 
-The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and native disclosures for less common mask categories. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript.
+The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and expandable mask comparisons and band guides. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript. The observed 24-hour PSI is labelled separately from NEA's forecast for future activities.
 
 SEO includes a descriptive title and description, canonical URL, WebPage structured data, a sitemap, and Open Graph/Twitter metadata with a 1200×630 share image. The sitemap is at `/haze-guide-sg/sitemap.xml`. This prepares the page for indexing; it does not guarantee search rankings or submit the site to Search Console. GitHub project sites do not control the domain-root `robots.txt`; no project-level robots file is used as a substitute.
 

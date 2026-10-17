@@ -63,6 +63,8 @@ export const ACTIVITY_GUIDANCE = {
     walk: 'Your usual walk or trip to the shops can continue.',
     exercise: 'Your usual outdoor exercise can continue if you feel well.',
     exerciseTitle: 'Your usual exercise is okay',
+    alternative:
+      'Planning a park connector walk or run? Check the reading again before setting off.',
     mask: 'A respirator is generally unnecessary for a short commute or indoors.',
     vulnerable: 'Usual activities can continue. Follow your care plan if you have symptoms.',
   },
@@ -73,6 +75,8 @@ export const ACTIVITY_GUIDANCE = {
     walk: 'Keep your walk gentle. Shorten the trip if your eyes or throat feel irritated.',
     exercise: 'Do less hard running, fast cycling or sport. An indoor session is an alternative.',
     exerciseTitle: 'Reduce hard outdoor exercise',
+    alternative:
+      'Swap a hard park connector run for gentle stretching indoors, or save the run for better air.',
     mask: 'A respirator is generally unnecessary for a short commute. For a long period outside, check the latest advisory and your health needs.',
     vulnerable: 'Avoid strenuous outdoor activity for the next hour.',
   },
@@ -83,6 +87,8 @@ export const ACTIVITY_GUIDANCE = {
     walk: 'Keep necessary trips short and gentle. People at higher risk should stay indoors.',
     exercise: 'Avoid strenuous outdoor activity, including hard running, fast cycling and sport.',
     exerciseTitle: 'Move exercise indoors',
+    alternative:
+      'Postpone the outdoor run or cycling session. Choose an indoor activity for the next hour.',
     mask: 'For prolonged exposure, or unavoidable outings for higher-risk people, a well-fitting N95, KN95, KF94 or FFP2 can reduce exposure.',
     vulnerable:
       'Avoid all outdoor activity for the next hour. If you must go out, consider a well-fitting respirator and follow medical advice.',
@@ -94,6 +100,8 @@ export const ACTIVITY_GUIDANCE = {
     walk: 'Minimise time outside. Postpone trips that can wait.',
     exercise: 'Postpone outdoor exercise. Choose an indoor session instead.',
     exerciseTitle: 'Postpone outdoor exercise',
+    alternative:
+      'Keep the workout indoors and postpone optional outdoor plans until the air improves.',
     mask: 'If you must go out, consider a well-fitting N95, KN95, KF94 or FFP2. Keep the outing short even with a mask.',
     vulnerable:
       'Avoid all outdoor activity for the next hour. Seek medical advice if you feel unwell.',
