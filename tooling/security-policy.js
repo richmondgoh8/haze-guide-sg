@@ -12,7 +12,7 @@ export function createContentSecurityPolicy(html) {
     "style-src-attr 'none'",
     "img-src 'self' data:",
     "font-src 'self'",
-    'connect-src https://api-open.data.gov.sg',
+    "connect-src 'self'",
     "object-src 'none'",
     "frame-src 'none'",
     "base-uri 'none'",

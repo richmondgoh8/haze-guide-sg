@@ -66,7 +66,8 @@
       </article>
     </div>
     <p class="reading-method">
-      Hourly source readings; this page checks every 15 minutes. For tomorrow’s plans,
+      Hourly source readings. Shared snapshot updates are scheduled every 15 minutes; delays can
+      happen. For tomorrow’s plans,
       <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer"
         >check NEA’s PSI forecast ↗</a
       >.
@@ -86,6 +87,24 @@
     </div>
     <div class="haze-level">
       <p id="level-caption">Checking the current haze level…</p>
+      <div class="band-position" id="band-position" hidden>
+        <strong id="band-position-title"></strong>
+        <span id="band-position-current"></span>
+        <meter
+          id="band-position-meter"
+          min="0"
+          max="56"
+          value="0"
+          aria-label="Current PM2.5 between adjacent band boundaries"
+        ></meter>
+        <div class="band-endpoints">
+          <span id="band-position-lower"></span><span id="band-position-upper"></span>
+        </div>
+        <div class="band-distances">
+          <span id="band-distance-down"></span><span id="band-distance-up"></span>
+        </div>
+        <small>Band distance, not a trend or safety margin. Units: µg/m³.</small>
+      </div>
       <ol
         class="severity-scale"
         role="list"
@@ -116,14 +135,14 @@
         <p class="decision-label">WINDOWS CAN OPEN?</p>
         <h3 id="window-verdict">Check the air before opening</h3>
         <p id="window-detail">Waiting for the latest outdoor reading.</p>
-        <p class="window-comfort">
-          <strong>Room getting hot or stuffy?</strong> No air-con and cannot stay cool? Move to a
-          cooler indoor place if possible. If you must open windows for cooling, close them once
-          comfortable and run a purifier if available.
-        </p>
-        <p class="decision-source">
-          Our cautious suggestion, based on the outdoor regional reading.
-        </p>
+        <div class="decision-reminder">
+          <!-- icon: heat -->
+          <p>
+            <strong>Too hot? Don’t tahan.</strong> Cooler indoor spot first. Must open to cool down?
+            Close once comfortable; purifier if available.
+          </p>
+        </div>
+        <p class="decision-source">Household suggestion—not an official NEA opening cutoff.</p>
         <a href="#window-guide">Window and ventilation guide ↗</a>
       </article>
       <article class="decision-card">
@@ -135,11 +154,14 @@
         </div>
         <p class="decision-label">OUTDOOR WORKOUT STILL ON?</p>
         <h3 id="exercise-verdict">Check before exercising outside</h3>
-        <p id="exercise-detail">Waiting for the latest activity advice.</p>
         <p class="activity-alternative">
-          <strong>Or change plans a bit</strong
+          <strong>Instead</strong
           ><span id="exercise-alternative">An alternative will appear with a current reading.</span>
         </p>
+        <details class="decision-details">
+          <summary>Why this advice?</summary>
+          <p id="exercise-detail">Waiting for the latest activity advice.</p>
+        </details>
         <a href="#what-to-do">Walking, exercise and mask advice ↗</a>
       </article>
     </div>

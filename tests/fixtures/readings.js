@@ -9,6 +9,11 @@ export function snapshot(east = 140, timestamp = TEST_TIMESTAMP) {
   return { pm25: measurement(east, timestamp), psi: measurement(143, timestamp), errors: [] };
 }
 
+export function snapshotPayload(east = 140, timestamp = TEST_TIMESTAMP) {
+  const { pm25, psi } = snapshot(east, timestamp);
+  return { version: 1, generatedAt: TEST_TIMESTAMP, readings: { pm25, psi } };
+}
+
 export function neaPayload(resource, east = 140, timestamp = TEST_TIMESTAMP) {
   const field = resource === 'pm25' ? 'pm25_one_hourly' : 'psi_twenty_four_hourly';
   return {

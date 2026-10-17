@@ -22,9 +22,11 @@ Automated scans are point-in-time checks, not a certified penetration test or a 
 
 ## Browser policy
 
-Production HTML has an early meta-delivered Content Security Policy. It limits scripts, styles and fonts to this origin, allows connections only to the public data.gov.sg API origin, blocks embedded objects/frames/forms and uses hashes for the exact inline structured metadata. It does not permit `unsafe-inline` or `unsafe-eval`. Trusted Types is enforced in supporting browsers; older browsers still receive the rest of the CSP and the app continues to use text-only DOM updates.
+Production HTML has an early meta-delivered Content Security Policy. It limits scripts, styles, fonts and connections to this origin, blocks embedded objects/frames/forms and uses hashes for the exact inline structured metadata. It does not permit `unsafe-inline` or `unsafe-eval`. Trusted Types is enforced in supporting browsers; older browsers still receive the rest of the CSP and the app continues to use text-only DOM updates.
 
 Fonts are bundled locally under their included OFL licences. There is no third-party runtime JavaScript, advertising, analytics or API credential. API requests omit credentials and fail rather than follow redirects. Referrer information is withheld from outgoing requests.
+
+Browsers read `data/latest.json` from the static deployment. Only the scheduled/deployment workflow calls the fixed government endpoints. The publisher whitelists numeric regional readings, rejects invalid/future timestamps, and retains the last validated measurement on source failure without refreshing its source timestamp. Visitors cannot request upstream refreshes or choose upstream URLs. This bounds upstream load; it does not add configurable edge DDoS protection or per-IP rate limits. Scan evidence artifacts are retained for one day because the workflow also runs on the data-refresh schedule.
 
 The development server intentionally does not inject the production CSP because Vite's development runtime has different requirements. Test the built site with `npm run build` and `npm run preview`; never expose the development server as the production deployment.
 

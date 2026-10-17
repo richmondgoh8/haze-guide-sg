@@ -6,7 +6,9 @@ This is a static website with a small browser dashboard. It uses native JavaScri
 
 ```mermaid
 flowchart LR
-  NEA[NEA public feeds] --> Client[NEA client]
+  NEA[NEA public feeds] --> Publisher[Scheduled publisher]
+  Publisher --> Snapshot[Static data/latest.json]
+  Snapshot --> Client[Browser snapshot client]
   Client --> Controller[Dashboard controller]
   Preference[Saved region] --> Controller
   Controller --> Model[Pure dashboard model]
@@ -20,7 +22,7 @@ flowchart LR
 `src/scripts/main.js` connects the pieces. Start there when explaining the code to someone new.
 
 1. The controller reads the saved region and asks the client for readings.
-2. The client requests PM2.5 and PSI independently, checks the responses and normalizes their shape.
+2. The browser client requests one same-site JSON snapshot. The scheduled publisher requests and validates the two upstream feeds independently before deployment.
 3. The controller passes the current snapshot, region and time to `createDashboardModel`.
 4. The model selects the readings, freshness state, advice and regional labels. It does not access the DOM, browser storage or network.
 5. The views put those values into existing elements. User interactions go back to the controller.
@@ -34,6 +36,10 @@ No component fetches its own data or calculates its own haze thresholds.
 | `src/scripts/main.js`                       | Application wiring and tab visibility events                                |
 | `src/scripts/config.js`                     | Regions, East default, refresh interval and freshness policy                |
 | `src/scripts/services/nea-client.js`        | HTTP requests, cancellation, timeouts and NEA response normalization        |
+| `src/scripts/services/snapshot-client.js`   | One same-site browser request, cancellation and timeout                     |
+| `src/scripts/domain/reading-snapshot.js`    | Versioned public snapshot validation and numeric-field whitelist            |
+| `src/scripts/domain/band-position.js`       | Exact distances to adjacent bands, without inferring trends                 |
+| `tooling/publish-snapshot.js`               | Collect source feeds, merge last-good data, write generated deployment JSON |
 | `src/scripts/services/region-preference.js` | Read/write the selected region; handle blocked browser storage              |
 | `src/scripts/domain/air-quality.js`         | Official band boundaries, PSI labels, freshness and window-advice selection |
 | `src/scripts/domain/dashboard-model.js`     | Convert state into the data each view needs                                 |
@@ -51,7 +57,7 @@ No component fetches its own data or calculates its own haze thresholds.
 
 ## The measurement contract
 
-Only the client knows NEA's raw property names such as `pm25_one_hourly`. The rest of the app receives:
+Only the build-time NEA adapter knows raw property names such as `pm25_one_hourly`. The browser receives a versioned public envelope (`version`, `generatedAt`, `readings`) and normalizes it into:
 
 ```js
 {

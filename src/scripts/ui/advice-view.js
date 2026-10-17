@@ -38,12 +38,12 @@ export function createAdviceView(root) {
         'exercise',
         'mask',
         'exerciseTitle',
-        'alternative',
       ]) {
         elements[key].textContent = activity[key];
       }
       elements.summaryCard.dataset.band = activity.className;
       elements.exerciseShort.textContent = activity.exerciseTitle;
+      elements.alternative.textContent = activity.alternativeShort;
       elements.exerciseDetail.textContent = activity.exerciseDetail;
       elements.windowCard.dataset.state = windows.state;
       elements.windowTitle.textContent = windows.title;

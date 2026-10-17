@@ -294,15 +294,36 @@
   padding-top: 14px;
 }
 
-.window-comfort {
-  border-left: 3px solid #a26a08;
-  padding-left: 16px;
+.decision-reminder {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 16px;
+  margin-block: 18px;
+  border-radius: 10px;
+  background: var(--cream);
 }
 
-.window-comfort strong {
+.decision-reminder .visual-icon {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.decision-reminder p {
+  margin: 0;
+}
+
+.decision-reminder strong {
   display: block;
-  margin-bottom: 8px;
-  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.decision-details > summary {
+  min-height: 44px;
+  padding-block: 10px;
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .ventilation-note {

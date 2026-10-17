@@ -53,6 +53,7 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: codeql-security-report
+          retention-days: 1
           path: security-reports/codeql/
           if-no-files-found: error
 
@@ -90,5 +91,6 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: zap-passive-baseline
+          retention-days: 1
           path: security-reports/
           if-no-files-found: error

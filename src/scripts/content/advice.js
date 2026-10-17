@@ -1,4 +1,5 @@
 export const UNAVAILABLE_ACTIVITY = {
+  alternativeShort: 'Check the current NEA reading first.',
   main: 'Check the latest reading before heading out.',
   walkShort: 'Check the current reading first.',
   maskShort: 'Check the official advisory first.',
@@ -13,6 +14,7 @@ export const UNAVAILABLE_ACTIVITY = {
 
 export const ACTIVITY_GUIDANCE = {
   1: {
+    alternativeShort: 'Usual PCN route, if you feel well.',
     walkShort: 'Usual pace, if you feel well.',
     maskShort: 'Short commute? Generally no need.',
     main: 'Usual plans can go ahead if you feel well.',
@@ -26,6 +28,7 @@ export const ACTIVITY_GUIDANCE = {
     vulnerable: 'Usual activities can continue. Follow your care plan if you have symptoms.',
   },
   2: {
+    alternativeShort: 'Light stretch at home. PCN run can wait.',
     walkShort: 'Gentle pace. Watch for irritation.',
     maskShort: 'Long time out? Check the advisory.',
     main: 'Haze is up. Take it easy outside, lah.',
@@ -40,6 +43,7 @@ export const ACTIVITY_GUIDANCE = {
     vulnerable: 'Avoid strenuous outdoor activity for the next hour.',
   },
   3: {
+    alternativeShort: 'Indoor workout or clear your watchlist.',
     walkShort: 'Necessary trips: short & gentle.',
     maskShort: 'Long exposure? Well-fitting respirator.',
     main: 'Haze is high. Outdoor workout, postpone first.',
@@ -55,6 +59,7 @@ export const ACTIVITY_GUIDANCE = {
       'Avoid all outdoor activity for the next hour. If you must go out, consider a well-fitting respirator and follow medical advice.',
   },
   4: {
+    alternativeShort: 'Low-key day in. Skip optional outdoor plans.',
     walkShort: 'Skip trips that can wait.',
     maskShort: 'Must go out? Consider a respirator.',
     main: 'Haze is very high. Better stay in as much as possible.',

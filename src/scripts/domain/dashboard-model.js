@@ -2,6 +2,7 @@ import { REGIONS } from '../config.js';
 import { ACTIVITY_GUIDANCE, UNAVAILABLE_ACTIVITY } from '../content/advice.js';
 import { formatTimestamp } from '../formatters.js';
 import { classifyPm25, describePsi, getWindowAdvice, isCurrentReading } from './air-quality.js';
+import { describeBandPosition } from './band-position.js';
 
 /** Select advice and display values without depending on the browser or NEA's payload format. */
 export function createDashboardModel({ readings, region, loading = false }, now = Date.now()) {
@@ -47,6 +48,7 @@ export function createDashboardModel({ readings, region, loading = false }, now 
           : [...status, ...warnings].join(' · '),
     },
     severity: {
+      position: activeBand ? describeBandPosition(pm25) : null,
       activeLevel: activeBand?.index ?? null,
       caption: activeBand
         ? `Haze level ${band.index} of 4. ${band.title}.`

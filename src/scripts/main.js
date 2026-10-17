@@ -1,10 +1,10 @@
 import { createDashboardController } from './app/dashboard-controller.js';
-import { createNeaClient } from './services/nea-client.js';
+import { createSnapshotClient } from './services/snapshot-client.js';
 import { createRegionPreference } from './services/region-preference.js';
 import { createDashboardView } from './ui/dashboard-view.js';
 
 const dashboard = createDashboardController({
-  client: createNeaClient(),
+  client: createSnapshotClient(),
   preference: createRegionPreference(),
   view: createDashboardView(document),
 });

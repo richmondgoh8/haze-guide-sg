@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { test, expect } from '@playwright/test';
 import { PAGES } from '../../tooling/site-pages.js';
-import { neaPayload, TEST_TIME } from '../fixtures/readings.js';
+import { snapshotPayload, TEST_TIME } from '../fixtures/readings.js';
 import { REGION_STORAGE_KEY } from '../../src/scripts/config.js';
 
 test.beforeEach(async ({ page }) => {
@@ -12,10 +12,7 @@ test.beforeEach(async ({ page }) => {
       window.securityViolations.push(event.effectiveDirective);
     });
   }, TEST_TIME);
-  await page.route('**/v2/real-time/api/*', (route) => {
-    const resource = route.request().url().endsWith('/pm25') ? 'pm25' : 'psi';
-    return route.fulfill({ json: neaPayload(resource, 140) });
-  });
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: snapshotPayload() }));
 });
 
 test('every built page enforces CSP before resources and loads without policy violations', async ({
@@ -74,9 +71,9 @@ test('hostile stored region and URL text cannot become markup or code', async ({
 test('malicious API fields are rejected and do not generate advice or DOM elements', async ({
   page,
 }) => {
-  const payload = neaPayload('pm25', 140);
-  payload.data.items[0].readings.pm25_one_hourly.east = '<img src=x onerror=alert(1)>';
-  await page.route('**/api/pm25', (route) => route.fulfill({ json: payload }));
+  const payload = snapshotPayload();
+  payload.readings.pm25.values.east = '<img src=x onerror=alert(1)>';
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
   await page.goto('/');
   await expect(page.locator('#pm-value')).toHaveText('—');
   await expect(page.locator('#window-card')).toHaveAttribute('data-state', 'unknown');

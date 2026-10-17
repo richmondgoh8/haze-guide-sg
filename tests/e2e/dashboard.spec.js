@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { neaPayload, TEST_TIME, TEST_TIMESTAMP } from '../fixtures/readings.js';
+import { snapshotPayload, TEST_TIME, TEST_TIMESTAMP } from '../fixtures/readings.js';
 
 const pageErrors = new WeakMap();
 
@@ -10,10 +10,7 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript((now) => {
     Date.now = () => now;
   }, TEST_TIME);
-  await page.route('**/v2/real-time/api/*', (route) => {
-    const resource = route.request().url().endsWith('/pm25') ? 'pm25' : 'psi';
-    return route.fulfill({ json: neaPayload(resource, resource === 'pm25' ? 140 : 143) });
-  });
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: snapshotPayload() }));
 });
 
 test.afterEach(async ({ page }) => {
@@ -38,6 +35,35 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#activity-exercise-short')).toHaveText('Reduce hard outdoor exercise');
   await expect(page.locator('#action-vulnerable')).toBeVisible();
   await expect(page.locator('#activity-reasoning')).not.toHaveAttribute('open');
+  await expect(page.locator('#band-position-title')).toHaveText('Closer to High');
+  await expect(page.locator('#band-distance-up')).toHaveText('11 µg/m³ below High (151)');
+  await expect(page.locator('#band-distance-down')).toHaveText('85 µg/m³ above Normal (≤55)');
+});
+
+test('one shared snapshot request serves all regions; no government API requests', async ({
+  page,
+}) => {
+  const urls = [];
+  page.on('request', (request) => urls.push(new URL(request.url())));
+  await page.goto('/');
+  await expect(page.locator('#pm-value')).toHaveText('140');
+  await page.locator('[data-region="north"]').click();
+  await expect(page.locator('#pm-value')).toHaveText('20');
+  expect(urls.filter((url) => url.pathname.endsWith('/data/latest.json'))).toHaveLength(1);
+  expect(urls.some((url) => url.hostname === 'api-open.data.gov.sg')).toBe(false);
+});
+
+test('compact decision cards keep heat advice visible and exercise reasoning expandable', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.locator('#window-card .decision-reminder')).toBeVisible();
+  await expect(page.locator('#window-card')).toContainText('Close once comfortable');
+  const summary = page.locator('.decision-details > summary');
+  await expect(page.locator('#exercise-detail')).not.toBeVisible();
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#exercise-detail')).toBeVisible();
 });
 
 test('visual summaries keep safety caveats visible and explanations keyboard accessible', async ({
@@ -78,9 +104,9 @@ test('keyboard region changes update advice, retain focus and survive a reload',
 
 for (const failedResource of ['pm25', 'psi']) {
   test(`a ${failedResource} failure does not discard the other feed`, async ({ page }) => {
-    await page.route(`**/api/${failedResource}`, (route) =>
-      route.fulfill({ status: 503, body: 'Unavailable' }),
-    );
+    const payload = snapshotPayload();
+    payload.readings[failedResource] = null;
+    await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
     await page.goto('/');
     await expect(page.locator(failedResource === 'psi' ? '#pm-value' : '#psi-value')).toHaveText(
       failedResource === 'psi' ? '140' : '143',
@@ -95,8 +121,8 @@ for (const failedResource of ['pm25', 'psi']) {
 
 test('stale readings keep reported values but remove current advice', async ({ page }) => {
   const stale = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
-  await page.route('**/api/pm25', (route) =>
-    route.fulfill({ json: neaPayload('pm25', 140, stale) }),
+  await page.route('**/data/latest.json', (route) =>
+    route.fulfill({ json: snapshotPayload(140, stale) }),
   );
   await page.goto('/');
   await expect(page.locator('#pm-value')).toHaveText('140');
@@ -104,12 +130,13 @@ test('stale readings keep reported values but remove current advice', async ({ p
   await expect(page.locator('.severity-step[aria-current]')).toHaveCount(0);
   await expect(page.locator('#window-card')).toHaveAttribute('data-state', 'unknown');
   await expect(page.locator('[data-region="east"] .region-band')).toHaveText('Old reading');
+  await expect(page.locator('#band-position')).not.toBeVisible();
 });
 
 test('all band boundaries update the scale and window state', async ({ page }) => {
   let pm25 = 0;
-  await page.route('**/api/pm25', (route) =>
-    route.fulfill({ json: neaPayload('pm25', pm25, TEST_TIMESTAMP) }),
+  await page.route('**/data/latest.json', (route) =>
+    route.fulfill({ json: snapshotPayload(pm25, TEST_TIMESTAMP) }),
   );
   await page.goto('/');
   for (const [value, level] of [
@@ -132,6 +159,14 @@ test('all band boundaries update the scale and window state', async ({ page }) =
       'data-state',
       level === 1 ? 'check' : 'reduce',
     );
+    await expect(page.locator('#band-position')).toBeVisible();
+    if (level === 4) {
+      await expect(page.locator('#band-position-meter')).not.toBeVisible();
+      await expect(page.locator('#band-position-title')).toHaveText('Already in the highest band');
+    } else {
+      await expect(page.locator('#band-position-meter')).toBeVisible();
+      await expect(page.locator('#band-position-meter')).toHaveJSProperty('value', value);
+    }
   }
 });
 

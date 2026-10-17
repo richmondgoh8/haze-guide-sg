@@ -8,14 +8,12 @@ export const WINDOW_ADVICE = {
   },
   check: {
     state: 'check',
-    title: 'Can consider airing the room',
-    detail:
-      'The reading is in NEA’s Normal band. If outdoor air has improved, take the chance to air the room. Check local conditions too; Normal does not mean pollution-free.',
+    title: 'Can consider airing',
+    detail: 'Air it if outdoor conditions have improved. Normal isn’t pollution-free.',
   },
   reduce: {
     state: 'reduce',
-    title: 'Mostly closed while it’s hazy',
-    detail:
-      'Limit haze coming in; air the room when outdoor air improves, even temporarily. If it gets hot or stuffy, don’t just tahan. Use the options below.',
+    title: 'Mostly closed for now',
+    detail: 'Keep haze out. Air the room when outdoor air improves—even briefly.',
   },
 };

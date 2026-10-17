@@ -59,7 +59,13 @@ The [SEO guide](docs/SEO.md) covers Search Console setup, ranking priorities, me
 
 ## Sources and accuracy
 
-The app fetches the public [PM2.5 API](https://api-open.data.gov.sg/v2/real-time/api/pm25) and [PSI API](https://api-open.data.gov.sg/v2/real-time/api/psi) directly from data.gov.sg. Both datasets are supplied by NEA: [PM2.5 dataset](https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view), [PSI dataset](https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view). The page displays the source timestamp in Singapore time. If data is missing or more than two hours old, it withholds reading-specific activity advice and links visitors to the official haze site.
+A scheduled GitHub Action fetches the public [PM2.5 API](https://api-open.data.gov.sg/v2/real-time/api/pm25) and [PSI API](https://api-open.data.gov.sg/v2/real-time/api/psi), validates them, and publishes `/haze-guide-sg/data/latest.json` with the site. Browsers request that same-site snapshot; visitor traffic cannot trigger government API calls. Both datasets are supplied by NEA: [PM2.5 dataset](https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view), [PSI dataset](https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view). The page displays the original source timestamps in Singapore time. If data is missing or more than two hours old, it withholds reading-specific activity advice and band-position context.
+
+The schedule runs at minutes 7, 22, 37 and 52, avoiding the start-of-hour rush. GitHub can delay or drop scheduled runs, and public-repository schedules can be disabled after 60 days without repository activity. CDN caching and deployment time add latency too. This is not an exact 15-minute freshness guarantee. Monitor Actions and the displayed source timestamps; use the official site when current advice is unavailable.
+
+`tooling/publish-snapshot.js` retains the latest validated published measurement per feed when a source fails or returns an older timestamp. It never changes the source timestamp to the collection time. If neither live nor previous data is usable, publication fails and the existing deployment stays up. Local builds contain an explicitly empty snapshot: run `node tooling/publish-snapshot.js` after building if you need real data in a local production preview. Never commit live readings.
+
+Band-position context shows distance to adjacent NEA bands, not a trend, forecast or safety margin. For example, 140 is 11 µg/m³ below High, which starts at 151, and 85 above the Normal ceiling of 55. The highest band is open-ended, so it has no artificial meter maximum.
 
 This is an independent project and is not an official government website. Readings cover five broad regions, not individual streets or indoor air.
 
@@ -78,7 +84,7 @@ If Chromium is already installed locally, `CHROMIUM_PATH=/path/to/chromium npm r
 
 ## Deployment
 
-GitHub Pages serves the generated `dist/` directory. Every push to `main` installs locked development dependencies, runs unit and browser tests, builds the site and deploys it. Browser tests use fixture data, so NEA availability does not decide whether a deployment passes.
+GitHub Pages serves the generated `dist/` directory. Pushes to `main`, manual runs and the 15-minute schedule run the existing verification and security gates before deployment. Browser tests use fixtures and do not depend on NEA availability. The publication step then collects the real snapshot; a failed collection uses validated prior readings or stops deployment if none exist. Scan artifacts are retained for one day to limit storage from scheduled runs. Standard hosted runner execution is free for public repositories; this does not promise unlimited storage or permanent free-tier terms.
 
 The free URL is `https://richmondgoh8.github.io/haze-guide-sg/`. Relative build asset paths also support GitHub project URLs. A custom domain can be added later in the repository's Pages settings.
 
@@ -86,7 +92,7 @@ The free URL is `https://richmondgoh8.github.io/haze-guide-sg/`. Relative build 
 
 See [SECURITY.md](SECURITY.md) for browser protections, repeatable scans, disclosure and hosting limits, and the [security assessment](docs/SECURITY-ASSESSMENT.md) for results and open findings. Automated scan success is not a certified VAPT pass.
 
-There are no API credentials to expose. The browser requests public government data directly. The only locally stored value is the selected region. The site has no analytics, account system, or user data collection.
+There are no API credentials to expose. The browser only requests a public, same-site JSON snapshot. GitHub Actions uses its normal deployment permissions; no new account or external secret is needed. Scheduled collection bounds upstream requests independently of visitor traffic, but is not per-IP rate limiting or a DDoS guarantee. The only locally stored value is the selected region. The site has no analytics, account system, or user data collection.
 
 ## Licence
 

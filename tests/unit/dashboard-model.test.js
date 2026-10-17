@@ -38,6 +38,7 @@ test('missing PM2.5 withholds activity guidance even when PSI is available', () 
   assert.equal(result.severity.activeLevel, null);
   assert.equal(result.windows.state, 'unknown');
   assert.equal(result.activity.className, 'unavailable');
+  assert.equal(result.severity.position, null);
 });
 
 test('aging readings retain reported values but remove actionable advice and regional recommendations', () => {
@@ -47,6 +48,7 @@ test('aging readings retain reported values but remove actionable advice and reg
   assert.equal(result.severity.activeLevel, null);
   assert.equal(result.windows.state, 'unknown');
   assert.ok(result.regions.every((region) => region.label === 'Old reading'));
+  assert.equal(result.severity.position, null);
 });
 
 test('unknown regions fail at the model boundary', () => {
