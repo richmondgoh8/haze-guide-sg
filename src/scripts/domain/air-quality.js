@@ -16,7 +16,7 @@ export const PM25_BANDS = [
     name: 'Elevated',
     className: 'elevated',
     index: 2,
-    title: 'Go easy outdoors, lah',
+    title: 'Take it easy outside',
     shortLabel: 'Take it easy',
     scaleLabel: 'Take it easy',
   },

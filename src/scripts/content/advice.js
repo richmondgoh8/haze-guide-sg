@@ -31,7 +31,7 @@ export const ACTIVITY_GUIDANCE = {
     alternativeShort: 'Light stretch at home. PCN run can wait.',
     walkShort: 'Gentle pace. Watch for irritation.',
     maskShort: 'Long time out? Check the advisory.',
-    main: 'Haze is up. Take it easy outside, lah.',
+    main: 'Haze is up. Take it easy outside.',
     detail:
       'Cut back on hard exercise for the next hour. Children, older adults, pregnant people and people with heart or lung conditions should avoid strenuous outdoor activity.',
     walk: 'Keep your walk gentle. Shorten the trip if your eyes or throat feel irritated.',
