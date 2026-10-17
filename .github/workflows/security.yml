@@ -1,0 +1,86 @@
+name: Security checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Install checksum-pinned Gitleaks 8.30.1
+        run: |
+          mkdir -p "$RUNNER_TEMP/gitleaks"
+          curl --fail --silent --show-error --location https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz --output "$RUNNER_TEMP/gitleaks/archive.tar.gz"
+          printf '%s  %s\n' '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' "$RUNNER_TEMP/gitleaks/archive.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/gitleaks/archive.tar.gz" -C "$RUNNER_TEMP/gitleaks"
+      - name: Scan reachable Git history and working tree
+        run: |
+          "$RUNNER_TEMP/gitleaks/gitleaks" git --redact=100 --log-opts=--all .
+          "$RUNNER_TEMP/gitleaks/gitleaks" dir --redact=100 .
+
+  codeql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: github/codeql-action/init@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4
+        with:
+          languages: javascript-typescript
+          build-mode: none
+          queries: security-extended
+      - uses: github/codeql-action/analyze@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4
+
+  passive-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Serve the production build locally
+        run: |
+          npm run preview > "$RUNNER_TEMP/haze-preview.log" 2>&1 &
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Passive ZAP baseline against localhost only
+        run: |
+          mkdir -p security-reports
+          chmod 777 security-reports
+          set +e
+          docker run --rm --network host -v "$GITHUB_WORKSPACE/security-reports:/zap/wrk:rw" ghcr.io/zaproxy/zaproxy@sha256:5ccfff9a411743ab2615136a2edd7416bec9ce41572fa94e935df38c14adb2b6 zap-baseline.py -t http://127.0.0.1:4173/ -m 1 -T 5 -J zap.json -r zap.html
+          zap_status=$?
+          set -e
+          if [ "$zap_status" -gt 2 ]; then exit "$zap_status"; fi
+          node tooling/check-zap-report.js security-reports/zap.json
+      - name: Preserve unfiltered scan evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: zap-passive-baseline
+          path: security-reports/
+          if-no-files-found: error

@@ -49,6 +49,8 @@ export function createNeaClient({
       const response = await fetchImpl(`${API_ROOT}/${ENDPOINTS[resource].path}`, {
         signal: controller.signal,
         cache: 'no-store',
+        credentials: 'omit',
+        redirect: 'error',
       });
       if (!response.ok) throw new Error(`${resource}: HTTP ${response.status}`);
       return parseReading(await response.json(), resource);

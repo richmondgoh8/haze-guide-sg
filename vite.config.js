@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { htmlPartials } from './tooling/html-partials.js';
 import { PAGES, pageFile } from './tooling/site-pages.js';
+import { securityPolicy } from './tooling/security-policy.js';
 
 const sourceRoot = fileURLToPath(new URL('./src', import.meta.url));
 
@@ -10,7 +11,7 @@ export default defineConfig({
   appType: 'mpa',
   base: './',
   publicDir: fileURLToPath(new URL('./public', import.meta.url)),
-  plugins: [htmlPartials(sourceRoot)],
+  plugins: [htmlPartials(sourceRoot), securityPolicy()],
   build: {
     outDir: fileURLToPath(new URL('./dist', import.meta.url)),
     emptyOutDir: true,

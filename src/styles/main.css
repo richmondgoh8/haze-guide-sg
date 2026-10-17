@@ -2,6 +2,7 @@
 
 /* All imports share a layer so component specificity keeps the established cascade. */
 @import url('./theme.css') layer(site);
+@import url('./fonts.css') layer(site);
 @import url('./base.css') layer(site);
 @import url('./components/header.css') layer(site);
 @import url('./components/hero.css') layer(site);

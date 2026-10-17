@@ -80,6 +80,8 @@ The free URL is `https://richmondgoh8.github.io/haze-guide-sg/`. Relative build 
 
 ## Privacy and security
 
+See [SECURITY.md](SECURITY.md) for browser protections, repeatable scans, disclosure and hosting limits, and the [security assessment](docs/SECURITY-ASSESSMENT.md) for results and open findings. Automated scan success is not a certified VAPT pass.
+
 There are no API credentials to expose. The browser requests public government data directly. The only locally stored value is the selected region. The site has no analytics, account system, or user data collection.
 
 ## Licence

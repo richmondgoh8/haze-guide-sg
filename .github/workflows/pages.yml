@@ -28,6 +28,8 @@ jobs:
         run: npm ci
       - name: Check formatting
         run: npm run format:check
+      - name: Audit locked dependencies
+        run: npm audit --audit-level=low
       - name: Test rules, data handling and controller
         run: npm test
       - name: Install browser
