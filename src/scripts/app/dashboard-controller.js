@@ -1,5 +1,6 @@
 import { REFRESH_INTERVAL_MS, isRegion } from '../config.js';
 import { createDashboardModel } from '../domain/dashboard-model.js';
+import { chooseActivityPhrases } from '../domain/activity-phrases.js';
 
 export function createDashboardController({
   client,
@@ -7,8 +8,14 @@ export function createDashboardController({
   view,
   now = Date.now,
   scheduler = globalThis,
+  random = Math.random,
 }) {
-  const state = { region: preference.read(), readings: { pm25: null, psi: null }, loading: false };
+  const state = {
+    region: preference.read(),
+    readings: { pm25: null, psi: null },
+    loading: false,
+    phraseChoices: chooseActivityPhrases(random),
+  };
   let visible = true;
   let started = false;
   let disposed = false;

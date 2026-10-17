@@ -57,6 +57,21 @@ test('unknown regions fail at the model boundary', () => {
   assert.throws(() => model(snapshot(), 'somewhere'), /Unknown region/);
 });
 
+test('stale or missing readings ignore every phrase choice', () => {
+  const readings = snapshot();
+  const phraseChoices = { 1: 3, 2: 3, 3: 3, 4: 3 };
+  const result = createDashboardModel(
+    { readings, region: 'east', phraseChoices },
+    TEST_TIME + 3 * 60 * 60 * 1000,
+  );
+  assert.equal(result.pm25.title, 'Current advice unavailable');
+  assert.equal(result.activity.alternativeShort, 'Check the current NEA reading first.');
+  readings.pm25 = null;
+  const missing = createDashboardModel({ readings, region: 'east', phraseChoices }, TEST_TIME);
+  assert.equal(missing.pm25.title, result.pm25.title);
+  assert.equal(missing.activity.alternativeShort, result.activity.alternativeShort);
+});
+
 test('PM2.5 and PSI colors are independent; old PSI keeps its value but not a current marker', () => {
   const readings = snapshot(20);
   const current = model(readings);

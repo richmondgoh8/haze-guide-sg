@@ -58,6 +58,28 @@ test('dropdown choice is remembered without cookies', async ({ page, context }) 
   expect(await context.cookies()).toEqual([]);
 });
 
+test('band-specific phrases appear in the main card and stay stable during use', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0.999999;
+  });
+  await page.goto('/');
+  await expect(page.locator('#pm-band')).toHaveText('Ease off the hard outdoor exercise');
+  await expect(page.locator('#exercise-alternative')).toHaveText(
+    'Light indoor stretch, then catch up on your watchlist.',
+  );
+  await expect(page.locator('#exercise-verdict')).toHaveText('Reduce hard outdoor exercise');
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(page.locator('#pm-band')).toHaveText('Ease off the hard outdoor exercise');
+  await page.locator('#region').selectOption('north');
+  await expect(page.locator('#pm-band')).toHaveText('Your usual outdoor plans are okay');
+  await page.locator('#region').selectOption('east');
+  await expect(page.locator('#exercise-alternative')).toHaveText(
+    'Light indoor stretch, then catch up on your watchlist.',
+  );
+});
+
 test('readings use joined colour bars and the oversized activity section is gone', async ({
   page,
 }) => {

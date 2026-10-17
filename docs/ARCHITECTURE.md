@@ -84,6 +84,10 @@ The views cache their element references. Regional buttons remain in the DOM whe
 
 ## Safety rules and copy
 
+`ACTIVITY_GUIDANCE[level].phrases` in `src/scripts/content/advice.js` holds paired `headline` and `alternativeShort` variants. Add or edit a pair there to change the casual copy. The controller picks one pair per band when the page loads and retains those choices through polling, visibility changes and region switches. Reloading may choose another pair; no storage, additional requests or generated text are involved.
+
+`domain/activity-phrases.js` only allows those two fields to vary. Exercise, mask, walking and higher-risk guidance remain fixed. The model ignores phrase choices when readings are stale or missing. Randomness is injected into the controller so the model stays deterministic and tests can cover every variant.
+
 The one-hour PM2.5 bands and the rolling 24-hour PSI remain separate. Current activity and window advice depend on PM2.5; the app never substitutes PSI when PM2.5 is missing.
 
 The two-hour freshness limit and clock-skew allowance are application policies in `config.js`, not NEA health thresholds. Old measurements remain visible with an old-reading label, but current recommendations are withheld.

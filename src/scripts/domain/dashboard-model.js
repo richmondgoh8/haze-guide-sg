@@ -1,5 +1,5 @@
 import { REGIONS } from '../config.js';
-import { ACTIVITY_GUIDANCE, UNAVAILABLE_ACTIVITY } from '../content/advice.js';
+import { resolveActivityGuidance } from './activity-phrases.js';
 import { formatTimestamp } from '../formatters.js';
 import {
   classifyPm25,
@@ -11,7 +11,10 @@ import {
 import { describeBandPosition } from './band-position.js';
 
 /** Select advice and display values without depending on the browser or NEA's payload format. */
-export function createDashboardModel({ readings, region, loading = false }, now = Date.now()) {
+export function createDashboardModel(
+  { readings, region, loading = false, phraseChoices = {} },
+  now = Date.now(),
+) {
   const selectedRegion = REGIONS.find(({ id }) => id === region);
   if (!selectedRegion) throw new Error(`Unknown region: ${region}`);
   const pm25 = readings.pm25?.values[region];
@@ -21,7 +24,7 @@ export function createDashboardModel({ readings, region, loading = false }, now 
   const activeBand = current ? band : null;
   const psiBand = classifyPsi(psi);
   const psiCurrent = Boolean(psiBand && isCurrentReading(readings.psi?.timestamp, now));
-  const advice = activeBand ? ACTIVITY_GUIDANCE[band.index] : UNAVAILABLE_ACTIVITY;
+  const advice = resolveActivityGuidance(activeBand?.index, phraseChoices[activeBand?.index]);
 
   const status = [];
   const warnings = [];
@@ -43,7 +46,7 @@ export function createDashboardModel({ readings, region, loading = false }, now 
       value: band ? pm25 : '—',
       reportedLevel: band?.index ?? null,
       current,
-      title: activeBand?.title || 'Current advice unavailable',
+      title: activeBand ? advice.headline : 'Current advice unavailable',
       className: activeBand?.className || '',
       category: band
         ? `NEA category: ${band.name} · Band ${band.index}${current ? '' : ' · Last reported'}`
@@ -68,7 +71,7 @@ export function createDashboardModel({ readings, region, loading = false }, now 
       position: activeBand ? describeBandPosition(pm25) : null,
       activeLevel: activeBand?.index ?? null,
       caption: activeBand
-        ? `Haze level ${band.index} of 4. ${band.title}.`
+        ? `Haze level ${band.index} of 4. ${advice.headline}.`
         : 'No current level. Check the latest official reading.',
     },
     activity: {
@@ -76,10 +79,10 @@ export function createDashboardModel({ readings, region, loading = false }, now 
       exerciseDetail: activeBand
         ? advice.exercise
         : 'Wait for a current reading or check haze.gov.sg.',
-      status: activeBand?.title || 'READING UNAVAILABLE',
+      status: activeBand ? advice.headline : 'READING UNAVAILABLE',
       className: activeBand?.className || 'unavailable',
       summary: activeBand
-        ? `${selectedRegion.name}: ${advice.main}`
+        ? `${selectedRegion.name}: ${advice.headline}`
         : 'No current recommendation. Check the official reading.',
     },
     windows: getWindowAdvice(pm25, readings.pm25?.timestamp, now),

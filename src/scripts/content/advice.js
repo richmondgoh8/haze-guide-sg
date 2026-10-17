@@ -14,7 +14,21 @@ export const UNAVAILABLE_ACTIVITY = {
 
 export const ACTIVITY_GUIDANCE = {
   1: {
-    alternativeShort: 'Usual PCN route, if you feel well.',
+    phrases: [
+      { headline: 'Can head out as usual', alternativeShort: 'Usual PCN route, if you feel well.' },
+      {
+        headline: 'Usual plans can go ahead',
+        alternativeShort: 'Park walk or kopi run, if you feel well.',
+      },
+      {
+        headline: 'Outdoor plans? Can, if you feel well',
+        alternativeShort: 'Your usual outdoor workout can go ahead.',
+      },
+      {
+        headline: 'Your usual outdoor plans are okay',
+        alternativeShort: 'A walk around the neighbourhood, if you feel well.',
+      },
+    ],
     walkShort: 'Usual pace, if you feel well.',
     maskShort: 'Short commute? Generally no need.',
     main: 'Usual plans can go ahead if you feel well.',
@@ -28,7 +42,24 @@ export const ACTIVITY_GUIDANCE = {
     vulnerable: 'Usual activities can continue. Follow your care plan if you have symptoms.',
   },
   2: {
-    alternativeShort: 'Light stretch at home. PCN run can wait.',
+    phrases: [
+      {
+        headline: 'Take it easy outside',
+        alternativeShort: 'Light stretch at home. PCN run can wait.',
+      },
+      {
+        headline: 'Keep outdoor activity light',
+        alternativeShort: 'Put on a playlist. Stretch at home.',
+      },
+      {
+        headline: 'Go lighter on outdoor workouts',
+        alternativeShort: 'Easy indoor movement. No need to chiong.',
+      },
+      {
+        headline: 'Ease off the hard outdoor exercise',
+        alternativeShort: 'Light indoor stretch, then catch up on your watchlist.',
+      },
+    ],
     walkShort: 'Gentle pace. Watch for irritation.',
     maskShort: 'Long time out? Check the advisory.',
     main: 'Haze is up. Take it easy outside.',
@@ -43,7 +74,24 @@ export const ACTIVITY_GUIDANCE = {
     vulnerable: 'Avoid strenuous outdoor activity for the next hour.',
   },
   3: {
-    alternativeShort: 'Indoor workout or clear your watchlist.',
+    phrases: [
+      {
+        headline: 'Outdoor workout? Postpone first',
+        alternativeShort: 'Indoor workout or clear your watchlist.',
+      },
+      {
+        headline: 'Move the workout indoors',
+        alternativeShort: 'Game night at home. The outdoor run can wait.',
+      },
+      {
+        headline: 'Skip strenuous outdoor exercise',
+        alternativeShort: 'Indoor session, then catch up on your shows.',
+      },
+      {
+        headline: 'Save the outdoor workout for clearer air',
+        alternativeShort: 'Playlist on. Workout indoors instead.',
+      },
+    ],
     walkShort: 'Necessary trips: short & gentle.',
     maskShort: 'Long exposure? Well-fitting respirator.',
     main: 'Haze is high. Outdoor workout, postpone first.',
@@ -59,7 +107,24 @@ export const ACTIVITY_GUIDANCE = {
       'Avoid all outdoor activity for the next hour. If you must go out, consider a well-fitting respirator and follow medical advice.',
   },
   4: {
-    alternativeShort: 'Low-key day in. Skip optional outdoor plans.',
+    phrases: [
+      {
+        headline: 'Stay in, skip optional trips',
+        alternativeShort: 'Low-key day in. Skip optional outdoor plans.',
+      },
+      {
+        headline: 'Optional outing? Save it for later',
+        alternativeShort: 'Clear your watchlist from the sofa. Skip optional trips.',
+      },
+      {
+        headline: 'Keep outdoor trips to a minimum',
+        alternativeShort: 'Board games at home. Outdoor plans can wait.',
+      },
+      {
+        headline: 'Stay indoors as much as possible',
+        alternativeShort: 'Book, playlist or game night. Keep it indoors.',
+      },
+    ],
     walkShort: 'Skip trips that can wait.',
     maskShort: 'Must go out? Consider a respirator.',
     main: 'Haze is very high. Better stay in as much as possible.',

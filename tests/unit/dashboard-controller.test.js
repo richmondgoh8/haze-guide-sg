@@ -11,7 +11,7 @@ function deferred() {
   return { promise, resolve };
 }
 
-function setup(loadLatest = async () => snapshot()) {
+function setup(loadLatest = async () => snapshot(), random = () => 0) {
   const models = [];
   const saved = [];
   let tick;
@@ -32,6 +32,7 @@ function setup(loadLatest = async () => snapshot()) {
       },
     },
     now: () => time,
+    random,
     scheduler: {
       setInterval: (callback) => {
         tick = callback;
@@ -73,6 +74,30 @@ test('concurrent refreshes share one request and use the region selected during 
   assert.equal(models.at(-1).loading, false);
   assert.deepEqual(saved, ['north']);
   controller.destroy();
+});
+
+test('phrase choices stay stable across refresh, visibility changes and region switches', async () => {
+  let draws = 0;
+  const fixture = setup(
+    async () => snapshot(),
+    () => {
+      draws++;
+      return 0.999999;
+    },
+  );
+  await fixture.controller.start();
+  const first = fixture.models.at(-1);
+  assert.equal(first.pm25.title, 'Ease off the hard outdoor exercise');
+  await fixture.controller.refresh();
+  assert.equal(fixture.models.at(-1).pm25.title, first.pm25.title);
+  assert.equal(fixture.models.at(-1).activity.alternativeShort, first.activity.alternativeShort);
+  fixture.controller.selectRegion('north');
+  assert.equal(fixture.models.at(-1).pm25.title, 'Your usual outdoor plans are okay');
+  fixture.controller.selectRegion('east');
+  await fixture.controller.setVisible(true);
+  assert.equal(fixture.models.at(-1).pm25.title, first.pm25.title);
+  assert.equal(draws, 4);
+  fixture.controller.destroy();
 });
 
 test('hidden tabs skip polling and returning tabs immediately reevaluate stale advice', async () => {
