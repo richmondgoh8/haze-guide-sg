@@ -103,8 +103,8 @@
             <div class="eyebrow">
               <span class="eyebrow-line"></span> SINGAPORE HAZE & AIR QUALITY
             </div>
-            <h1 id="hero-title">Singapore haze today</h1>
-            <p>Official readings, what they mean, and what to do for the next hour.</p>
+            <h1 id="hero-title">Singapore haze: how ah?</h1>
+            <p>Go out, work out, or lepak indoors? Check the air first.</p>
             <div class="hero-note">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="12" cy="12" r="9" />
@@ -250,7 +250,7 @@
           </div>
           <div class="outdoor-summary" id="outdoor-summary">
             <div>
-              <span class="summary-label">CAN I GO OUTSIDE?</span>
+              <span class="summary-label">GO OUT, CAN OR NOT?</span>
               <p id="outdoor-verdict">Checking the next-hour recommendation for East…</p>
               <small>For generally healthy adults. Higher-risk guidance is below.</small>
             </div>
@@ -263,9 +263,14 @@
                   <path d="M5 4h22v24H5zM16 4v24M5 16h22m-11-5-5-2v14l5-2" />
                 </svg>
               </div>
-              <p class="decision-label">OPEN THE WINDOWS?</p>
+              <p class="decision-label">WINDOWS CAN OPEN?</p>
               <h3 id="window-verdict">Check the air before opening</h3>
               <p id="window-detail">Waiting for the latest outdoor reading.</p>
+              <p class="window-comfort">
+                <strong>Room getting hot or stuffy?</strong> No air-con and cannot stay cool? Move
+                to a cooler indoor place if possible. If you must open windows for cooling, close
+                them once comfortable and run a purifier if available.
+              </p>
               <p class="decision-source">
                 Our cautious suggestion, based on the outdoor regional reading.
               </p>
@@ -278,61 +283,17 @@
                   <path d="m10 13 5-5 6 7 6 1M17 11l-4 9-7 7m8-10 8 5 2 6M4 13h6" />
                 </svg>
               </div>
-              <p class="decision-label">EXERCISING OUTSIDE?</p>
+              <p class="decision-label">OUTDOOR WORKOUT STILL ON?</p>
               <h3 id="exercise-verdict">Check before exercising outside</h3>
               <p id="exercise-detail">Waiting for the latest activity advice.</p>
               <p class="activity-alternative">
-                <strong>Another option</strong
+                <strong>Or change plans a bit</strong
                 ><span id="exercise-alternative"
                   >An alternative will appear with a current reading.</span
                 >
               </p>
               <a href="#what-to-do">Walking, exercise and mask advice ↗</a>
             </article>
-          </div>
-          <div class="next-hour-plan">
-            <div class="plan-heading">
-              <div>
-                <p class="kicker">THREE QUICK CHECKS</p>
-                <h3>Your plan for the next hour</h3>
-              </div>
-              <span class="plan-count" id="plan-count">0 of 3 checked</span>
-            </div>
-            <progress
-              id="plan-progress"
-              value="0"
-              max="3"
-              aria-label="Reminders checked"
-            ></progress>
-            <p id="plan-status" role="status">
-              The checklist will be available when a current reading arrives.
-            </p>
-            <div class="plan-tasks">
-              <label for="plan-reading"
-                ><input class="plan-check" type="checkbox" id="plan-reading" disabled /><span
-                  ><strong>I checked the latest reading</strong
-                  ><small id="plan-reading-detail">Waiting for a current reading.</small></span
-                ></label
-              >
-              <label for="plan-windows"
-                ><input class="plan-check" type="checkbox" id="plan-windows" disabled /><span
-                  ><strong>I decided about the windows</strong
-                  ><small id="plan-windows-detail"
-                    >Check the conditions outside your home.</small
-                  ></span
-                ></label
-              >
-              <label for="plan-outdoors"
-                ><input class="plan-check" type="checkbox" id="plan-outdoors" disabled /><span
-                  ><strong>I adjusted my outdoor plans</strong
-                  ><small id="plan-outdoors-detail">Check the activity advice above.</small></span
-                ></label
-              >
-            </div>
-            <p class="plan-note">
-              Ticks record your decisions, not your level of protection. The checklist resets when
-              the region or reading changes.
-            </p>
           </div>
           <div class="regional-block">
             <div>
@@ -389,7 +350,7 @@
         <div class="shell action-grid">
           <div class="action-intro">
             <p class="kicker">02 / YOUR NEXT MOVE</p>
-            <h2 id="action-title">Outdoor plans?<br /><em>Here’s your guide.</em></h2>
+            <h2 id="action-title">Still going out?<br /><em>See first, then decide.</em></h2>
             <p>
               Use the latest 1-hour PM2.5 reading for the next hour. Duration, effort and your
               health all matter. Recheck before leaving; a mask does not make strenuous exercise
@@ -451,38 +412,77 @@
       <section class="window-guide-section" id="window-guide" aria-labelledby="window-guide-title">
         <div class="shell">
           <p class="kicker">AT HOME</p>
-          <h2 id="window-guide-title">Can I open the windows?</h2>
+          <h2 id="window-guide-title">Windows can open or not?</h2>
+          <div class="ventilation-note">
+            <h3>“Close all day, then no oxygen how?”</h3>
+            <p>
+              A typical home isn’t airtight; some air still comes in through gaps. But keeping a
+              room closed for too long can build up heat, moisture, CO₂ and other indoor pollutants.
+              So yes, ventilation still matters during haze.
+            </p>
+            <p>
+              A fan moves air around. A typical split-unit air-con cools and recirculates room air.
+              A HEPA purifier removes particles. None of these, on its own, brings in fresh outdoor
+              air or removes CO₂.
+            </p>
+            <p class="ventilation-links">
+              <a
+                href="https://www.epa.gov/emergencies-iaq/power-outages-and-indoor-air-quality-iaq"
+                target="_blank"
+                rel="noopener noreferrer"
+                >EPA: air exchange with windows closed ↗</a
+              >
+              ·
+              <a
+                href="https://www.nea.gov.sg/our-services/public-cleanliness/environmental-cleaning-guidelines/advisories/guidance-on-improving-ventilation-and-indoor-air-quality-in-buildings-amid-the-covid-19-situation"
+                target="_blank"
+                rel="noopener noreferrer"
+                >NEA: air-con and ventilation ↗</a
+              >
+            </p>
+          </div>
           <div class="window-guide-grid">
             <article>
-              <h3>When haze gets worse</h3>
+              <h3>Haze getting worse? Keep most of it out.</h3>
               <p>
-                Keep windows and outside doors closed to reduce the particles coming in. A suitable
-                air purifier can help with indoor particles; a fan or air-conditioning helps with
-                comfort.
+                Keep windows and outside doors mostly closed while outdoor air is poor. Use air-con
+                for cooling and a suitable purifier for particles, if available. Keep indoor smoke
+                down too: skip candles, smoking and heavy frying.
               </p>
             </article>
             <article>
-              <h3>When the outside air improves</h3>
+              <h3>Air improves a bit? Use that window.</h3>
               <p>
-                Air the room periodically. Check conditions near your home as well as the regional
-                reading. A “Normal” band does not mean the air is pollution-free.
+                Check the latest reading and air the room when outdoor air improves, even
+                temporarily. You do not have to wait for a magic “all clear”. The amount of airing
+                needed depends on the room and people inside; a regional reading cannot set a safe
+                timer.
               </p>
             </article>
             <article>
-              <h3>If the room gets hot or stuffy</h3>
+              <h3>Hazy all day, no air-con? Don’t tahan the heat.</h3>
               <p>
-                Do not leave the room sealed indefinitely. Closed rooms can build up heat, carbon
-                dioxide and other pollutants. Use a cooler indoor space if needed, and ventilate
-                when outdoor conditions improve.
+                If it is too hot to stay with windows closed, spend time in a cooler indoor place
+                with adequate ventilation if possible. If you must open windows to cool your home,
+                close them once the room is comfortable, then run a purifier if available. Opening
+                lets haze in too, so aim to manage both heat and smoke exposure.
+              </p>
+            </article>
+            <article>
+              <h3>For longer spells: filtered fresh air</h3>
+              <p>
+                NEA also describes filtered mechanical ventilation: bringing outdoor air through a
+                suitable particle filter. It needs proper design and installation. An ordinary fan,
+                recirculating air-con or standalone purifier does not do this by itself.
               </p>
             </article>
           </div>
           <p class="window-method">
-            The window card is our cautious interpretation: at 56 µg/m³ and above, it suggests
-            keeping windows closed for now; at 0–55, it asks you to check local conditions before
-            airing the room. NEA does not set an official one-hour window-opening cutoff. Regional
-            readings cannot tell us whether the air inside your home is cleaner. A clear sky or lack
-            of smoke smell is not proof that the air is clean.
+            The card is a starting point, not a 24/7 closure rule. At 56 µg/m³ and above, it
+            suggests limiting haze entry while planning ventilation; in the Normal band, it suggests
+            considering airing. NEA does not set an official one-hour opening cutoff. This page does
+            not measure your indoor PM2.5, CO₂ or temperature. A clear sky or lack of smoke smell
+            does not prove the air is clean.
           </p>
           <a
             href="https://www.nea.gov.sg/our-services/pollution-control/air-pollution/faqs"
@@ -496,6 +496,13 @@
             target="_blank"
             rel="noopener noreferrer"
             >NEA indoor air and ventilation guide ↗</a
+          >
+          <span aria-hidden="true">·</span
+          ><a
+            href="https://www.epa.gov/wildfires/reduce-your-smoke-exposure"
+            target="_blank"
+            rel="noopener noreferrer"
+            >EPA smoke and heat advice (additional guidance) ↗</a
           >
         </div>
       </section>
@@ -577,7 +584,7 @@
             </div>
             <div class="mask-copy">
               <p class="kicker">04 / A PRACTICAL MASK GUIDE</p>
-              <h2 id="mask-title">Choose a mask that fits</h2>
+              <h2 id="mask-title">Mask or no mask?</h2>
               <p>
                 MOH includes N95, KN95, KF94 and FFP2 as options for haze particles. A genuine,
                 well-fitting model from these groups is a practical starting point when a respirator

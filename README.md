@@ -15,15 +15,16 @@ Live site: https://richmondgoh8.github.io/haze-guide-sg/
 - A next-hour outdoor activity recommendation, with separate everyday activity, strenuous exercise, mask and higher-risk guidance. Unavailable, stale and invalid timestamps withhold the recommendation.
 - A mobile-friendly comparison of cloth, surgical/KF-AD, N95, KN95, KF94 and FFP2 masks, plus KF80, N99/FFP3/KF99, N100/P100, reusable and valved options. The ratings describe laboratory filtration, not guaranteed personal protection.
 - A four-step haze scale, with the current level marked in text and colour. The scale uses NEA's existing bands; it is not a separate risk score.
-- A three-item checklist for the selected reading. It resets when the region, timestamp or PM2.5 value changes. Checking a box records a decision; it does not indicate protection.
 
 ## Window advice
 
 NEA recommends closing windows when outdoor air worsens and reopening them periodically when it improves. It does not publish a one-hour PM2.5 threshold for opening windows.
 
-The window card is an editorial rule, not an official cutoff: at 56 µg/m³ or above it suggests keeping windows closed for now; in the 0–55 band it asks users to check local conditions before airing the room. It never labels outside air as clean or assumes it is better than the air indoors. The detailed guide covers heat, stuffiness and the need to ventilate when conditions improve.
+The window card is an editorial rule, not an official cutoff: at 56 µg/m³ or above it suggests limiting smoke entry while planning ventilation; in the 0–55 band it suggests considering airing if outdoor air has improved. It does not tell users to keep a room sealed all day or assume outdoor air is cleaner than indoor air.
 
-Sources: [NEA household FAQ](https://www.nea.gov.sg/our-services/pollution-control/air-pollution/faqs), [NEA indoor-air guidance](https://www.haze.gov.sg/docs/default-source/faq/detailed-practical-tips-for-manging-iaq-during-haze.pdf).
+The guide explains heat, CO₂, recirculating air-con and particle filtration. For persistent haze without adequate cooling, it recommends a cooler indoor place where possible. If windows must be opened to cool the home, it advises closing them once comfortable and filtering particles if a purifier is available. The heat exception follows EPA smoke-and-heat guidance; Singapore's PM2.5 bands and activity rules remain from NEA/MOH. There is no fixed ventilation timer or indoor-air estimate.
+
+Sources: [NEA household FAQ](https://www.nea.gov.sg/our-services/pollution-control/air-pollution/faqs), [NEA indoor-air guidance](https://www.haze.gov.sg/docs/default-source/faq/detailed-practical-tips-for-manging-iaq-during-haze.pdf), [EPA smoke and heat advice](https://www.epa.gov/wildfires/reduce-your-smoke-exposure), [EPA on passive air exchange](https://www.epa.gov/emergencies-iaq/power-outages-and-indoor-air-quality-iaq).
 
 ## Mask comparison and value guidance
 
@@ -56,7 +57,7 @@ Then open http://localhost:8000. The site has no build step or runtime dependenc
 ## Code and tests
 
 - `dist/air-quality.js`: NEA bands, timestamp validation, activity copy and the window-advice rule.
-- `dist/app.js`: requests, region selection, DOM updates and checklist state.
+- `dist/app.js`: requests, region selection and DOM updates.
 - `tests/air-quality.test.js`: boundary and failure cases for the advice rules.
 
 Run `npm test` with Node.js 18 or later. No dependency installation is needed. PM2.5 and PSI requests fail independently; a missing PSI response does not suppress current PM2.5 advice.

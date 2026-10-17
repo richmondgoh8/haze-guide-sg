@@ -21,11 +21,9 @@ const REQUEST_TIMEOUT_MS = 12_000;
 const getElement = (id) => document.getElementById(id);
 const regionSelect = getElement('region');
 const refreshButton = getElement('refresh');
-const checklistInputs = [...document.querySelectorAll('.plan-check')];
 
 let readings = { pm25: null, psi: null };
 let requestPending = false;
-let checklistReading = null;
 
 function regionName(region) {
   return region[0].toUpperCase() + region.slice(1);
@@ -117,8 +115,6 @@ function renderActivity(band, current, region) {
     advice?.exercise || 'Wait for a current reading or check haze.gov.sg.';
   getElement('exercise-alternative').textContent =
     advice?.alternative || 'Check the latest reading before choosing an activity.';
-  getElement('plan-outdoors-detail').textContent =
-    advice?.exerciseTitle || 'A current reading is needed.';
 }
 
 function renderWindowAdvice(pm25, timestamp) {
@@ -126,28 +122,6 @@ function renderWindowAdvice(pm25, timestamp) {
   getElement('window-card').dataset.state = advice.state;
   getElement('window-verdict').textContent = advice.title;
   getElement('window-detail').textContent = advice.detail;
-  getElement('plan-windows-detail').textContent = advice.title;
-}
-
-function renderChecklist(key) {
-  if (checklistReading !== key) {
-    checklistInputs.forEach((input) => {
-      input.checked = false;
-    });
-    checklistReading = key;
-  }
-  checklistInputs.forEach((input) => {
-    input.disabled = key === null;
-  });
-  const checked = checklistInputs.filter((input) => input.checked).length;
-  getElement('plan-progress').value = checked;
-  getElement('plan-count').textContent = `${checked} of 3 checked`;
-  getElement('plan-status').textContent =
-    key === null
-      ? 'The checklist will be available when a current reading arrives.'
-      : checked === 3
-        ? 'All three reminders checked for this reading.'
-        : 'Tick each reminder after you have made your plan.';
 }
 
 function renderRegions() {
@@ -181,16 +155,11 @@ function render() {
   getElement('pm-value').textContent = band ? pm25 : '—';
   getElement('psi-value').textContent = describePsi(psi) !== 'Unavailable' ? psi : '—';
   getElement('psi-band').textContent = describePsi(psi);
-  getElement('plan-reading-detail').textContent =
-    current && band
-      ? `${regionName(region)} · ${formatTimestamp(readings.pm25.timestamp)}`
-      : 'Waiting for a current reading.';
 
   renderReadingStatus(pm25, psi, current);
   renderHazeLevel(band, current);
   renderActivity(band, current, region);
   renderWindowAdvice(pm25, readings.pm25?.timestamp);
-  renderChecklist(current && band ? `${region}:${readings.pm25.timestamp}:${pm25}` : null);
   renderRegions();
 }
 
@@ -248,9 +217,6 @@ getElement('regional-list').addEventListener('click', (event) => {
   if (button) selectRegion(button.dataset.region);
 });
 refreshButton.addEventListener('click', refreshReadings);
-checklistInputs.forEach((input) =>
-  input.addEventListener('change', () => renderChecklist(checklistReading)),
-);
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
     render();

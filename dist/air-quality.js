@@ -6,15 +6,15 @@ export const PM25_BANDS = [
     name: 'Normal',
     className: 'normal',
     index: 1,
-    title: 'Usual activities can continue',
-    shortLabel: 'Usual plans',
+    title: 'Can head out as usual',
+    shortLabel: 'Can go as usual',
   },
   {
     limit: 150,
     name: 'Elevated',
     className: 'elevated',
     index: 2,
-    title: 'Go easy outdoors',
+    title: 'Go easy outdoors, lah',
     shortLabel: 'Take it easy',
   },
   {
@@ -22,15 +22,15 @@ export const PM25_BANDS = [
     name: 'High',
     className: 'high',
     index: 3,
-    title: 'Skip hard outdoor exercise',
-    shortLabel: 'Skip hard exercise',
+    title: 'Outdoor workout? Postpone first',
+    shortLabel: 'Workout indoors',
   },
   {
     limit: Infinity,
     name: 'Very high',
     className: 'very-high',
     index: 4,
-    title: 'Stay indoors as much as possible',
+    title: 'Stay in, skip optional trips',
     shortLabel: 'Stay indoors',
   },
 ];
@@ -58,50 +58,50 @@ export function isCurrentReading(timestamp, now = Date.now()) {
 
 export const ACTIVITY_GUIDANCE = {
   1: {
-    main: 'Outdoor activities are generally okay.',
-    detail: 'The current reading allows usual activities. Check again before a long outing.',
+    main: 'Usual plans can go ahead if you feel well.',
+    detail: 'Going out for a bit? Can. Check the reading again before a long outing.',
     walk: 'Your usual walk or trip to the shops can continue.',
     exercise: 'Your usual outdoor exercise can continue if you feel well.',
     exerciseTitle: 'Your usual exercise is okay',
     alternative:
-      'Planning a park connector walk or run? Check the reading again before setting off.',
+      'Your usual park connector route can go ahead. Check the air again before setting off.',
     mask: 'A respirator is generally unnecessary for a short commute or indoors.',
     vulnerable: 'Usual activities can continue. Follow your care plan if you have symptoms.',
   },
   2: {
-    main: 'Go easy outdoors. There are more fine particles in the air.',
+    main: 'Haze is up. Take it easy outside, lah.',
     detail:
       'Cut back on hard exercise for the next hour. Children, older adults, pregnant people and people with heart or lung conditions should avoid strenuous outdoor activity.',
     walk: 'Keep your walk gentle. Shorten the trip if your eyes or throat feel irritated.',
-    exercise: 'Do less hard running, fast cycling or sport. An indoor session is an alternative.',
+    exercise: 'No need to chiong. Reduce hard running, fast cycling or sport for the next hour.',
     exerciseTitle: 'Reduce hard outdoor exercise',
     alternative:
-      'Swap a hard park connector run for gentle stretching indoors, or save the run for better air.',
+      'PCN run can wait. Put on a playlist, do a light stretch at home, or save the workout for clearer air.',
     mask: 'A respirator is generally unnecessary for a short commute. For a long period outside, check the latest advisory and your health needs.',
     vulnerable: 'Avoid strenuous outdoor activity for the next hour.',
   },
   3: {
-    main: 'Avoid hard outdoor exercise. Haze particles are high.',
+    main: 'Haze is high. Outdoor workout, postpone first.',
     detail:
       'Move exercise indoors for the next hour. People at higher risk should avoid all outdoor activity.',
     walk: 'Keep necessary trips short and gentle. People at higher risk should stay indoors.',
     exercise: 'Avoid strenuous outdoor activity, including hard running, fast cycling and sport.',
     exerciseTitle: 'Move exercise indoors',
     alternative:
-      'Postpone the outdoor run or cycling session. Choose an indoor activity for the next hour.',
+      'Indoor workout, game night, or finally clearing your watchlist. The outdoor training can wait.',
     mask: 'For prolonged exposure, or unavoidable outings for higher-risk people, a well-fitting N95, KN95, KF94 or FFP2 can reduce exposure.',
     vulnerable:
       'Avoid all outdoor activity for the next hour. If you must go out, consider a well-fitting respirator and follow medical advice.',
   },
   4: {
-    main: 'Stay indoors as much as possible. Haze particles are very high.',
+    main: 'Haze is very high. Better stay in as much as possible.',
     detail:
       'Postpone optional trips and outdoor exercise. People at higher risk should avoid all outdoor activity.',
     walk: 'Minimise time outside. Postpone trips that can wait.',
     exercise: 'Postpone outdoor exercise. Choose an indoor session instead.',
     exerciseTitle: 'Postpone outdoor exercise',
     alternative:
-      'Keep the workout indoors and postpone optional outdoor plans until the air improves.',
+      'Watchlist, board game, low-key day at home. Skip optional outdoor plans till the air improves.',
     mask: 'If you must go out, consider a well-fitting N95, KN95, KF94 or FFP2. Keep the outing short even with a mask.',
     vulnerable:
       'Avoid all outdoor activity for the next hour. Seek medical advice if you feel unwell.',
@@ -113,7 +113,7 @@ export function getWindowAdvice(pm25, timestamp, now = Date.now()) {
   if (!band || !isCurrentReading(timestamp, now)) {
     return {
       state: 'unknown',
-      title: 'Check the air before opening',
+      title: 'Check the air first',
       detail:
         'The reading is missing or out of date. Check haze.gov.sg and conditions outside your home.',
     };
@@ -123,16 +123,16 @@ export function getWindowAdvice(pm25, timestamp, now = Date.now()) {
   if (band.index === 1) {
     return {
       state: 'check',
-      title: 'Open briefly only if the air has cleared',
+      title: 'Can consider airing the room',
       detail:
-        'Check conditions outside your home first. If the haze has cleared, you can consider airing the room briefly. Close the windows if smoke returns.',
+        'The reading is in NEA’s Normal band. If outdoor air has improved, take the chance to air the room. Check local conditions too; Normal does not mean pollution-free.',
     };
   }
 
   return {
-    state: 'closed',
-    title: 'Keep windows closed for now',
+    state: 'reduce',
+    title: 'Mostly closed while it’s hazy',
     detail:
-      'Outdoor particle levels are raised. Use a fan or air-conditioning for comfort, and a suitable air purifier if available. Air the room when outside air improves.',
+      'Limit haze coming in; air the room when outdoor air improves, even temporarily. If it gets hot or stuffy, don’t just tahan. Use the options below.',
   };
 }

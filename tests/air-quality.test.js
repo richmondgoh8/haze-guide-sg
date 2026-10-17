@@ -61,15 +61,16 @@ test('normal PM2.5 permits only conditional airing advice', () => {
   for (const value of [0, 30, 55]) {
     const advice = getWindowAdvice(value, current, now);
     assert.equal(advice.state, 'check');
-    assert.match(advice.title, /only if the air has cleared/);
+    assert.match(advice.detail, /does not mean pollution-free/);
   }
 });
 
 test('raised PM2.5 suggests closing windows without prescribing indefinite closure', () => {
   for (const value of [56, 150, 151, 250, 251]) {
     const advice = getWindowAdvice(value, current, now);
-    assert.equal(advice.state, 'closed');
-    assert.match(advice.detail, /when outside air improves/);
+    assert.equal(advice.state, 'reduce');
+    assert.match(advice.detail, /when outdoor air improves/);
+    assert.match(advice.detail, /hot or stuffy/);
   }
 });
 
