@@ -18,7 +18,7 @@ export function createAdviceView(root) {
     exerciseTitle: '#exercise-verdict',
     exerciseDetail: '#exercise-detail',
     alternative: '#exercise-alternative',
-    windowCard: '#window-card',
+    windowCard: '#window-guide',
     windowTitle: '#window-verdict',
     windowDetail: '#window-detail',
   });

@@ -76,7 +76,7 @@ test('malicious API fields are rejected and do not generate advice or DOM elemen
   await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
   await page.goto('/');
   await expect(page.locator('#pm-value')).toHaveText('—');
-  await expect(page.locator('#window-card')).toHaveAttribute('data-state', 'unknown');
+  await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'unknown');
   await expect(page.locator('img[onerror]')).toHaveCount(0);
   expect(await page.evaluate(() => window.securityViolations)).toEqual([]);
 });

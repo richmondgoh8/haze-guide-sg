@@ -23,7 +23,7 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#pm-value')).toHaveText('140');
   await expect(page.locator('#psi-value')).toHaveText('143');
   await expect(page.locator('#pm-category')).toContainText('Band 2');
-  await expect(page.locator('#window-card')).toHaveAttribute('data-state', 'reduce');
+  await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'reduce');
   await expect(page.locator('#region-towns')).toContainText('Bedok');
   const sourceUrl = new URL(await page.locator('.status-source a').getAttribute('href'));
   expect(sourceUrl.origin).toBe('https://data.gov.sg');
@@ -57,8 +57,8 @@ test('compact decision cards keep heat advice visible and exercise reasoning exp
   page,
 }) => {
   await page.goto('/');
-  await expect(page.locator('#window-card .decision-reminder')).toBeVisible();
-  await expect(page.locator('#window-card')).toContainText('Close once comfortable');
+  await expect(page.locator('#window-guide .decision-reminder')).toBeVisible();
+  await expect(page.locator('#window-guide')).toContainText('Close once comfortable');
   const summary = page.locator('.decision-details > summary');
   await expect(page.locator('#exercise-detail')).not.toBeVisible();
   await summary.focus();
@@ -70,15 +70,17 @@ test('visual summaries keep safety caveats visible and explanations keyboard acc
   page,
 }) => {
   await page.goto('/');
-  await expect(page.locator('.mask-snapshot .visual-card')).toHaveCount(4);
+  await expect(page.locator('.mask-lab-ratings dl > div')).toHaveCount(4);
   await expect(page.locator('.mask-snapshot .visual-caveat')).toBeVisible();
-  await expect(page.locator('#window-guide .visual-caveat')).toBeVisible();
+  await expect(page.locator('#window-guide .decision-reminder')).toBeVisible();
   await expect(page.locator('#purifier-guide .visual-caveat')).toBeVisible();
   const summary = page.locator('#activity-reasoning > summary');
   await summary.focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#activity-reasoning')).toHaveAttribute('open');
   await expect(page.locator('#activity-exercise')).toContainText('No need to chiong');
+  await page.locator('#window-guide > a').click();
+  await expect(page).toHaveURL(/\/guides\/windows-during-haze\/$/u);
   const windowSummary = page.locator('#window-guide > .shell > .visual-details > summary');
   await windowSummary.focus();
   await page.keyboard.press('Enter');
@@ -92,7 +94,9 @@ test('mask guide stays concise and removed sections do not return', async ({ pag
   await expect(page.getByText('Which mask, at which haze level?', { exact: true })).toHaveCount(0);
   await expect(page.getByText('04 / A PRACTICAL MASK GUIDE', { exact: true })).toHaveCount(0);
   await expect(page.locator('#mask-band-details, #guides-title')).toHaveCount(0);
-  await expect(masks.locator('.mask-fit-strip li')).toHaveCount(3);
+  await expect(masks.locator('.mask-infographic')).toHaveCount(1);
+  await expect(masks.locator('.mask-fit-figure')).toBeVisible();
+  await expect(masks.locator('.mask-fit-strip')).toHaveCount(0);
   await expect(masks.locator('.mask-care-summary')).toBeVisible();
   expect((await masks.innerText()).trim().split(/\s+/u).length).toBeLessThan(250);
   await expect(page.locator('.footer-guides a')).toHaveCount(3);
@@ -101,6 +105,21 @@ test('mask guide stays concise and removed sections do not return', async ({ pag
   await page.keyboard.press('Enter');
   await expect(page.locator('#mask-use-details')).toHaveAttribute('open');
   await expect(masks).toContainText('pregnant people');
+});
+
+test('homepage has one window block and no repeated tips section', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByText('05 / SMALL, USEFUL MOVES', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Mask on? Fit first.', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('WINDOWS CAN OPEN?', { exact: true })).toHaveCount(0);
+  await expect(page.locator('.tips-section, .window-guide-section')).toHaveCount(0);
+  await expect(page.locator('#window-guide')).toHaveCount(1);
+  await expect(page.locator('#window-guide')).toContainText('Not a 24/7 closure rule');
+  await expect(page.locator('#window-guide > a')).toHaveAttribute(
+    'href',
+    './guides/windows-during-haze/',
+  );
+  await expect(page.locator('#mask-title')).toHaveText('Masks');
 });
 
 test('keyboard region changes update advice, retain focus and survive a reload', async ({
@@ -114,7 +133,7 @@ test('keyboard region changes update advice, retain focus and survive a reload',
   await expect(north).toBeFocused();
   await expect(page.locator('#region')).toHaveValue('north');
   await expect(page.locator('#pm-value')).toHaveText('20');
-  await expect(page.locator('#window-card')).toHaveAttribute('data-state', 'check');
+  await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'check');
   await page.reload();
   await expect(page.locator('#region')).toHaveValue('north');
   await expect(page.locator('#pm-value')).toHaveText('20');
@@ -129,7 +148,7 @@ for (const failedResource of ['pm25', 'psi']) {
     await expect(page.locator(failedResource === 'psi' ? '#pm-value' : '#psi-value')).toHaveText(
       failedResource === 'psi' ? '140' : '143',
     );
-    await expect(page.locator('#window-card')).toHaveAttribute(
+    await expect(page.locator('#window-guide')).toHaveAttribute(
       'data-state',
       failedResource === 'pm25' ? 'unknown' : 'reduce',
     );
@@ -146,7 +165,7 @@ test('stale readings keep reported values but remove current advice', async ({ p
   await expect(page.locator('#pm-value')).toHaveText('140');
   await expect(page.locator('#pm-category')).toContainText('Last reported');
   await expect(page.locator('.severity-step[aria-current]')).toHaveCount(0);
-  await expect(page.locator('#window-card')).toHaveAttribute('data-state', 'unknown');
+  await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'unknown');
   await expect(page.locator('[data-region="east"] .region-band')).toHaveText('Old reading');
   await expect(page.locator('#band-position')).not.toBeVisible();
 });
@@ -173,7 +192,7 @@ test('all band boundaries update the scale and window state', async ({ page }) =
       'data-level',
       String(level),
     );
-    await expect(page.locator('#window-card')).toHaveAttribute(
+    await expect(page.locator('#window-guide')).toHaveAttribute(
       'data-state',
       level === 1 ? 'check' : 'reduce',
     );

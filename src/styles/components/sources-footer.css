@@ -2,6 +2,9 @@
   background: #e7ece4;
   padding: 90px 0;
 }
+.about-section {
+  padding-block: clamp(56px, 6vw, 95px);
+}
 .sources-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -73,8 +73,7 @@
     font-size: 0.85rem;
   }
   .readings-section,
-  .explainer-section,
-  .tips-section {
+  .explainer-section {
     padding: 72px 0;
   }
   .section-heading {
@@ -124,15 +123,6 @@
   }
   .mask-section {
     padding: 0 0 70px;
-  }
-  .tips-grid {
-    grid-template-columns: 1fr;
-  }
-  .tip,
-  .tip + .tip {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-    padding: 25px 0;
   }
   .source-list {
     margin-top: 25px;

@@ -301,8 +301,7 @@ select {
     font-size: 1rem;
   }
   .vulnerable-note p,
-  .guide-card p,
-  .tip p {
+  .guide-card p {
     font-size: 1rem;
   }
   .mask-section {
