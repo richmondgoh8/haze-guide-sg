@@ -32,6 +32,31 @@ test('East loads official values, current advice and source links', async ({ pag
   expect(sourceUrl.origin).toBe('https://data.gov.sg');
   await expect(page.locator('#mask-comparison-details')).not.toHaveAttribute('open');
   await expect(page.locator('.next-hour-plan, .plan-check')).toHaveCount(0);
+  await expect(page.locator('#activity-walk-short')).toHaveText(
+    'Gentle pace. Watch for irritation.',
+  );
+  await expect(page.locator('#activity-exercise-short')).toHaveText('Reduce hard outdoor exercise');
+  await expect(page.locator('#action-vulnerable')).toBeVisible();
+  await expect(page.locator('#activity-reasoning')).not.toHaveAttribute('open');
+});
+
+test('visual summaries keep safety caveats visible and explanations keyboard accessible', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.locator('.mask-snapshot .visual-card')).toHaveCount(6);
+  await expect(page.locator('.mask-snapshot .visual-caveat')).toBeVisible();
+  await expect(page.locator('#window-guide .visual-caveat')).toBeVisible();
+  await expect(page.locator('#purifier-guide .visual-caveat')).toBeVisible();
+  const summary = page.locator('#activity-reasoning > summary');
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#activity-reasoning')).toHaveAttribute('open');
+  await expect(page.locator('#activity-exercise')).toContainText('No need to chiong');
+  const windowSummary = page.locator('#window-guide > .shell > .visual-details > summary');
+  await windowSummary.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#window-guide .ventilation-note')).toBeVisible();
 });
 
 test('keyboard region changes update advice, retain focus and survive a reload', async ({

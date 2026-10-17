@@ -45,3 +45,17 @@
 .guide-card p strong {
   color: var(--ink);
 }
+.reading-time {
+  display: block;
+  margin-block: 12px 20px;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+.reading-time small {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: normal;
+}

@@ -49,6 +49,10 @@ The cost guidance is editorial: compare price per mask after testing fit, buy ge
 
 The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and expandable mask comparisons and band guides. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript. The observed 24-hour PSI is labelled separately from NEA's forecast for future activities.
 
+Guides lead with labelled icons, short activity verdicts, mask-rating cards and placement diagrams. Longer explanations use native disclosures; heat, higher-risk and filtration caveats stay visible. There are no autoplay effects or additional health scores. This follows cognitive-accessibility principles, not a claim of clinical ADHD suitability.
+
+`tooling/icons.js` renders the shared SVG icons at build time from `<!-- icon: name -->` markers. Add a named path there and use a visible text label beside it. Shared infographic layouts live in `src/styles/components/visual-guide.css`; thresholds and activity copy remain in the existing domain/content modules.
+
 The dashboard and three dedicated guides have unique titles, descriptions, canonical URLs, sharing metadata and static HTML. `tooling/site-pages.js` drives the build entries, metadata, related-guide links and generated sitemap at `/haze-guide-sg/sitemap.xml`. Guide pages also have breadcrumb structured data and do not load the dashboard JavaScript.
 
 The [SEO guide](docs/SEO.md) covers Search Console setup, ranking priorities, measurement and GitHub Pages limitations. These changes prepare pages for discovery; they do not guarantee search rankings or submit the site to Search Console. GitHub project sites do not control the domain-root `robots.txt`; no project-level robots file is used as a substitute.

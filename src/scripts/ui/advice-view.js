@@ -10,6 +10,9 @@ export function createAdviceView(root) {
     summary: '#outdoor-verdict',
     summaryCard: '#outdoor-summary',
     walk: '#activity-walk',
+    walkShort: '#activity-walk-short',
+    maskShort: '#activity-mask-short',
+    exerciseShort: '#activity-exercise-short',
     exercise: '#activity-exercise',
     mask: '#activity-mask',
     exerciseTitle: '#exercise-verdict',
@@ -30,6 +33,8 @@ export function createAdviceView(root) {
         'vulnerable',
         'summary',
         'walk',
+        'walkShort',
+        'maskShort',
         'exercise',
         'mask',
         'exerciseTitle',
@@ -38,6 +43,7 @@ export function createAdviceView(root) {
         elements[key].textContent = activity[key];
       }
       elements.summaryCard.dataset.band = activity.className;
+      elements.exerciseShort.textContent = activity.exerciseTitle;
       elements.exerciseDetail.textContent = activity.exerciseDetail;
       elements.windowCard.dataset.state = windows.state;
       elements.windowTitle.textContent = windows.title;

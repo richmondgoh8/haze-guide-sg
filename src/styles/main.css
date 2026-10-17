@@ -16,3 +16,4 @@
 @import url('./responsive.css') layer(site);
 @import url('./guide-components.css') layer(site);
 @import url('./dashboard.css') layer(site);
+@import url('./components/visual-guide.css') layer(site);

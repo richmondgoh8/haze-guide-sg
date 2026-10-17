@@ -6,59 +6,92 @@
       Start with the room you spend the most time in. Bedroom at night, living room when you’re
       hanging out. One unit in the corridor won’t reliably clean every bedroom.
     </p>
-    <div class="purifier-placement">
-      <figure class="purifier-room">
-        <div class="purifier-room-plan" aria-hidden="true">
-          <span class="purifier-room-window">Window</span>
-          <span class="purifier-room-bed">Bed / sofa</span>
-          <span class="purifier-room-unit">
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="13" y="17" width="22" height="27" rx="5" />
-              <path
-                d="M19 25h10m-10 5h10m-10 5h10M18 12V4m6 8V2m6 10V4m-15 3 3-3 3 3m0-2 3-3 3 3m0 2 3-3 3 3"
-              />
-            </svg>
-            Purifier
-          </span>
-          <span class="purifier-room-gap">Clear space around it</span>
-        </div>
-        <figcaption>
-          Same room as you, with open airflow. Illustrative layout, not to scale; follow your
-          model’s clearance instructions.
-        </figcaption>
-      </figure>
-      <div class="purifier-rules">
-        <article>
-          <h3>Give the intake and outlet space</h3>
-          <p>
-            Don’t squeeze it behind the sofa, under a shelf or against curtains. Leave the gaps
-            stated in the manual—not a one-size-fits-all “30 cm”. Keep the clean-air outlet clear.
-          </p>
-        </article>
-        <article>
-          <h3>Floor or table? Follow the model.</h3>
-          <p>
-            Floor units can stay on the floor; tabletop units belong on a stable surface. No need to
-            raise every purifier to face height. If the draft bothers you, redirect it without
-            blocking it.
-          </p>
-        </article>
-        <article>
-          <h3>Only got one? Pick your main room.</h3>
-          <p>
-            Prioritise where a child, older person or someone sensitive to haze spends time. A
-            smaller enclosed room is easier to filter than the whole flat. During poor outdoor air,
-            limit haze coming in—but
-            <a href="{{link.windows}}">don’t ignore heat and ventilation</a>.
-          </p>
-        </article>
+    <div class="visual-guide">
+      <div class="placement-pair">
+        <figure class="purifier-room placement-panel">
+          <strong><!-- icon: check -->Can: same room, open airflow</strong>
+          <div class="purifier-room-plan" aria-hidden="true">
+            <span class="purifier-room-window">Window</span>
+            <span class="purifier-room-bed">Bed / sofa</span>
+            <span class="purifier-room-unit">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="13" y="17" width="22" height="27" rx="5" />
+                <path
+                  d="M19 25h10m-10 5h10m-10 5h10M18 12V4m6 8V2m6 10V4m-15 3 3-3 3 3m0-2 3-3 3 3m0 2 3-3 3 3"
+                />
+              </svg>
+              Purifier
+            </span>
+            <span class="purifier-room-gap">Clear space around it</span>
+          </div>
+          <figcaption>
+            Same room as you, with open airflow. Illustrative layout, not to scale; follow your
+            model’s clearance instructions.
+          </figcaption>
+        </figure>
+        <figure class="placement-panel purifier-room">
+          <strong><!-- icon: cross -->Cannot: tucked behind furniture</strong>
+          <div class="blocked-airflow" aria-hidden="true">
+            <!-- icon: purifier -->
+            <span>Sofa / curtains blocking airflow</span>
+          </div>
+          <figcaption>
+            Not behind the sofa, under a shelf or against curtains. Follow the manual’s intake and
+            outlet clearances—not a universal “30 cm”.
+          </figcaption>
+        </figure>
       </div>
     </div>
+    <p class="visual-caveat">
+      <strong>Filters particles, not CO₂.</strong> Limit haze entry when outdoor air is poor, but
+      <a href="{{link.windows}}">don’t ignore heat and ventilation</a>.
+    </p>
+    <details class="visual-details">
+      <summary>Floor or table? Room choice & placement details</summary>
+      <div class="purifier-placement">
+        <div class="purifier-rules">
+          <article>
+            <h3>Give the intake and outlet space</h3>
+            <p>
+              Don’t squeeze it behind the sofa, under a shelf or against curtains. Leave the gaps
+              stated in the manual—not a one-size-fits-all “30 cm”. Keep the clean-air outlet clear.
+            </p>
+          </article>
+          <article>
+            <h3>Floor or table? Follow the model.</h3>
+            <p>
+              Floor units can stay on the floor; tabletop units belong on a stable surface. No need
+              to raise every purifier to face height. If the draft bothers you, redirect it without
+              blocking it.
+            </p>
+          </article>
+          <article>
+            <h3>Only got one? Pick your main room.</h3>
+            <p>
+              Prioritise where a child, older person or someone sensitive to haze spends time. A
+              smaller enclosed room is easier to filter than the whole flat. During poor outdoor
+              air, limit haze coming in—but don’t ignore heat and ventilation.
+            </p>
+          </article>
+        </div>
+      </div>
+    </details>
     <details class="purifier-details" id="purifier-setup-details">
       <summary>Room size, fan speed & running costs</summary>
       <div class="purifier-setup-grid">
         <article>
           <h3>Check smoke CADR, not just “HEPA”</h3>
+          <div
+            class="sizing-flow"
+            role="img"
+            aria-label="Example: room volume 31.2 cubic metres, times three, gives a minimum smoke CADR of about 94 cubic metres per hour."
+          >
+            <strong>4 × 3 × 2.6 m<small>Room dimensions</small></strong>
+            <span aria-hidden="true">→</span>
+            <strong>31.2 m³<small>Room volume</small></strong>
+            <span aria-hidden="true">× 3 →</span>
+            <strong>≥94 m³/h<small>Smoke CADR</small></strong>
+          </div>
           <p>
             CADR tells you how much filtered air the unit delivers. NEA’s haze FAQ recommends smoke
             CADR in m³/h of at least 3 × room volume in m³. For a 4 × 3 × 2.6 m room, that’s about

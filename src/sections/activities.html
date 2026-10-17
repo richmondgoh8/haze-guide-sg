@@ -29,24 +29,50 @@
       <div class="action-body">
         <p class="action-status" id="action-status">Waiting for a reading</p>
         <h3 id="action-main">We’ll show advice when the latest reading arrives.</h3>
-        <p class="action-detail" id="action-detail">
-          If the feed is unavailable, use the official haze site before deciding on outdoor
-          activity.
-        </p>
-        <dl class="activity-list">
+        <div class="activity-verdicts">
           <div>
-            <dt>Walking & everyday activity</dt>
-            <dd id="activity-walk">Check the official reading before heading out.</dd>
+            <!-- icon: walk -->
+            <div>
+              <strong>Walk / errands</strong>
+              <p id="activity-walk-short">Check the current reading first.</p>
+            </div>
           </div>
           <div>
-            <dt>Running, cycling & sport</dt>
-            <dd id="activity-exercise">Check the official activity guide before starting.</dd>
+            <!-- icon: run -->
+            <div>
+              <strong>Workout</strong>
+              <p id="activity-exercise-short">Check before exercising outside.</p>
+            </div>
           </div>
           <div>
-            <dt>Mask choice</dt>
-            <dd id="activity-mask">Advice appears with a fresh reading.</dd>
+            <!-- icon: mask -->
+            <div>
+              <strong>Mask</strong>
+              <p id="activity-mask-short">Check the official advisory first.</p>
+            </div>
           </div>
-        </dl>
+        </div>
+        <details class="visual-details" id="activity-reasoning">
+          <summary>Why this advice? Activity & mask details</summary>
+          <p class="action-detail" id="action-detail">
+            If the feed is unavailable, use the official haze site before deciding on outdoor
+            activity.
+          </p>
+          <dl class="activity-list">
+            <div>
+              <dt>Walking & everyday activity</dt>
+              <dd id="activity-walk">Check the official reading before heading out.</dd>
+            </div>
+            <div>
+              <dt>Running, cycling & sport</dt>
+              <dd id="activity-exercise">Check the official activity guide before starting.</dd>
+            </div>
+            <div>
+              <dt>Mask choice</dt>
+              <dd id="activity-mask">Advice appears with a fresh reading.</dd>
+            </div>
+          </dl>
+        </details>
         <div class="vulnerable-note">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 3 2 20h20L12 3Zm0 6v5m0 3h.01" />

@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { isAbsolute, relative, resolve } from 'node:path';
 import { renderStaticFragments } from './static-fragments.js';
+import { renderIcons } from './icons.js';
 import { PAGES, pageFile, renderPageFragments, renderSitemap } from './site-pages.js';
 
 export function expandHtmlIncludes(html, sourceRoot, parents = []) {
@@ -34,7 +35,7 @@ export function htmlPartials(sourceRoot) {
         const page = PAGES.find((entry) => pageFile(entry) === filename);
         if (!page) throw new Error(`Missing page metadata: ${filename}`);
         return renderPageFragments(
-          renderStaticFragments(expandHtmlIncludes(html, sourceRoot)),
+          renderIcons(renderStaticFragments(expandHtmlIncludes(html, sourceRoot))),
           page,
         );
       },

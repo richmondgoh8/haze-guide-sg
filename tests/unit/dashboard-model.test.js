@@ -52,3 +52,19 @@ test('aging readings retain reported values but remove actionable advice and reg
 test('unknown regions fail at the model boundary', () => {
   assert.throws(() => model(snapshot(), 'somewhere'), /Unknown region/);
 });
+
+test('short activity verdicts follow the same freshness and band decisions as full advice', () => {
+  const readings = snapshot();
+  for (const value of [0, 56, 151, 251]) {
+    readings.pm25.values.east = value;
+    const { activity } = model(readings);
+    assert.ok(activity.walkShort.length > 0);
+    assert.ok(activity.maskShort.length > 0);
+    assert.ok(activity.exerciseTitle.length > 0);
+  }
+  const stale = model(readings, 'east', TEST_TIME + 3 * 60 * 60 * 1000);
+  assert.equal(stale.activity.walkShort, 'Check the current reading first.');
+  assert.equal(stale.activity.maskShort, 'Check the official advisory first.');
+  readings.pm25 = null;
+  assert.equal(model(readings).activity.walkShort, stale.activity.walkShort);
+});

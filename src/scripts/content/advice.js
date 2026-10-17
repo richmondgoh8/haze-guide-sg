@@ -1,5 +1,7 @@
 export const UNAVAILABLE_ACTIVITY = {
   main: 'Check the latest reading before heading out.',
+  walkShort: 'Check the current reading first.',
+  maskShort: 'Check the official advisory first.',
   detail: 'The feed is missing or out of date. Check haze.gov.sg for current advice.',
   vulnerable: 'Follow your care plan and check the official advisory.',
   walk: 'Check haze.gov.sg before heading out.',
@@ -11,6 +13,8 @@ export const UNAVAILABLE_ACTIVITY = {
 
 export const ACTIVITY_GUIDANCE = {
   1: {
+    walkShort: 'Usual pace, if you feel well.',
+    maskShort: 'Short commute? Generally no need.',
     main: 'Usual plans can go ahead if you feel well.',
     detail: 'Going out for a bit? Can. Check the reading again before a long outing.',
     walk: 'Your usual walk or trip to the shops can continue.',
@@ -22,6 +26,8 @@ export const ACTIVITY_GUIDANCE = {
     vulnerable: 'Usual activities can continue. Follow your care plan if you have symptoms.',
   },
   2: {
+    walkShort: 'Gentle pace. Watch for irritation.',
+    maskShort: 'Long time out? Check the advisory.',
     main: 'Haze is up. Take it easy outside, lah.',
     detail:
       'Cut back on hard exercise for the next hour. Children, older adults, pregnant people and people with heart or lung conditions should avoid strenuous outdoor activity.',
@@ -34,6 +40,8 @@ export const ACTIVITY_GUIDANCE = {
     vulnerable: 'Avoid strenuous outdoor activity for the next hour.',
   },
   3: {
+    walkShort: 'Necessary trips: short & gentle.',
+    maskShort: 'Long exposure? Well-fitting respirator.',
     main: 'Haze is high. Outdoor workout, postpone first.',
     detail:
       'Move exercise indoors for the next hour. People at higher risk should avoid all outdoor activity.',
@@ -47,6 +55,8 @@ export const ACTIVITY_GUIDANCE = {
       'Avoid all outdoor activity for the next hour. If you must go out, consider a well-fitting respirator and follow medical advice.',
   },
   4: {
+    walkShort: 'Skip trips that can wait.',
+    maskShort: 'Must go out? Consider a respirator.',
     main: 'Haze is very high. Better stay in as much as possible.',
     detail:
       'Postpone optional trips and outdoor exercise. People at higher risk should avoid all outdoor activity.',

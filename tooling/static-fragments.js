@@ -1,5 +1,6 @@
 import { DEFAULT_REGION, REGIONS } from '../src/scripts/config.js';
 import { PM25_BANDS } from '../src/scripts/domain/air-quality.js';
+import { renderIcon } from './icons.js';
 
 function escapeHtml(value) {
   return String(value).replace(
@@ -32,7 +33,7 @@ export function renderStaticFragments(html) {
     const lower = index === 0 ? 0 : PM25_BANDS[index - 1].limit + 1;
     const range = Number.isFinite(band.limit) ? `${lower}–${band.limit}` : `≥${lower}`;
     return `<li class="severity-step" data-level="${band.index}">
-      <span class="level-number" aria-hidden="true">${band.index}</span>
+      <span class="level-number" aria-hidden="true">${renderIcon(['walk', 'walk', 'home', 'home'][index])}</span>
       <strong>${escapeHtml(band.scaleLabel)}</strong><span>${escapeHtml(band.name)} · ${range}</span><small class="level-marker"></small>
     </li>`;
   }).join('\n');
