@@ -86,7 +86,6 @@
   .readings-grid,
   .action-grid,
   .guide-grid,
-  .mask-grid,
   .sources-grid {
     grid-template-columns: 1fr;
   }
@@ -125,20 +124,6 @@
   }
   .mask-section {
     padding: 0 0 70px;
-  }
-  .mask-grid {
-    gap: 35px;
-  }
-  .mask-visual {
-    min-height: 260px;
-    border-radius: 0 0 8px 8px;
-  }
-  .mask-visual svg {
-    width: 185px;
-    height: 145px;
-  }
-  .mask-visual span {
-    margin-top: -24px;
   }
   .tips-grid {
     grid-template-columns: 1fr;

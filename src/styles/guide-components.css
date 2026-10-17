@@ -7,7 +7,6 @@ section,
 article,
 .shell,
 .action-grid > *,
-.mask-grid > *,
 .sources-grid > * {
   min-width: 0;
 }
@@ -92,17 +91,7 @@ select {
   line-height: 1.65;
 }
 .mask-comparison {
-  margin-top: 70px;
-}
-.mask-comparison > h3,
-.band-guide > h3,
-.mask-care h3 {
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 1.1rem + 1.5vw, 2.2rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin-bottom: 15px;
+  margin-top: 24px;
 }
 .comparison-note {
   max-width: 850px;
@@ -135,7 +124,7 @@ select {
 .mask-card.recommended .mask-tag {
   color: #365f48;
 }
-.mask-card h4 {
+.mask-card h3 {
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 500;
@@ -202,43 +191,6 @@ select {
 .mask-citations a,
 .mask-care a {
   text-underline-offset: 3px;
-}
-.band-guide {
-  border-top: 1px solid #c8d2c5;
-  padding-top: 42px;
-  margin-top: 42px;
-}
-.band-guide > p {
-  max-width: 820px;
-  color: #52665b;
-}
-.band-guide-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 25px;
-}
-.band-guide-grid article {
-  background: #fffdf8;
-  padding: 25px;
-  border: 1px solid #d5d9cf;
-  border-radius: 7px;
-}
-.band-guide-grid .band-pill {
-  display: inline-block;
-  white-space: normal;
-}
-.band-guide-grid h4 {
-  font-size: 1.2rem;
-  margin: 20px 0 12px;
-}
-.band-guide-grid p {
-  font-size: 0.95rem;
-  color: #52665b;
-  line-height: 1.7;
-}
-.band-guide-grid p:last-child {
-  margin-bottom: 0;
 }
 .mask-care {
   background: #e1e8dc;
@@ -350,31 +302,21 @@ select {
   }
   .vulnerable-note p,
   .guide-card p,
-  .tip p,
-  .mask-copy li {
+  .tip p {
     font-size: 1rem;
   }
   .mask-section {
     padding-top: 35px;
   }
-  .mask-visual {
-    min-height: 210px;
-    border-radius: 7px;
-  }
-  .mask-grid {
-    gap: 25px;
-  }
   .mask-comparison {
-    margin-top: 45px;
+    margin-top: 24px;
   }
   .mask-cards,
-  .band-guide-grid,
   .advanced-masks {
     grid-template-columns: minmax(0, 1fr);
   }
   .mask-card p,
   .advanced-masks p,
-  .band-guide-grid p,
   .mask-care p {
     font-size: 1rem;
   }

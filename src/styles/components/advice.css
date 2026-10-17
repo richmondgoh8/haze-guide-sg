@@ -24,8 +24,7 @@
   max-width: 420px;
   line-height: 1.7;
 }
-.action-intro > a,
-.mask-copy > a {
+.action-intro > a {
   display: inline-flex;
   align-items: center;
   gap: 15px;

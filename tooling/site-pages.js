@@ -21,7 +21,7 @@ export const PAGES = [
     heading: 'Haze masks in Singapore: which one is worth it?',
     intro:
       'N95, KN95, KF94 or FFP2? Understand the ratings, find a comfortable seal and avoid paying for features you don’t need. This guide compares masks for haze particles—not infection-control requirements.',
-    summary: 'Filtration ratings, fit, when to wear one and value for money.',
+    navLabel: 'Masks',
   },
   {
     path: 'guides/windows-during-haze/',
@@ -32,7 +32,7 @@ export const PAGES = [
     heading: 'Singapore haze: can open windows or not?',
     intro:
       'Keeping haze out matters, but so do heat and fresh air. Here’s how to think about ventilation in an HDB flat or other home, without a rigid “close 24/7” rule or a made-up safe opening timer.',
-    summary: 'Keep haze out without forgetting fresh air and Singapore’s heat.',
+    navLabel: 'Windows & ventilation',
   },
   {
     path: 'guides/air-purifier-placement/',
@@ -43,7 +43,7 @@ export const PAGES = [
     heading: 'Air purifier placement: make it work for your room.',
     intro:
       'A purifier in the wrong spot can struggle even with a good filter. Start with the room you actually use, leave the airflow clear and check that the unit is sized for that space—not the whole flat by default.',
-    summary: 'Room layout, clear airflow, smoke CADR and practical running tips.',
+    navLabel: 'Purifier placement',
   },
 ];
 
@@ -134,8 +134,7 @@ export function renderPageFragments(html, page) {
     : '';
   const links = PAGES.filter((entry) => entry.path && entry.path !== page.path)
     .map(
-      (entry) => `<a href="${home}${entry.path}"><span><strong>${escapeHtml(entry.name)}</strong>
-        <small>${escapeHtml(entry.summary)}</small></span><span aria-hidden="true">→</span></a>`,
+      (entry) => `<a href="${home}${entry.path}">${escapeHtml(entry.navLabel ?? entry.name)}</a>`,
     )
     .join('');
   return html

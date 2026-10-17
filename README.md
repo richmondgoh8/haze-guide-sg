@@ -47,7 +47,7 @@ The cost guidance is editorial: compare price per mask after testing fit, buy ge
 
 ## Mobile and search
 
-The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and expandable mask comparisons and band guides. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript. The observed 24-hour PSI is labelled separately from NEA's forecast for future activities.
+The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and expandable mask-rating and safe-use details. The mask overview leads with four filtration tiles and short fit/value tips; activity-specific mask advice remains with the current reading, without a repeated four-band section. Guide links sit in a compact footer rather than a separate promotional block. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript. The observed 24-hour PSI is labelled separately from NEA's forecast for future activities.
 
 Guides lead with labelled icons, short activity verdicts, mask-rating cards and placement diagrams. Longer explanations use native disclosures; heat, higher-risk and filtration caveats stay visible. There are no autoplay effects or additional health scores. This follows cognitive-accessibility principles, not a claim of clinical ADHD suitability.
 

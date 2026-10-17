@@ -46,7 +46,7 @@ No component fetches its own data or calculates its own haze thresholds.
 | `src/scripts/content/`                      | Activity and household advice copy                                          |
 | `src/scripts/ui/`                           | DOM references, rendering and event binding                                 |
 | `src/sections/`                             | Static page content, grouped by visible section                             |
-| `src/sections/masks/`                       | Mask introduction, comparison, band guide and care notes                    |
+| `src/sections/masks/`                       | Compact rating overview, expandable comparisons and safe-use notes          |
 | `src/partials/`                             | Document head, navigation and footer                                        |
 | `src/styles/`                               | Theme, shared styles, component styles and dashboard composition            |
 | `public/`                                   | Assets copied unchanged, including favicon and sharing image                |

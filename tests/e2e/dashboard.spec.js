@@ -70,7 +70,7 @@ test('visual summaries keep safety caveats visible and explanations keyboard acc
   page,
 }) => {
   await page.goto('/');
-  await expect(page.locator('.mask-snapshot .visual-card')).toHaveCount(6);
+  await expect(page.locator('.mask-snapshot .visual-card')).toHaveCount(4);
   await expect(page.locator('.mask-snapshot .visual-caveat')).toBeVisible();
   await expect(page.locator('#window-guide .visual-caveat')).toBeVisible();
   await expect(page.locator('#purifier-guide .visual-caveat')).toBeVisible();
@@ -83,6 +83,24 @@ test('visual summaries keep safety caveats visible and explanations keyboard acc
   await windowSummary.focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#window-guide .ventilation-note')).toBeVisible();
+});
+
+test('mask guide stays concise and removed sections do not return', async ({ page }) => {
+  await page.goto('/');
+  const masks = page.locator('#masks');
+  await expect(page.getByText('THE PRACTICAL GUIDES', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Which mask, at which haze level?', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('04 / A PRACTICAL MASK GUIDE', { exact: true })).toHaveCount(0);
+  await expect(page.locator('#mask-band-details, #guides-title')).toHaveCount(0);
+  await expect(masks.locator('.mask-fit-strip li')).toHaveCount(3);
+  await expect(masks.locator('.mask-care-summary')).toBeVisible();
+  expect((await masks.innerText()).trim().split(/\s+/u).length).toBeLessThan(250);
+  await expect(page.locator('.footer-guides a')).toHaveCount(3);
+  const summary = page.locator('#mask-use-details > summary');
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#mask-use-details')).toHaveAttribute('open');
+  await expect(masks).toContainText('pregnant people');
 });
 
 test('keyboard region changes update advice, retain focus and survive a reload', async ({
@@ -175,7 +193,7 @@ test('expanded guides fit phone, tablet, desktop and enlarged text', async ({ pa
   await expect(page.locator('#pm-value')).toHaveText('140');
   await page.locator('#mask-comparison-details > summary').click();
   await page.locator('#mask-comparison-details .mask-details > summary').click();
-  await page.locator('#mask-band-details > summary').click();
+  await page.locator('#mask-use-details > summary').click();
   await page.locator('#purifier-setup-details > summary').click();
   for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });

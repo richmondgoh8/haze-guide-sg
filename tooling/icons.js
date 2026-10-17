@@ -1,4 +1,7 @@
 const paths = {
+  coins:
+    '<ellipse cx="9" cy="6" rx="6" ry="3"/><path d="M3 6v5c0 2 3 3 6 3m6-8v5M3 11v5c0 2 3 3 6 3"/><ellipse cx="16" cy="15" rx="5" ry="3"/><path d="M11 15v4c0 2 2 3 5 3s5-1 5-3v-4"/>',
+  replace: '<path d="M20 8A8 8 0 0 0 6 5L3 8m0-5v5h5m-4 8a8 8 0 0 0 14 3l3-3m0 5v-5h-5"/>',
   walk: '<circle cx="13" cy="4" r="2"/><path d="m8 21 3-7-1-5m5 12-1-6-3-3m-5 0 4-4 5 4h4"/>',
   run: '<circle cx="16" cy="4" r="2"/><path d="m3 19 6-1 3-5m-4-4 4-2 4 5h5m-9-5-2 7 6 3-1 5"/>',
   home: '<path d="m3 11 9-8 9 8M5 10v11h14V10M10 21v-7h4v7"/>',
