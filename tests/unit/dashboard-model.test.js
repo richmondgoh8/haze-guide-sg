@@ -55,6 +55,21 @@ test('unknown regions fail at the model boundary', () => {
   assert.throws(() => model(snapshot(), 'somewhere'), /Unknown region/);
 });
 
+test('PM2.5 and PSI colors are independent; old PSI keeps its value but not a current marker', () => {
+  const readings = snapshot(20);
+  const current = model(readings);
+  assert.equal(current.pm25.className, 'normal');
+  assert.equal(current.psi.className, 'unhealthy');
+  assert.equal(current.psi.activeLevel, 3);
+  readings.psi.timestamp = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
+  const stale = model(readings);
+  assert.equal(stale.psi.value, 143);
+  assert.equal(stale.psi.className, '');
+  assert.equal(stale.psi.activeLevel, null);
+  assert.equal(stale.psi.label, 'Unhealthy · Last reported');
+  assert.equal(stale.pm25.className, 'normal');
+});
+
 test('short activity verdicts follow the same freshness and band decisions as full advice', () => {
   const readings = snapshot();
   for (const value of [0, 56, 151, 251]) {

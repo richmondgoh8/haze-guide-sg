@@ -45,13 +45,21 @@ export function classifyPm25(value) {
   return PM25_BANDS.find((band) => value <= band.limit);
 }
 
+export const PSI_BANDS = [
+  { limit: 50, name: 'Good', className: 'good', index: 1 },
+  { limit: 100, name: 'Moderate', className: 'moderate', index: 2 },
+  { limit: 200, name: 'Unhealthy', className: 'unhealthy', index: 3 },
+  { limit: 300, name: 'Very unhealthy', className: 'very-unhealthy', index: 4 },
+  { limit: Infinity, name: 'Hazardous', className: 'hazardous', index: 5 },
+];
+
+export function classifyPsi(value) {
+  if (!Number.isFinite(value) || value < 0) return null;
+  return PSI_BANDS.find((band) => value <= band.limit);
+}
+
 export function describePsi(value) {
-  if (!Number.isFinite(value) || value < 0) return 'Unavailable';
-  if (value <= 50) return 'Good';
-  if (value <= 100) return 'Moderate';
-  if (value <= 200) return 'Unhealthy';
-  if (value <= 300) return 'Very unhealthy';
-  return 'Hazardous';
+  return classifyPsi(value)?.name ?? 'Unavailable';
 }
 
 export function isCurrentReading(timestamp, now = Date.now()) {

@@ -26,7 +26,6 @@ h4 {
 select {
   max-width: 100%;
 }
-.site-header nav a,
 .header-source {
   display: inline-flex;
   align-items: center;
@@ -226,21 +225,7 @@ select {
   .header-inner {
     flex-wrap: wrap;
     gap: 0;
-    padding-top: 16px;
-  }
-  .site-header nav {
-    margin-left: 0;
-    width: 100%;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px 14px;
-    margin-top: 8px;
-  }
-  .site-header nav a,
-  .site-header nav a:last-child,
-  .site-header nav a:nth-child(2) {
-    display: inline-flex;
-    font-size: 0.82rem;
+    padding-top: 0;
   }
   .hero-copy {
     padding: 34px 0 36px;
@@ -252,9 +237,6 @@ select {
     font-size: 1rem;
     line-height: 1.65;
     margin-bottom: 22px;
-  }
-  .hero-art {
-    display: none;
   }
   .eyebrow {
     font-size: 0.65rem;
@@ -342,18 +324,12 @@ select {
   .shell {
     width: calc(100% - 28px);
   }
-  .site-header nav a,
-  .site-header nav a:last-child,
-  .site-header nav a:nth-child(2) {
-    font-size: 0.75rem;
-  }
   .reading-card {
     padding: 20px;
   }
   .reading-value {
     flex-wrap: wrap;
     gap: 8px;
-    font-size: 5rem;
   }
   .region-toolbar {
     gap: 8px;

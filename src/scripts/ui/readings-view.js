@@ -11,6 +11,7 @@ export function createReadingsView(root) {
     pmCategory: '#pm-category',
     psiValue: '#psi-value',
     psiLabel: '#psi-band',
+    psiCard: '#psi-card',
     statusDot: '#status-dot',
     statusText: '#data-status-text',
     levelCaption: '#level-caption',
@@ -37,6 +38,11 @@ export function createReadingsView(root) {
       ];
     }),
   );
+  const psiSteps = [...root.querySelectorAll('.psi-step')].map((element) => ({
+    element,
+    level: Number(element.dataset.level),
+    marker: requireElement(element, '.level-marker'),
+  }));
 
   return {
     render(model) {
@@ -49,6 +55,13 @@ export function createReadingsView(root) {
       elements.pmCategory.textContent = model.pm25.category;
       elements.psiValue.textContent = model.psi.value;
       elements.psiLabel.textContent = model.psi.label;
+      elements.psiCard.dataset.band = model.psi.className;
+      for (const { element, level, marker } of psiSteps) {
+        const selected = level === model.psi.activeLevel;
+        if (selected) element.setAttribute('aria-current', 'step');
+        else element.removeAttribute('aria-current');
+        marker.textContent = selected ? '▲ Now' : '';
+      }
       elements.statusDot.className = `status-dot ${model.status.warning ? 'warn' : 'ok'}`;
       elements.statusText.textContent = model.status.text;
       elements.levelCaption.textContent = model.severity.caption;
@@ -76,10 +89,9 @@ export function createReadingsView(root) {
 
       for (const { element, level, marker } of steps) {
         const selected = level === model.severity.activeLevel;
-        element.classList.toggle('is-current', selected);
         if (selected) element.setAttribute('aria-current', 'step');
         else element.removeAttribute('aria-current');
-        marker.textContent = selected ? 'Current level' : '';
+        marker.textContent = selected ? '▲ Now' : '';
       }
 
       for (const region of model.regions) {

@@ -1,7 +1,4 @@
 @media (max-width: 1000px) {
-  .site-header nav {
-    gap: 18px;
-  }
   .header-source {
     display: none;
   }
@@ -29,16 +26,6 @@
   .header-inner {
     min-height: 69px;
   }
-  .site-header nav {
-    gap: 15px;
-    margin-left: auto;
-  }
-  .site-header nav a {
-    font-size: 0.73rem;
-  }
-  .site-header nav a:last-child {
-    display: none;
-  }
   .brand {
     font-size: 1.15rem;
   }
@@ -55,22 +42,6 @@
   }
   .hero h1 {
     font-size: clamp(3.35rem, 11vw, 5rem);
-  }
-  .hero-art {
-    height: 280px;
-    margin: 0 0 24px;
-    border-radius: 45% 45% 5px 5px;
-  }
-  .sun {
-    width: 145px;
-    height: 145px;
-    top: 34px;
-  }
-  .art-hill {
-    height: 170px;
-  }
-  .art-caption {
-    font-size: 0.85rem;
   }
   .readings-section,
   .explainer-section {
@@ -137,17 +108,11 @@
   }
 }
 @media (max-width: 430px) {
-  .site-header nav a:nth-child(2) {
-    display: none;
-  }
   .hero h1 {
     font-size: 3.25rem;
   }
   .reading-card {
     padding: 23px;
-  }
-  .reading-value {
-    font-size: 5.5rem;
   }
   .region-toolbar {
     flex-wrap: wrap;

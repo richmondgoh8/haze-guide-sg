@@ -32,11 +32,13 @@ test('HTML includes support nested sections and report missing or circular files
 
 test('static region controls and scale use the same configuration as the client', () => {
   const result = renderStaticFragments(
-    '<!-- regions: options --><!-- regions: cards --><!-- regions: hint --><!-- haze: scale -->',
+    '<!-- regions: options --><!-- regions: cards --><!-- regions: hint --><!-- haze: scale --><!-- psi: scale -->',
   );
   assert.match(result, /value="east" selected/);
   assert.match(result, /data-region="east" aria-pressed="true"/);
   assert.match(result, /East includes Bedok/);
   assert.equal((result.match(/class="severity-step"/g) || []).length, 4);
+  assert.equal((result.match(/class="psi-step"/g) || []).length, 5);
+  assert.ok(result.includes('Hazardous'));
   assert.ok(!result.includes('<!--'));
 });

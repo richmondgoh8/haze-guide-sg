@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   classifyPm25,
+  classifyPsi,
   describePsi,
   getWindowAdvice,
   isCurrentReading,
@@ -41,6 +42,24 @@ test('PSI labels use their own thresholds', () => {
   ]) {
     assert.equal(describePsi(value), label);
   }
+});
+
+test('PSI visual categories use their own boundaries and reject non-numeric values', () => {
+  for (const [value, className] of [
+    [0, 'good'],
+    [50, 'good'],
+    [51, 'moderate'],
+    [100, 'moderate'],
+    [101, 'unhealthy'],
+    [200, 'unhealthy'],
+    [201, 'very-unhealthy'],
+    [300, 'very-unhealthy'],
+    [301, 'hazardous'],
+  ]) {
+    assert.equal(classifyPsi(value)?.className, className);
+  }
+  for (const value of [null, undefined, -1, NaN, Infinity, '178'])
+    assert.equal(classifyPsi(value), null);
 });
 
 test('freshness rejects missing, invalid, old and future readings', () => {

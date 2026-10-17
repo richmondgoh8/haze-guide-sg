@@ -9,9 +9,6 @@
   gap: 10%;
   align-items: center;
 }
-.action-intro .kicker {
-  color: #e5ba82;
-}
 .action-intro h2 {
   font-size: clamp(2.7rem, 4.5vw, 4.5rem);
   margin-bottom: 22px;
@@ -19,19 +16,10 @@
 .action-intro h2 em {
   color: #f0c78e;
 }
-.action-intro > p:not(.kicker) {
+.action-intro > p {
   color: #c1d5c7;
   max-width: 420px;
   line-height: 1.7;
-}
-.action-intro > a {
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  color: #f3d7a2;
-  font-weight: 700;
-  text-underline-offset: 6px;
-  margin-top: 18px;
 }
 .action-panel {
   background: #f8f7ef;

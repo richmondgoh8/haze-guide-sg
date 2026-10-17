@@ -34,24 +34,56 @@
 .footer-brand span {
   color: #db975e;
 }
-.site-header nav {
-  display: flex;
-  gap: 34px;
-  margin-left: auto;
-}
-.site-header nav a,
 .header-source {
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 700;
 }
-.site-header nav a:hover,
 .header-source:hover {
   color: #a35b2a;
 }
 .header-source {
+  margin-left: auto;
   border-left: 1px solid var(--line);
   padding-left: 30px;
+}
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: 0 3px 8px #173b340c;
+}
+.section-links {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 4px;
+  padding-block: 6px;
+}
+.section-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.section-links a:hover,
+.section-links a:focus-visible {
+  background: var(--mint);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 760px) {
+  .section-links {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 .header-source span {
   margin-left: 7px;

@@ -1,7 +1,13 @@
 import { REGIONS } from '../config.js';
 import { ACTIVITY_GUIDANCE, UNAVAILABLE_ACTIVITY } from '../content/advice.js';
 import { formatTimestamp } from '../formatters.js';
-import { classifyPm25, describePsi, getWindowAdvice, isCurrentReading } from './air-quality.js';
+import {
+  classifyPm25,
+  classifyPsi,
+  describePsi,
+  getWindowAdvice,
+  isCurrentReading,
+} from './air-quality.js';
 import { describeBandPosition } from './band-position.js';
 
 /** Select advice and display values without depending on the browser or NEA's payload format. */
@@ -13,6 +19,8 @@ export function createDashboardModel({ readings, region, loading = false }, now 
   const band = classifyPm25(pm25);
   const current = Boolean(band && isCurrentReading(readings.pm25?.timestamp, now));
   const activeBand = current ? band : null;
+  const psiBand = classifyPsi(psi);
+  const psiCurrent = Boolean(psiBand && isCurrentReading(readings.psi?.timestamp, now));
   const advice = activeBand ? ACTIVITY_GUIDANCE[band.index] : UNAVAILABLE_ACTIVITY;
 
   const status = [];
@@ -39,7 +47,12 @@ export function createDashboardModel({ readings, region, loading = false }, now 
         ? `NEA category: ${band.name} · Band ${band.index}${current ? '' : ' · Last reported'}`
         : 'NEA category unavailable',
     },
-    psi: { value: describePsi(psi) !== 'Unavailable' ? psi : '—', label: describePsi(psi) },
+    psi: {
+      value: psiBand ? psi : '—',
+      label: psiBand ? `${psiBand.name}${psiCurrent ? '' : ' · Last reported'}` : 'Unavailable',
+      className: psiCurrent ? psiBand.className : '',
+      activeLevel: psiCurrent ? psiBand.index : null,
+    },
     status: {
       warning: warnings.length > 0,
       text:

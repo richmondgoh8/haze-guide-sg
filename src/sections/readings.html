@@ -14,6 +14,15 @@
         still read the activity and mask guides below.
       </p></noscript
     >
+    <div class="advisory-link-row">
+      <a
+        class="official-advisory"
+        href="https://www.haze.gov.sg/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Official NEA advisory & forecast ↗</a
+      >
+    </div>
     <div class="region-toolbar">
       <label for="region">I’m in</label
       ><select id="region" aria-label="Singapore region">
@@ -26,6 +35,9 @@
         Refresh
       </button>
     </div>
+    <p class="region-memory">
+      Your region is remembered on this browser when storage is available.
+    </p>
     <p class="region-hint">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z" />
@@ -47,12 +59,19 @@
         <div class="reading-value"><span id="pm-value">—</span><span class="unit">µg/m³</span></div>
         <p class="reading-caption">1-hour PM2.5 · Fine particles in the air</p>
         <p id="pm-category" class="official-category">Waiting for the NEA reading</p>
+        <ol
+          class="reading-scale severity-scale"
+          role="list"
+          aria-label="PM2.5 bands from Normal to Very high, in micrograms per cubic metre"
+        >
+          <!-- haze: scale -->
+        </ol>
         <div class="reading-divider"></div>
         <p class="reading-foot">
           Higher numbers mean <strong>more fine particles to breathe in.</strong>
         </p>
       </article>
-      <article class="reading-card psi-card">
+      <article class="reading-card psi-card" id="psi-card">
         <div class="reading-top">
           <span class="reading-label">24-HOUR PSI</span
           ><span class="mini-icon" aria-hidden="true"
@@ -61,6 +80,13 @@
         </div>
         <div class="reading-value"><span id="psi-value">—</span></div>
         <p class="reading-caption" id="psi-band">Checking…</p>
+        <ol
+          class="reading-scale psi-scale"
+          role="list"
+          aria-label="PSI categories from Good to Hazardous"
+        >
+          <!-- psi: scale -->
+        </ol>
         <div class="reading-divider"></div>
         <p class="reading-foot">A rolling reading, <strong>not tomorrow’s forecast.</strong></p>
       </article>
@@ -105,13 +131,6 @@
         </div>
         <small>Band distance, not a trend or safety margin. Units: µg/m³.</small>
       </div>
-      <ol
-        class="severity-scale"
-        role="list"
-        aria-label="Four haze levels, from normal to very high"
-      >
-        <!-- haze: scale -->
-      </ol>
       <p class="scale-note">
         Ranges are 1-hour PM2.5 in µg/m³. The actions are for generally healthy adults; people at
         higher risk need extra care.

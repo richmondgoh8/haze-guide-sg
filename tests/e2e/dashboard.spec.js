@@ -22,6 +22,9 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#region')).toHaveValue('east');
   await expect(page.locator('#pm-value')).toHaveText('140');
   await expect(page.locator('#psi-value')).toHaveText('143');
+  await expect(page.locator('#pm-card')).toHaveAttribute('data-band', 'elevated');
+  await expect(page.locator('#psi-card')).toHaveAttribute('data-band', 'unhealthy');
+  await expect(page.locator('.psi-step[aria-current]')).toHaveAttribute('data-level', '3');
   await expect(page.locator('#pm-category')).toContainText('Band 2');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'reduce');
   await expect(page.locator('#region-towns')).toContainText('Bedok');
@@ -38,6 +41,58 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#band-position-title')).toHaveText('Closer to High');
   await expect(page.locator('#band-distance-up')).toHaveText('11 µg/m³ below High (151)');
   await expect(page.locator('#band-distance-down')).toHaveText('85 µg/m³ above Normal (≤55)');
+});
+
+test('dropdown choice is remembered without cookies', async ({ page, context }) => {
+  await page.goto('/');
+  await page.locator('#region').selectOption('west');
+  await expect(page.locator('#pm-value')).toHaveText('80');
+  await page.reload();
+  await expect(page.locator('#region')).toHaveValue('west');
+  await expect(page.locator('#pm-value')).toHaveText('80');
+  expect(await context.cookies()).toEqual([]);
+});
+
+test('section navigation stays available and anchors clear it, including enlarged text', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const navigation = page.getByRole('navigation', { name: 'Page sections' });
+  await expect(navigation.getByRole('link')).toHaveCount(8);
+  await expect(page.getByText('02 / YOUR NEXT MOVE', { exact: true })).toHaveCount(0);
+  await expect(page.locator('.hero-art')).toHaveCount(0);
+  await expect(page.locator('.official-advisory')).toBeVisible();
+  const font = await page
+    .locator('.reading-value')
+    .first()
+    .evaluate((element) => getComputedStyle(element).fontFamily);
+  expect(font).toContain('DM Sans');
+  expect(font).not.toContain('Fraunces');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await navigation.getByRole('link', { name: 'Masks', exact: true }).click();
+    await expect(page).toHaveURL(/#masks$/u);
+    await expect
+      .poll(async () => {
+        const navBox = await navigation.boundingBox();
+        const sectionBox = await page.locator('#masks').boundingBox();
+        return sectionBox.y >= navBox.y + navBox.height - 2;
+      })
+      .toBe(true);
+    expect((await navigation.boundingBox()).y).toBeLessThanOrEqual(1);
+    await navigation.getByRole('link', { name: 'Back to top' }).click();
+    await expect(page).toHaveURL(/#top$/u);
+  }
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.evaluate(() => {
+    document.documentElement.style.fontSize = '200%';
+  });
+  await navigation.getByRole('link', { name: 'Purifier', exact: true }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const navBox = await navigation.boundingBox();
+  const sectionBox = await page.locator('#purifier-guide').boundingBox();
+  expect(sectionBox.y).toBeGreaterThanOrEqual(navBox.y + navBox.height - 2);
 });
 
 test('one shared snapshot request serves all regions; no government API requests', async ({

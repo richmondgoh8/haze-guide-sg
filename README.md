@@ -28,6 +28,7 @@ Read [the architecture guide](docs/ARCHITECTURE.md) for the data flow and [the c
 - A next-hour outdoor activity recommendation, with separate everyday activity, strenuous exercise, mask and higher-risk guidance. Unavailable, stale and invalid timestamps withhold the recommendation.
 - A mobile-friendly comparison of cloth, surgical/KF-AD, N95, KN95, KF94 and FFP2 masks, plus KF80, N99/FFP3/KF99, N100/P100, reusable and valved options. The ratings describe laboratory filtration, not guaranteed personal protection.
 - A four-step haze scale, with the current level marked in text and colour. The scale uses NEA's existing bands; it is not a separate risk score.
+- Both reading cards use readable sans-serif numbers and their own labelled colour scales: four PM2.5 bands and five PSI categories. Their colours follow each measurement independently; stale values lose their current marker and card tint. These UI colours are not a new health index.
 
 ## Window advice
 
@@ -54,6 +55,8 @@ Guides lead with labelled icons, short activity verdicts, mask-rating cards and 
 `tooling/icons.js` renders the shared SVG icons at build time from `<!-- icon: name -->` markers. Add a named path there and use a visible text label beside it. Shared infographic layouts live in `src/styles/components/visual-guide.css`; thresholds and activity copy remain in the existing domain/content modules.
 
 The dashboard and three dedicated guides have unique titles, descriptions, canonical URLs, sharing metadata and static HTML. `tooling/site-pages.js` drives the build entries, metadata, related-guide links and generated sitemap at `/haze-guide-sg/sitemap.xml`. Guide pages also have breadcrumb structured data and do not load the dashboard JavaScript.
+
+The shared section bar stays at the top while scrolling and includes a Top link. Native links work without JavaScript; scroll offsets keep targets below the bar at phone widths and enlarged text. Region preferences use local storage, not cookies. The official advisory and forecast link sits beside the readings, separate from this project's practical advice.
 
 The [SEO guide](docs/SEO.md) covers Search Console setup, ranking priorities, measurement and GitHub Pages limitations. These changes prepare pages for discovery; they do not guarantee search rankings or submit the site to Search Console. GitHub project sites do not control the domain-root `robots.txt`; no project-level robots file is used as a substitute.
 

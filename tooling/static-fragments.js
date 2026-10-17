@@ -1,6 +1,5 @@
 import { DEFAULT_REGION, REGIONS } from '../src/scripts/config.js';
-import { PM25_BANDS } from '../src/scripts/domain/air-quality.js';
-import { renderIcon } from './icons.js';
+import { PM25_BANDS, PSI_BANDS } from '../src/scripts/domain/air-quality.js';
 
 function escapeHtml(value) {
   return String(value).replace(
@@ -29,23 +28,24 @@ export function renderStaticFragments(html) {
       <span class="region-band">Checking…</span><span class="region-arrow" aria-hidden="true">↗</span>
     </button>`;
   }).join('\n');
-  const scale = PM25_BANDS.map((band, index) => {
-    const lower = index === 0 ? 0 : PM25_BANDS[index - 1].limit + 1;
-    const range = Number.isFinite(band.limit) ? `${lower}–${band.limit}` : `≥${lower}`;
-    return `<li class="severity-step" data-level="${band.index}">
-      <span class="level-number" aria-hidden="true">${renderIcon(['walk', 'walk', 'home', 'home'][index])}</span>
-      <strong>${escapeHtml(band.scaleLabel)}</strong><span>${escapeHtml(band.name)} · ${range}</span><small class="level-marker"></small>
-    </li>`;
-  }).join('\n');
+  const renderScale = (bands, stepClass) =>
+    bands
+      .map((band, index) => {
+        const lower = index === 0 ? 0 : bands[index - 1].limit + 1;
+        const range = Number.isFinite(band.limit) ? `${lower}–${band.limit}` : `≥${lower}`;
+        return `<li class="${stepClass}" data-level="${band.index}" data-band="${band.className}"><strong>${escapeHtml(band.name)}</strong><span>${range}</span><small class="level-marker"></small></li>`;
+      })
+      .join('\n');
   const region = REGIONS.find(({ id }) => id === DEFAULT_REGION);
   const fragments = {
     'regions: options': regionOptions,
     'regions: cards': regionCards,
     'regions: hint': escapeHtml(`${region.name} includes ${region.towns}.`),
-    'haze: scale': scale,
+    'haze: scale': renderScale(PM25_BANDS, 'severity-step'),
+    'psi: scale': renderScale(PSI_BANDS, 'psi-step'),
   };
   return html.replace(
-    /<!--\s*(regions: (?:options|cards|hint)|haze: scale)\s*-->/g,
+    /<!--\s*(regions: (?:options|cards|hint)|(?:haze|psi): scale)\s*-->/g,
     (_, name) => fragments[name],
   );
 }

@@ -94,7 +94,9 @@ Window advice is an editorial interpretation of the cited household guidance. It
 
 `src/index.html` lists sections in reading order. A comment such as `<!-- include: sections/windows.html -->` is expanded before Vite processes the document. Includes are relative to `src/`; nested includes are supported. Missing, out-of-root or circular includes fail the build with a useful error.
 
-`tooling/static-fragments.js` renders region options, regional buttons and the haze scale from the same configuration used by the browser. Their placeholder comments are specific to those repeated components; this is not a general template language. All guides are present in the built HTML, including when JavaScript is disabled.
+`tooling/static-fragments.js` renders region options, regional buttons, the four PM2.5 bands and five PSI categories from the same configuration used by the browser. The model classifies each reading independently and the view updates only text, data attributes and current markers. Their placeholder comments are specific to those repeated components; this is not a general template language. All guides are present in the built HTML, including when JavaScript is disabled.
+
+The shared section navigation is a native sticky bar, not a scroll listener or client-side router. Responsive anchor offsets account for its wrapped mobile layout and enlarged text. The Top link and all section links work without JavaScript. Number readouts use the existing bundled body font with tabular figures; decorative display type is reserved for headings.
 
 `src/styles/main.css` declares the import order. All styles share the `site` cascade layer, retaining the existing specificity and order. `theme.css` contains shared design tokens. `components/` holds shared section styles, `guide-components.css` holds detailed guide components, and `dashboard.css` handles the compact dashboard composition. Responsive rules remain with their relevant defaults or in `responsive.css`. Change a component where its existing rule lives; avoid adding a new override file for each edit.
 

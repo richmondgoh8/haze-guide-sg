@@ -2,11 +2,6 @@
 .visual-icon {
   color: #44806b;
 }
-.level-number .visual-icon {
-  width: 23px;
-  height: 23px;
-  color: inherit;
-}
 .visual-guide {
   container-type: inline-size;
   margin-block: 28px;

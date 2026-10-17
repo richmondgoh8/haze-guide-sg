@@ -2,8 +2,10 @@
   box-sizing: border-box;
 }
 html {
+  --section-offset: 4rem;
   font-size: var(--base-font-size);
   scroll-behavior: smooth;
+  scroll-padding-top: var(--section-offset);
 }
 body {
   margin: 0;
@@ -79,5 +81,21 @@ h3 {
   outline-offset: 4px;
 }
 section {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 12px;
+}
+button,
+a,
+select,
+summary {
+  scroll-margin-block: var(--section-offset) 24px;
+}
+@media (max-width: 760px) {
+  html {
+    --section-offset: 7rem;
+  }
+}
+@media (max-width: 360px) {
+  html {
+    --section-offset: 8rem;
+  }
 }
