@@ -1,152 +1,939 @@
 <!doctype html>
 <html lang="en-SG">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f6f1">
-  <meta name="description" content="Check Singapore's NEA 1-hour PM2.5 and 24-hour PSI. See whether outdoor activities are advisable, compare mask filtration, and choose practical haze protection.">
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <link rel="canonical" href="https://richmondgoh8.github.io/haze-guide-sg/">
-  <link rel="sitemap" type="application/xml" href="./sitemap.xml">
-  <meta property="og:title" content="Singapore Haze, PM2.5 & Mask Guide | Air, Actually">
-  <meta property="og:description" content="Official NEA readings, clear outdoor activity advice, and a practical mask comparison. East Singapore by default, with all five regions available.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_SG">
-  <meta property="og:site_name" content="Air, Actually">
-  <meta property="og:url" content="https://richmondgoh8.github.io/haze-guide-sg/">
-  <meta property="og:image" content="https://richmondgoh8.github.io/haze-guide-sg/social-card.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Air, Actually: Singapore haze readings, outdoor activity advice and mask guide">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Singapore Haze, PM2.5 & Mask Guide | Air, Actually">
-  <meta name="twitter:description" content="Know the air. Check official NEA readings, outdoor activity advice and mask filtration ratings.">
-  <meta name="twitter:image" content="https://richmondgoh8.github.io/haze-guide-sg/social-card.png">
-  <meta name="twitter:image:alt" content="Air, Actually: Singapore haze guide">
-  <title>Singapore Haze, Live PM2.5 & Mask Guide | Air, Actually</title>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://richmondgoh8.github.io/haze-guide-sg/#webpage",
-    "url": "https://richmondgoh8.github.io/haze-guide-sg/",
-    "name": "Singapore Haze, Live PM2.5 & Mask Guide | Air, Actually",
-    "description": "Official NEA regional haze readings, outdoor activity guidance, and a comparison of mask filtration ratings for Singapore.",
-    "inLanguage": "en-SG",
-    "spatialCoverage": { "@type": "Country", "name": "Singapore" },
-    "isPartOf": { "@type": "WebSite", "name": "Air, Actually", "url": "https://richmondgoh8.github.io/haze-guide-sg/" },
-    "about": [ { "@type": "Thing", "name": "Singapore haze and PM2.5" }, { "@type": "Thing", "name": "Respirator filtration and outdoor activity guidance" } ]
-  }
-  </script>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./mobile.css">
-  <script src="./app.js" defer></script>
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="shell header-inner">
-      <a class="brand" href="#top" aria-label="Air, Actually — home">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M6 27c9-10 16-10 25-1 4 4 7 4 11 0M6 35c9-10 16-10 25-1 4 4 7 4 11 0M9 17c6-6 13-7 20-1"/></svg></span>
-        <span>air, actually<span class="brand-dot">.</span></span>
-      </a>
-      <nav aria-label="Main navigation"><a href="#readings">Readings</a><a href="#what-to-do">Outdoor advice</a><a href="#masks">Masks</a><a href="#explained">The guide</a></nav>
-      <a class="header-source" href="#sources">Our sources <span aria-hidden="true">↗</span></a>
-    </div>
-  </header>
-
-  <main id="main" tabindex="-1">
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="shell hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow"><span class="eyebrow-line"></span> SINGAPORE HAZE & AIR QUALITY</div>
-          <h1 id="hero-title">Know the air.<br><em>Make your move.</em></h1>
-          <p>Haze numbers can be confusing. Here’s what the air is like in your part of Singapore, and what that means for your next hour outside.</p>
-          <a class="hero-cta" href="#readings">Check your area <span aria-hidden="true">↗</span></a>
-          <div class="hero-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v6m0-9h.01"/></svg><span>Live readings from Singapore’s National Environment Agency</span></div>
-        </div>
-        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="art-ring ring-one"></div><div class="art-ring ring-two"></div><div class="art-hill hill-back"></div><div class="art-hill hill-front"></div><div class="art-caption">A clearer way to see the day.</div></div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f6f1" />
+    <meta
+      name="description"
+      content="Check Singapore's NEA 1-hour PM2.5 and 24-hour PSI. See whether outdoor activities are advisable, compare mask filtration, and choose practical haze protection."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://richmondgoh8.github.io/haze-guide-sg/" />
+    <link rel="sitemap" type="application/xml" href="./sitemap.xml" />
+    <meta property="og:title" content="Singapore Haze, PM2.5 & Mask Guide | Air, Actually" />
+    <meta
+      property="og:description"
+      content="Official NEA readings, clear outdoor activity advice, and a practical mask comparison. East Singapore by default, with all five regions available."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_SG" />
+    <meta property="og:site_name" content="Air, Actually" />
+    <meta property="og:url" content="https://richmondgoh8.github.io/haze-guide-sg/" />
+    <meta
+      property="og:image"
+      content="https://richmondgoh8.github.io/haze-guide-sg/social-card.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Air, Actually: Singapore haze readings, outdoor activity advice and mask guide"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Singapore Haze, PM2.5 & Mask Guide | Air, Actually" />
+    <meta
+      name="twitter:description"
+      content="Check Singapore haze readings, outdoor activity advice, mask ratings and when to close the windows."
+    />
+    <meta
+      name="twitter:image"
+      content="https://richmondgoh8.github.io/haze-guide-sg/social-card.png"
+    />
+    <meta name="twitter:image:alt" content="Air, Actually: Singapore haze guide" />
+    <title>Singapore Haze, Live PM2.5 & Mask Guide | Air, Actually</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://richmondgoh8.github.io/haze-guide-sg/#webpage",
+        "url": "https://richmondgoh8.github.io/haze-guide-sg/",
+        "name": "Singapore Haze, Live PM2.5 & Mask Guide | Air, Actually",
+        "description": "Official NEA regional haze readings, outdoor activity guidance, and a comparison of mask filtration ratings for Singapore.",
+        "inLanguage": "en-SG",
+        "spatialCoverage": { "@type": "Country", "name": "Singapore" },
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Air, Actually",
+          "url": "https://richmondgoh8.github.io/haze-guide-sg/"
+        },
+        "about": [
+          { "@type": "Thing", "name": "Singapore haze and PM2.5" },
+          { "@type": "Thing", "name": "Respirator filtration and outdoor activity guidance" }
+        ]
+      }
+    </script>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./mobile.css" />
+    <link rel="stylesheet" href="./guidance.css" />
+    <script src="./app.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#top" aria-label="Air, Actually — home">
+          <span class="brand-mark" aria-hidden="true"
+            ><svg viewBox="0 0 48 48">
+              <path
+                d="M6 27c9-10 16-10 25-1 4 4 7 4 11 0M6 35c9-10 16-10 25-1 4 4 7 4 11 0M9 17c6-6 13-7 20-1"
+              /></svg
+          ></span>
+          <span>air, actually<span class="brand-dot">.</span></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#readings">Readings</a><a href="#what-to-do">Outdoor advice</a
+          ><a href="#masks">Masks</a><a href="#explained">The guide</a>
+        </nav>
+        <a class="header-source" href="#sources">Our sources <span aria-hidden="true">↗</span></a>
       </div>
-    </section>
+    </header>
 
-    <section class="readings-section" id="readings" aria-labelledby="readings-title">
-      <div class="shell">
-        <div class="section-heading"><div><p class="kicker">01 / THE AIR RIGHT NOW</p><h2 id="readings-title">Your area, at a glance.</h2></div><p>Choose a region for official readings and practical next steps.</p></div>
-        <noscript><p>Live readings need JavaScript. <a href="https://www.haze.gov.sg/">Check the current readings at haze.gov.sg.</a> You can still read the activity and mask guides below.</p></noscript>
-        <div class="region-toolbar"><label for="region">I’m in</label><select id="region" aria-label="Singapore region"><option value="north">North</option><option value="south">South</option><option value="east" selected>East</option><option value="west">West</option><option value="central">Central</option></select><span class="toolbar-spacer"></span><button class="refresh-button" id="refresh" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2 6m2 2v-6h-6"/></svg> Refresh</button></div>
-        <div class="readings-grid">
-          <article class="reading-card primary-card" id="pm-card"><div class="reading-top"><span class="reading-label">1-HOUR PM2.5</span><span class="band-pill" id="pm-band">Checking…</span></div><div class="reading-value"><span id="pm-value">—</span><span class="unit">µg/m³</span></div><p class="reading-caption">Fine particles averaged over the past hour</p><div class="reading-divider"></div><p class="reading-foot">Use this for <strong>what to do in the next hour.</strong></p></article>
-          <article class="reading-card psi-card"><div class="reading-top"><span class="reading-label">24-HOUR PSI</span><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17h18M5 12h14M8 7h8"/></svg></span></div><div class="reading-value"><span id="psi-value">—</span></div><p class="reading-caption" id="psi-band">Checking…</p><div class="reading-divider"></div><p class="reading-foot">Use this for <strong>the bigger picture and planning ahead.</strong></p></article>
-        </div>
-        <div class="data-status" role="status" aria-live="polite"><span class="status-dot" id="status-dot"></span><span id="data-status-text">Checking official NEA readings…</span><span class="status-source">Source: <a href="https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view" target="_blank" rel="noopener noreferrer">NEA via data.gov.sg ↗</a></span></div>
-        <div class="outdoor-summary" id="outdoor-summary"><div><span class="summary-label">CAN I GO OUTSIDE?</span><p id="outdoor-verdict">Checking the next-hour recommendation for East…</p><small>For generally healthy adults. Higher-risk guidance is below.</small></div><a href="#what-to-do">See activity & mask advice <span aria-hidden="true">↗</span></a></div>
-        <div class="regional-block"><div><h3>Across the island</h3><p>Tap a region to see its advice.</p></div><div class="regional-list" id="regional-list" aria-label="One-hour PM2.5 by region"></div></div>
-      </div>
-    </section>
-
-    <section class="action-section" id="what-to-do" aria-labelledby="action-title">
-      <div class="shell action-grid">
-        <div class="action-intro"><p class="kicker">02 / YOUR NEXT MOVE</p><h2 id="action-title">Outdoor plans?<br><em>Here’s your guide.</em></h2><p>Use the latest 1-hour PM2.5 reading for the next hour. Duration, effort and your health all matter. Recheck before leaving; a mask does not make strenuous exercise advisable in poor air.</p><p>Higher-risk people include children, older adults, pregnant people, and those with chronic heart or lung conditions.</p><a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">See the official haze advisory <span aria-hidden="true">↗</span></a></div>
-        <div class="action-panel"><div class="action-panel-head"><span class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M18.4 5.6l-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg></span><span id="action-region">EAST · NEXT HOUR</span></div>
-          <div class="action-body"><p class="action-status" id="action-status">Waiting for a reading</p><h3 id="action-main">We’ll show advice when the latest reading arrives.</h3><p class="action-detail" id="action-detail">If the feed is unavailable, use the official haze site before deciding on outdoor activity.</p>
-            <dl class="activity-list"><div><dt>Walking & everyday activity</dt><dd id="activity-walk">Check the official reading before heading out.</dd></div><div><dt>Running, cycling & sport</dt><dd id="activity-exercise">Check the official activity guide before starting.</dd></div><div><dt>Mask choice</dt><dd id="activity-mask">Advice appears with a fresh reading.</dd></div></dl>
-            <div class="vulnerable-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3h.01"/></svg><div><strong>If you’re more vulnerable</strong><p id="action-vulnerable">Use the official guidance and your own care plan.</p></div></div>
+    <main id="main" tabindex="-1">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">
+              <span class="eyebrow-line"></span> SINGAPORE HAZE & AIR QUALITY
+            </div>
+            <h1 id="hero-title">Haze today?<br /><em>Here’s what to do.</em></h1>
+            <p>
+              Check the air in your part of Singapore. Find out whether to head outside, exercise,
+              or keep the windows closed.
+            </p>
+            <a class="hero-cta" href="#readings"
+              >Check your area <span aria-hidden="true">↗</span></a
+            >
+            <div class="hero-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 10v6m0-9h.01" /></svg
+              ><span>Live readings from Singapore’s National Environment Agency</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="art-ring ring-one"></div>
+            <div class="art-ring ring-two"></div>
+            <div class="art-hill hill-back"></div>
+            <div class="art-hill hill-front"></div>
+            <div class="art-caption">Singapore · five regions · hourly readings</div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="explainer-section" id="explained" aria-labelledby="explained-title"><div class="shell"><div class="section-heading"><div><p class="kicker">03 / THE SHORT GUIDE</p><h2 id="explained-title">Less jargon. More clarity.</h2></div><p>Three things worth knowing before you head out.</p></div><div class="guide-grid"><article class="guide-card"><span class="guide-number">01</span><div class="guide-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 13v11l8 5"/></svg></div><h3>PM2.5 for right now</h3><p>These tiny particles can get deep into your lungs. The <strong>1-hour reading</strong> tells you how much was in the air over the past hour. It can change quickly, so check again before heading out.</p></article><article class="guide-card"><span class="guide-number">02</span><div class="guide-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M9 36V16m10 20V9m10 27V22m10 14V13M5 36h38"/></svg></div><h3>PSI for the bigger picture</h3><p>Singapore’s <strong>24-hour PSI</strong> combines several pollutants over a longer period. It is useful for planning, but it may respond more slowly to a sudden change outside your window.</p></article><article class="guide-card"><span class="guide-number">03</span><div class="guide-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 33c5-6 9-6 14 0s9 6 14 0M10 24c5-6 9-6 14 0s9 6 14 0M10 15c5-6 9-6 14 0s9 6 14 0"/></svg></div><h3>There isn’t one global AQI</h3><p>Different countries calculate “AQI” differently. We show <strong>NEA’s original Singapore readings</strong> and official bands, so you can see exactly what each number means here.</p></article></div></div></section>
-
-    <section class="mask-section" id="masks" aria-labelledby="mask-title">
-      <div class="shell">
-        <div class="mask-grid">
-          <div class="mask-visual" aria-hidden="true"><svg viewBox="0 0 320 250"><path class="mask-strap" d="M85 80C29 62 27 187 88 174M235 80c56-18 58 107-3 94"/><path class="mask-body" d="M83 75c36-29 93-31 154 0v82c-34 48-99 67-154 0V75Z"/><path class="mask-seam" d="M83 88c50-26 100-28 154 0M83 146c50 26 100 28 154 0M160 67v139"/></svg><span>FIT FIRST. THEN THE NUMBER.</span></div>
-          <div class="mask-copy"><p class="kicker">04 / A PRACTICAL MASK GUIDE</p><h2 id="mask-title">Spend on a good fit.<br>Not just a bigger number.</h2><p>MOH includes N95, KN95, KF94 and FFP2 as options for haze particles. A genuine, well-fitting model from these groups is a practical starting point when a respirator is needed.</p><ul><li><span class="check-icon" aria-hidden="true">✓</span><span><strong>A short commute?</strong> MOH says a respirator is generally unnecessary for routine commuting or indoors. Follow the current band and your health needs.</span></li><li><span class="check-icon" aria-hidden="true">✓</span><span><strong>Check the seal every time.</strong> Cover your nose and mouth fully, mould the nosepiece, and follow the maker’s seal-check instructions. Gaps and facial hair at the seal reduce protection.</span></li><li><span class="check-icon" aria-hidden="true">✓</span><span><strong>Buy a small pack first.</strong> Compare the delivered price per mask after finding a certified model that seals comfortably. Surgical fluid resistance adds no particle-filtration benefit for haze.</span></li></ul><a href="https://www.moh.gov.sg/others/haze/" target="_blank" rel="noopener noreferrer">Read MOH’s mask guidance <span aria-hidden="true">↗</span></a></div>
-        </div>
-
-        <div class="mask-comparison">
-          <h3>What the filtration labels actually mean</h3>
-          <p class="comparison-note">These are minimum filter efficiencies under each standard’s laboratory tests, not the percentage of protection you will get on your face. Standards use different test conditions; fit and authenticity matter. A “95% BFE” surgical mask is not the same as an N95.</p>
-          <div class="mask-cards">
-            <article class="mask-card"><span class="mask-tag">NOT A HAZE RESPIRATOR</span><h4>Cloth / fashion / paper</h4><p class="filter-rating">No fixed rating</p><p>Material and leakage vary. Uncertified “PM2.5” inserts do not establish protection for the whole mask.</p><p class="mask-value"><strong>Value for haze:</strong> avoid spending on these as your particle protection.</p></article>
-            <article class="mask-card"><span class="mask-tag">LOOSE FIT</span><h4>Surgical / 3-ply / KF-AD</h4><p class="filter-rating">BFE ≠ respirator rating</p><p>Designed mainly for droplets and splashes. A bacterial filtration claim does not tell you how much haze leaks around the edges.</p><p class="mask-value"><strong>Value for haze:</strong> low purchase price does not make it a substitute for a respirator.</p></article>
-            <article class="mask-card recommended"><span class="mask-tag">PRACTICAL HAZE OPTION</span><h4>N95</h4><p class="filter-rating">≥95% <small>NIOSH · US</small></p><p>Often uses two headbands. Check the NIOSH name, model and TC approval number. A standard N95 and surgical N95 have the same minimum particle rating.</p><p class="mask-value"><strong>Value for haze:</strong> a useful choice if it seals well; no need to pay for a surgical version solely for haze.</p></article>
-            <article class="mask-card recommended"><span class="mask-tag">PRACTICAL HAZE OPTION</span><h4>KN95</h4><p class="filter-rating">≥95% <small>GB 2626 · China</small></p><p>Commonly sold in folding designs. Ear loops or headbands vary by model; verify the stated standard and check for gaps.</p><p class="mask-value"><strong>Value for haze:</strong> compare it with N95 on genuine certification, your fit and price per mask.</p></article>
-            <article class="mask-card recommended"><span class="mask-tag">PRACTICAL HAZE OPTION</span><h4>KF94</h4><p class="filter-rating">≥94% <small>MFDS · Korea</small></p><p>Commonly sold in boat shapes. Look for a genuine KF94 product and the correct size. The standard differs from N95, though MOH accepts it for haze.</p><p class="mask-value"><strong>Value for haze:</strong> a practical option if it fits; the one-point rating difference alone should not decide your purchase.</p></article>
-            <article class="mask-card recommended"><span class="mask-tag">PRACTICAL HAZE OPTION</span><h4>FFP2</h4><p class="filter-rating">≥94% <small>EN 149 · Europe</small></p><p>A tight-fitting particulate respirator. Check the EN 149 classification and manufacturer’s markings; shape and straps vary.</p><p class="mask-value"><strong>Value for haze:</strong> another suitable category; choose a certified fit rather than paying for an imported label.</p></article>
+      <section class="readings-section" id="readings" aria-labelledby="readings-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="kicker">01 / THE AIR RIGHT NOW</p>
+              <h2 id="readings-title">Your area, at a glance.</h2>
+            </div>
+            <p>Choose a region for official readings and practical next steps.</p>
           </div>
-          <details class="mask-details"><summary>Other ratings, reusable respirators and valves</summary><div class="advanced-masks">
-            <div><strong>KF80: ≥80%</strong><p>A lower filtration class. It is not one of MOH’s listed N95-equivalent haze options; select N95, KN95, KF94 or FFP2 when that level of protection is called for.</p></div>
-            <div><strong>N99 / FFP3 / KF99: ≥99%</strong><p>Higher filter ratings with different certification tests. Buying one is optional, not an official requirement triggered by a particular PM2.5 band. A poor seal still lets particles in.</p></div>
-            <div><strong>N100 / P100: ≥99.97%</strong><p>P-series filters also resist oil aerosols. These higher filter classes are not required by MOH’s general haze guide. Balance cost, fit and comfort before upgrading.</p></div>
-            <div><strong>Reusable half-face respirators</strong><p>The fitted filter determines the particle rating. Include replacement filters, cleaning and storage in the cost; follow the manufacturer’s service-life instructions. A gas cartridge alone is not a particulate filter.</p></div>
-            <div><strong>Valved vs unvalved</strong><p>A valve can ease exhalation; it does not increase the stated filter rating. Outward air may bypass filtration, so an unvalved model is the simpler choice when protecting others from respiratory infections also matters.</p></div>
-            <div><strong>“Carbon” and “anti-odour” masks</strong><p>Carbon is not a particle certification. Check for a recognised respirator rating. Particle respirators do not protect against all haze gases or vapours.</p></div>
-          </div></details>
-          <p class="mask-citations">Rating sources: <a href="https://www.hsa.gov.sg/announcements/guide-to-masks-and-respirators/" target="_blank" rel="noopener noreferrer">HSA mask comparison</a>, <a href="https://www.cdc.gov/niosh/ppe/respirators/ffr.html" target="_blank" rel="noopener noreferrer">NIOSH filter classes</a>, <a href="https://multimedia.3m.com/mws/media/1791500O/comparison-ffp2-kn95-n95-filtering-facepiece-respirator-classes-tb.pdf" target="_blank" rel="noopener noreferrer">3M standards comparison</a>, <a href="https://www.mfds.go.kr/webzine/202002/sub05.html" target="_blank" rel="noopener noreferrer">MFDS KF ratings</a>, <a href="https://www.hse.gov.uk/research/assets/docs/personal-protective-equipment-selection-for-healthcare-settings.pdf" target="_blank" rel="noopener noreferrer">HSE FFP3 comparison</a>.</p>
-        </div>
-
-        <div class="band-guide"><h3>Which mask, at which haze level?</h3><p>Use the 1-hour PM2.5 reading for immediate plans. These practical choices follow MOH’s activity guidance; the value notes are our editorial suggestions, not product endorsements.</p>
-          <div class="band-guide-grid">
-            <article><span class="band-pill normal">Normal · 0–55 µg/m³</span><h4>Keep your normal plans</h4><p>Ordinary activities can continue. A respirator is generally unnecessary for a short commute or indoors.</p><p><strong>Value move:</strong> keep a small supply ready rather than wearing a new mask routinely for normal air.</p></article>
-            <article><span class="band-pill elevated">Elevated · 56–150 µg/m³</span><h4>Ease off strenuous exercise</h4><p>Healthy adults should reduce strenuous outdoor activity; higher-risk people should avoid it.</p><p><strong>Value move:</strong> shorten or move the workout indoors. A higher-rated mask is not a reason to push through.</p></article>
-            <article><span class="band-pill high">High · 151–250 µg/m³</span><h4>Skip strenuous outdoor activity</h4><p>Higher-risk people should avoid all outdoor activity. If exposure is unavoidable, a well-fitting N95 or equivalent can reduce particles inhaled; this is also relevant for prolonged exposure.</p><p><strong>Value move:</strong> use a genuine, well-fitting N95 / KN95 / KF94 / FFP2 you can afford.</p></article>
-            <article><span class="band-pill very-high">Very high · ≥251 µg/m³</span><h4>Minimise time outdoors</h4><p>Higher-risk people should avoid outdoor activity. For unavoidable time outside, consider a well-fitting N95 or equivalent.</p><p><strong>Value move:</strong> prioritise less exposure and a reliable seal. MOH does not require an N99 or P100 upgrade.</p></article>
+          <noscript
+            ><p>
+              Live readings need JavaScript.
+              <a href="https://www.haze.gov.sg/">Check the current readings at haze.gov.sg.</a> You
+              can still read the activity and mask guides below.
+            </p></noscript
+          >
+          <div class="region-toolbar">
+            <label for="region">I’m in</label
+            ><select id="region" aria-label="Singapore region">
+              <option value="north">North</option>
+              <option value="south">South</option>
+              <option value="east" selected>East</option>
+              <option value="west">West</option>
+              <option value="central">Central</option></select
+            ><span class="toolbar-spacer"></span
+            ><button class="refresh-button" id="refresh" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 11a8 8 0 1 0-2 6m2 2v-6h-6" />
+              </svg>
+              Refresh
+            </button>
+          </div>
+          <div class="readings-grid">
+            <article class="reading-card primary-card" id="pm-card">
+              <div class="reading-top">
+                <span class="reading-label">AIR OUTSIDE · PAST HOUR</span
+                ><span class="band-pill" id="pm-band">Checking the air…</span>
+              </div>
+              <div class="reading-value">
+                <span id="pm-value">—</span><span class="unit">µg/m³</span>
+              </div>
+              <p class="reading-caption">1-hour PM2.5 · Fine particles in the air</p>
+              <p id="pm-category" class="official-category">Waiting for the NEA reading</p>
+              <div class="reading-divider"></div>
+              <p class="reading-foot">
+                Higher numbers mean <strong>more fine particles to breathe in.</strong>
+              </p>
+            </article>
+            <article class="reading-card psi-card">
+              <div class="reading-top">
+                <span class="reading-label">24-HOUR PSI</span
+                ><span class="mini-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24"><path d="M3 17h18M5 12h14M8 7h8" /></svg
+                ></span>
+              </div>
+              <div class="reading-value"><span id="psi-value">—</span></div>
+              <p class="reading-caption" id="psi-band">Checking…</p>
+              <div class="reading-divider"></div>
+              <p class="reading-foot">
+                Use this for <strong>the bigger picture and planning ahead.</strong>
+              </p>
+            </article>
+          </div>
+          <div class="data-status" role="status" aria-live="polite">
+            <span class="status-dot" id="status-dot"></span
+            ><span id="data-status-text">Checking official NEA readings…</span
+            ><span class="status-source"
+              >Source:
+              <a
+                href="https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view"
+                target="_blank"
+                rel="noopener noreferrer"
+                >NEA via data.gov.sg ↗</a
+              ></span
+            >
+          </div>
+          <div class="haze-level">
+            <p id="level-caption">Checking the current haze level…</p>
+            <ol
+              class="severity-scale"
+              role="list"
+              aria-label="Four haze levels, from normal to very high"
+            >
+              <li class="severity-step" data-level="1">
+                <span class="level-number" aria-hidden="true">1</span><strong>Usual plans</strong
+                ><span>Normal · 0–55</span><small class="level-marker"></small>
+              </li>
+              <li class="severity-step" data-level="2">
+                <span class="level-number" aria-hidden="true">2</span><strong>Take it easy</strong
+                ><span>Elevated · 56–150</span><small class="level-marker"></small>
+              </li>
+              <li class="severity-step" data-level="3">
+                <span class="level-number" aria-hidden="true">3</span
+                ><strong>Skip hard exercise</strong><span>High · 151–250</span
+                ><small class="level-marker"></small>
+              </li>
+              <li class="severity-step" data-level="4">
+                <span class="level-number" aria-hidden="true">4</span><strong>Stay indoors</strong
+                ><span>Very high · ≥251</span><small class="level-marker"></small>
+              </li>
+            </ol>
+            <p class="scale-note">
+              Ranges are 1-hour PM2.5 in µg/m³. The actions are for generally healthy adults; people
+              at higher risk need extra care.
+            </p>
+          </div>
+          <div class="outdoor-summary" id="outdoor-summary">
+            <div>
+              <span class="summary-label">CAN I GO OUTSIDE?</span>
+              <p id="outdoor-verdict">Checking the next-hour recommendation for East…</p>
+              <small>For generally healthy adults. Higher-risk guidance is below.</small>
+            </div>
+            <a href="#what-to-do">See activity & mask advice <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="daily-decisions">
+            <article class="decision-card" id="window-card">
+              <div class="decision-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                  <path d="M5 4h22v24H5zM16 4v24M5 16h22m-11-5-5-2v14l5-2" />
+                </svg>
+              </div>
+              <p class="decision-label">OPEN THE WINDOWS?</p>
+              <h3 id="window-verdict">Check the air before opening</h3>
+              <p id="window-detail">Waiting for the latest outdoor reading.</p>
+              <p class="decision-source">
+                Our cautious suggestion, based on the outdoor regional reading.
+              </p>
+              <a href="#window-guide">Window and ventilation guide ↗</a>
+            </article>
+            <article class="decision-card">
+              <div class="decision-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                  <circle cx="20" cy="5" r="3" />
+                  <path d="m10 13 5-5 6 7 6 1M17 11l-4 9-7 7m8-10 8 5 2 6M4 13h6" />
+                </svg>
+              </div>
+              <p class="decision-label">EXERCISING OUTSIDE?</p>
+              <h3 id="exercise-verdict">Check before exercising outside</h3>
+              <p id="exercise-detail">Waiting for the latest activity advice.</p>
+              <a href="#what-to-do">Walking, exercise and mask advice ↗</a>
+            </article>
+          </div>
+          <div class="next-hour-plan">
+            <div class="plan-heading">
+              <div>
+                <p class="kicker">THREE QUICK CHECKS</p>
+                <h3>Your plan for the next hour</h3>
+              </div>
+              <span class="plan-count" id="plan-count">0 of 3 checked</span>
+            </div>
+            <progress
+              id="plan-progress"
+              value="0"
+              max="3"
+              aria-label="Reminders checked"
+            ></progress>
+            <p id="plan-status" role="status">
+              The checklist will be available when a current reading arrives.
+            </p>
+            <div class="plan-tasks">
+              <label for="plan-reading"
+                ><input class="plan-check" type="checkbox" id="plan-reading" disabled /><span
+                  ><strong>I checked the latest reading</strong
+                  ><small id="plan-reading-detail">Waiting for a current reading.</small></span
+                ></label
+              >
+              <label for="plan-windows"
+                ><input class="plan-check" type="checkbox" id="plan-windows" disabled /><span
+                  ><strong>I decided about the windows</strong
+                  ><small id="plan-windows-detail"
+                    >Check the conditions outside your home.</small
+                  ></span
+                ></label
+              >
+              <label for="plan-outdoors"
+                ><input class="plan-check" type="checkbox" id="plan-outdoors" disabled /><span
+                  ><strong>I adjusted my outdoor plans</strong
+                  ><small id="plan-outdoors-detail">Check the activity advice above.</small></span
+                ></label
+              >
+            </div>
+            <p class="plan-note">
+              Ticks record your decisions, not your level of protection. The checklist resets when
+              the region or reading changes.
+            </p>
+          </div>
+          <div class="regional-block">
+            <div>
+              <h3>Across the island</h3>
+              <p>Tap a region to see its advice.</p>
+            </div>
+            <div class="regional-list" id="regional-list" aria-label="One-hour PM2.5 by region">
+              <button class="region-item" type="button" data-region="north" aria-pressed="false">
+                <span class="region-name">North</span
+                ><span class="region-reading"
+                  ><span class="region-value">—</span> <small>µg/m³</small></span
+                ><span class="region-band">Checking…</span
+                ><span class="region-arrow" aria-hidden="true">↗</span>
+              </button>
+              <button class="region-item" type="button" data-region="south" aria-pressed="false">
+                <span class="region-name">South</span
+                ><span class="region-reading"
+                  ><span class="region-value">—</span> <small>µg/m³</small></span
+                ><span class="region-band">Checking…</span
+                ><span class="region-arrow" aria-hidden="true">↗</span>
+              </button>
+              <button
+                class="region-item selected"
+                type="button"
+                data-region="east"
+                aria-pressed="true"
+              >
+                <span class="region-name">East</span
+                ><span class="region-reading"
+                  ><span class="region-value">—</span> <small>µg/m³</small></span
+                ><span class="region-band">Checking…</span
+                ><span class="region-arrow" aria-hidden="true">↗</span>
+              </button>
+              <button class="region-item" type="button" data-region="west" aria-pressed="false">
+                <span class="region-name">West</span
+                ><span class="region-reading"
+                  ><span class="region-value">—</span> <small>µg/m³</small></span
+                ><span class="region-band">Checking…</span
+                ><span class="region-arrow" aria-hidden="true">↗</span>
+              </button>
+              <button class="region-item" type="button" data-region="central" aria-pressed="false">
+                <span class="region-name">Central</span
+                ><span class="region-reading"
+                  ><span class="region-value">—</span> <small>µg/m³</small></span
+                ><span class="region-band">Checking…</span
+                ><span class="region-arrow" aria-hidden="true">↗</span>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="mask-care"><h3>Make the protection count</h3><p>Follow the maker’s use and replacement instructions. Replace a mask when damaged, dirty, damp or difficult to breathe through; do not wash disposable respirators. Do not share them. For children, adult masks may not seal: prioritise staying indoors and ask a healthcare professional about suitable protection. Older adults, pregnant people and people with severe heart or lung problems who have difficulty breathing should consult a doctor about respirator use. If you feel unwell, seek medical advice.</p><p>Guidance checked 17 October 2026. <a href="https://www.moh.gov.sg/others/haze/" target="_blank" rel="noopener noreferrer">Check MOH for updates.</a></p></div>
+      </section>
+
+      <section class="action-section" id="what-to-do" aria-labelledby="action-title">
+        <div class="shell action-grid">
+          <div class="action-intro">
+            <p class="kicker">02 / YOUR NEXT MOVE</p>
+            <h2 id="action-title">Outdoor plans?<br /><em>Here’s your guide.</em></h2>
+            <p>
+              Use the latest 1-hour PM2.5 reading for the next hour. Duration, effort and your
+              health all matter. Recheck before leaving; a mask does not make strenuous exercise
+              advisable in poor air.
+            </p>
+            <p>
+              Higher-risk people include children, older adults, pregnant people, and those with
+              chronic heart or lung conditions.
+            </p>
+            <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer"
+              >See the official haze advisory <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <div class="action-panel">
+            <div class="action-panel-head">
+              <span class="action-icon" aria-hidden="true"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M18.4 5.6l-2.1 2.1m-8.6 8.6-2.1 2.1"
+                  />
+                  <circle cx="12" cy="12" r="4" /></svg></span
+              ><span id="action-region">EAST · NEXT HOUR</span>
+            </div>
+            <div class="action-body">
+              <p class="action-status" id="action-status">Waiting for a reading</p>
+              <h3 id="action-main">We’ll show advice when the latest reading arrives.</h3>
+              <p class="action-detail" id="action-detail">
+                If the feed is unavailable, use the official haze site before deciding on outdoor
+                activity.
+              </p>
+              <dl class="activity-list">
+                <div>
+                  <dt>Walking & everyday activity</dt>
+                  <dd id="activity-walk">Check the official reading before heading out.</dd>
+                </div>
+                <div>
+                  <dt>Running, cycling & sport</dt>
+                  <dd id="activity-exercise">Check the official activity guide before starting.</dd>
+                </div>
+                <div>
+                  <dt>Mask choice</dt>
+                  <dd id="activity-mask">Advice appears with a fresh reading.</dd>
+                </div>
+              </dl>
+              <div class="vulnerable-note">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3 2 20h20L12 3Zm0 6v5m0 3h.01" />
+                </svg>
+                <div>
+                  <strong>If you’re more vulnerable</strong>
+                  <p id="action-vulnerable">Use the official guidance and your own care plan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="window-guide-section" id="window-guide" aria-labelledby="window-guide-title">
+        <div class="shell">
+          <p class="kicker">AT HOME</p>
+          <h2 id="window-guide-title">Can I open the windows?</h2>
+          <div class="window-guide-grid">
+            <article>
+              <h3>When haze gets worse</h3>
+              <p>
+                Keep windows and outside doors closed to reduce the particles coming in. A suitable
+                air purifier can help with indoor particles; a fan or air-conditioning helps with
+                comfort.
+              </p>
+            </article>
+            <article>
+              <h3>When the outside air improves</h3>
+              <p>
+                Air the room periodically. Check conditions near your home as well as the regional
+                reading. A “Normal” band does not mean the air is pollution-free.
+              </p>
+            </article>
+            <article>
+              <h3>If the room gets hot or stuffy</h3>
+              <p>
+                Do not leave the room sealed indefinitely. Closed rooms can build up heat, carbon
+                dioxide and other pollutants. Use a cooler indoor space if needed, and ventilate
+                when outdoor conditions improve.
+              </p>
+            </article>
+          </div>
+          <p class="window-method">
+            The window card is our cautious interpretation: at 56 µg/m³ and above, it suggests
+            keeping windows closed for now; at 0–55, it asks you to check local conditions before
+            airing the room. NEA does not set an official one-hour window-opening cutoff. Regional
+            readings cannot tell us whether the air inside your home is cleaner.
+          </p>
+          <a
+            href="https://www.nea.gov.sg/our-services/pollution-control/air-pollution/faqs"
+            target="_blank"
+            rel="noopener noreferrer"
+            >NEA household advice ↗</a
+          >
+          <span aria-hidden="true">·</span>
+          <a
+            href="https://www.haze.gov.sg/docs/default-source/faq/detailed-practical-tips-for-manging-iaq-during-haze.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            >NEA indoor air and ventilation guide ↗</a
+          >
+        </div>
+      </section>
+
+      <section class="explainer-section" id="explained" aria-labelledby="explained-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="kicker">03 / THE SHORT GUIDE</p>
+              <h2 id="explained-title">What the numbers mean</h2>
+            </div>
+            <p>How to use PM2.5 and PSI when planning your day.</p>
+          </div>
+          <div class="guide-grid">
+            <article class="guide-card">
+              <span class="guide-number">01</span>
+              <div class="guide-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="16" />
+                  <path d="M24 13v11l8 5" />
+                </svg>
+              </div>
+              <h3>PM2.5 for the next hour</h3>
+              <p>
+                These tiny particles can get deep into your lungs. The
+                <strong>1-hour reading</strong> tells you how much was in the air over the past
+                hour. It can change quickly, so check again before heading out.
+              </p>
+            </article>
+            <article class="guide-card">
+              <span class="guide-number">02</span>
+              <div class="guide-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <path d="M9 36V16m10 20V9m10 27V22m10 14V13M5 36h38" />
+                </svg>
+              </div>
+              <h3>PSI for the longer view</h3>
+              <p>
+                Singapore’s <strong>24-hour PSI</strong> combines several pollutants over a longer
+                period. It is useful for planning, but it may respond more slowly to a sudden change
+                outside your window.
+              </p>
+            </article>
+            <article class="guide-card">
+              <span class="guide-number">03</span>
+              <div class="guide-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <path
+                    d="M10 33c5-6 9-6 14 0s9 6 14 0M10 24c5-6 9-6 14 0s9 6 14 0M10 15c5-6 9-6 14 0s9 6 14 0"
+                  />
+                </svg>
+              </div>
+              <h3>Why other apps differ</h3>
+              <p>
+                Countries calculate “AQI” differently. This site uses
+                <strong>NEA’s original Singapore readings and bands</strong>. Compare the pollutant,
+                averaging period and source before comparing two numbers.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="mask-section" id="masks" aria-labelledby="mask-title">
+        <div class="shell">
+          <div class="mask-grid">
+            <div class="mask-visual" aria-hidden="true">
+              <svg viewBox="0 0 320 250">
+                <path class="mask-strap" d="M85 80C29 62 27 187 88 174M235 80c56-18 58 107-3 94" />
+                <path class="mask-body" d="M83 75c36-29 93-31 154 0v82c-34 48-99 67-154 0V75Z" />
+                <path
+                  class="mask-seam"
+                  d="M83 88c50-26 100-28 154 0M83 146c50 26 100 28 154 0M160 67v139"
+                /></svg
+              ><span>N95 · KN95 · KF94 · FFP2</span>
+            </div>
+            <div class="mask-copy">
+              <p class="kicker">04 / A PRACTICAL MASK GUIDE</p>
+              <h2 id="mask-title">Choose a mask that fits</h2>
+              <p>
+                MOH includes N95, KN95, KF94 and FFP2 as options for haze particles. A genuine,
+                well-fitting model from these groups is a practical starting point when a respirator
+                is needed.
+              </p>
+              <ul>
+                <li>
+                  <span class="check-icon" aria-hidden="true">✓</span
+                  ><span
+                    ><strong>A short commute?</strong> MOH says a respirator is generally
+                    unnecessary for routine commuting or indoors. Follow the current band and your
+                    health needs.</span
+                  >
+                </li>
+                <li>
+                  <span class="check-icon" aria-hidden="true">✓</span
+                  ><span
+                    ><strong>Check the seal every time.</strong> Cover your nose and mouth fully,
+                    mould the nosepiece, and follow the maker’s seal-check instructions. Gaps and
+                    facial hair at the seal reduce protection.</span
+                  >
+                </li>
+                <li>
+                  <span class="check-icon" aria-hidden="true">✓</span
+                  ><span
+                    ><strong>Buy a small pack first.</strong> Compare the delivered price per mask
+                    after finding a certified model that seals comfortably. Surgical fluid
+                    resistance adds no particle-filtration benefit for haze.</span
+                  >
+                </li>
+              </ul>
+              <a
+                href="https://www.moh.gov.sg/others/haze/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Read MOH’s mask guidance <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </div>
+
+          <div class="mask-comparison">
+            <h3>What the filtration labels actually mean</h3>
+            <p class="comparison-note">
+              These are minimum filter efficiencies under each standard’s laboratory tests, not the
+              percentage of protection you will get on your face. Standards use different test
+              conditions; fit and authenticity matter. A “95% BFE” surgical mask is not the same as
+              an N95.
+            </p>
+            <div class="mask-cards">
+              <article class="mask-card">
+                <span class="mask-tag">NOT A HAZE RESPIRATOR</span>
+                <h4>Cloth / fashion / paper</h4>
+                <p class="filter-rating">No fixed rating</p>
+                <p>
+                  Material and leakage vary. Uncertified “PM2.5” inserts do not establish protection
+                  for the whole mask.
+                </p>
+                <p class="mask-value">
+                  <strong>Value for haze:</strong> avoid spending on these as your particle
+                  protection.
+                </p>
+              </article>
+              <article class="mask-card">
+                <span class="mask-tag">LOOSE FIT</span>
+                <h4>Surgical / 3-ply / KF-AD</h4>
+                <p class="filter-rating">BFE ≠ respirator rating</p>
+                <p>
+                  Designed mainly for droplets and splashes. A bacterial filtration claim does not
+                  tell you how much haze leaks around the edges.
+                </p>
+                <p class="mask-value">
+                  <strong>Value for haze:</strong> low purchase price does not make it a substitute
+                  for a respirator.
+                </p>
+              </article>
+              <article class="mask-card recommended">
+                <span class="mask-tag">PRACTICAL HAZE OPTION</span>
+                <h4>N95</h4>
+                <p class="filter-rating">≥95% <small>NIOSH · US</small></p>
+                <p>
+                  Often uses two headbands. Check the NIOSH name, model and TC approval number. A
+                  standard N95 and surgical N95 have the same minimum particle rating.
+                </p>
+                <p class="mask-value">
+                  <strong>Value for haze:</strong> a useful choice if it seals well; no need to pay
+                  for a surgical version solely for haze.
+                </p>
+              </article>
+              <article class="mask-card recommended">
+                <span class="mask-tag">PRACTICAL HAZE OPTION</span>
+                <h4>KN95</h4>
+                <p class="filter-rating">≥95% <small>GB 2626 · China</small></p>
+                <p>
+                  Commonly sold in folding designs. Ear loops or headbands vary by model; verify the
+                  stated standard and check for gaps.
+                </p>
+                <p class="mask-value">
+                  <strong>Value for haze:</strong> compare it with N95 on genuine certification,
+                  your fit and price per mask.
+                </p>
+              </article>
+              <article class="mask-card recommended">
+                <span class="mask-tag">PRACTICAL HAZE OPTION</span>
+                <h4>KF94</h4>
+                <p class="filter-rating">≥94% <small>MFDS · Korea</small></p>
+                <p>
+                  Commonly sold in boat shapes. Look for a genuine KF94 product and the correct
+                  size. The standard differs from N95, though MOH accepts it for haze.
+                </p>
+                <p class="mask-value">
+                  <strong>Value for haze:</strong> a practical option if it fits; the one-point
+                  rating difference alone should not decide your purchase.
+                </p>
+              </article>
+              <article class="mask-card recommended">
+                <span class="mask-tag">PRACTICAL HAZE OPTION</span>
+                <h4>FFP2</h4>
+                <p class="filter-rating">≥94% <small>EN 149 · Europe</small></p>
+                <p>
+                  A tight-fitting particulate respirator. Check the EN 149 classification and
+                  manufacturer’s markings; shape and straps vary.
+                </p>
+                <p class="mask-value">
+                  <strong>Value for haze:</strong> another suitable category; choose a certified fit
+                  rather than paying for an imported label.
+                </p>
+              </article>
+            </div>
+            <details class="mask-details">
+              <summary>Other ratings, reusable respirators and valves</summary>
+              <div class="advanced-masks">
+                <div>
+                  <strong>KF80: ≥80%</strong>
+                  <p>
+                    A lower filtration class. It is not one of MOH’s listed N95-equivalent haze
+                    options; select N95, KN95, KF94 or FFP2 when that level of protection is called
+                    for.
+                  </p>
+                </div>
+                <div>
+                  <strong>N99 / FFP3 / KF99: ≥99%</strong>
+                  <p>
+                    Higher filter ratings with different certification tests. Buying one is
+                    optional, not an official requirement triggered by a particular PM2.5 band. A
+                    poor seal still lets particles in.
+                  </p>
+                </div>
+                <div>
+                  <strong>N100 / P100: ≥99.97%</strong>
+                  <p>
+                    P-series filters also resist oil aerosols. These higher filter classes are not
+                    required by MOH’s general haze guide. Balance cost, fit and comfort before
+                    upgrading.
+                  </p>
+                </div>
+                <div>
+                  <strong>Reusable half-face respirators</strong>
+                  <p>
+                    The fitted filter determines the particle rating. Include replacement filters,
+                    cleaning and storage in the cost; follow the manufacturer’s service-life
+                    instructions. A gas cartridge alone is not a particulate filter.
+                  </p>
+                </div>
+                <div>
+                  <strong>Valved vs unvalved</strong>
+                  <p>
+                    A valve can ease exhalation; it does not increase the stated filter rating.
+                    Outward air may bypass filtration, so an unvalved model is the simpler choice
+                    when protecting others from respiratory infections also matters.
+                  </p>
+                </div>
+                <div>
+                  <strong>“Carbon” and “anti-odour” masks</strong>
+                  <p>
+                    Carbon is not a particle certification. Check for a recognised respirator
+                    rating. Particle respirators do not protect against all haze gases or vapours.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <p class="mask-citations">
+              Rating sources:
+              <a
+                href="https://www.hsa.gov.sg/announcements/guide-to-masks-and-respirators/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >HSA mask comparison</a
+              >,
+              <a
+                href="https://www.cdc.gov/niosh/ppe/respirators/ffr.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                >NIOSH filter classes</a
+              >,
+              <a
+                href="https://multimedia.3m.com/mws/media/1791500O/comparison-ffp2-kn95-n95-filtering-facepiece-respirator-classes-tb.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                >3M standards comparison</a
+              >,
+              <a
+                href="https://www.mfds.go.kr/webzine/202002/sub05.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                >MFDS KF ratings</a
+              >,
+              <a
+                href="https://www.hse.gov.uk/research/assets/docs/personal-protective-equipment-selection-for-healthcare-settings.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                >HSE FFP3 comparison</a
+              >.
+            </p>
+          </div>
+
+          <div class="band-guide">
+            <h3>Which mask, at which haze level?</h3>
+            <p>
+              Use the 1-hour PM2.5 reading for immediate plans. These practical choices follow MOH’s
+              activity guidance; the value notes are our editorial suggestions, not product
+              endorsements.
+            </p>
+            <div class="band-guide-grid">
+              <article>
+                <span class="band-pill normal">Normal · 0–55 µg/m³</span>
+                <h4>Keep your normal plans</h4>
+                <p>
+                  Ordinary activities can continue. A respirator is generally unnecessary for a
+                  short commute or indoors.
+                </p>
+                <p>
+                  <strong>Value move:</strong> keep a small supply ready rather than wearing a new
+                  mask routinely for normal air.
+                </p>
+              </article>
+              <article>
+                <span class="band-pill elevated">Elevated · 56–150 µg/m³</span>
+                <h4>Ease off strenuous exercise</h4>
+                <p>
+                  Healthy adults should reduce strenuous outdoor activity; higher-risk people should
+                  avoid it.
+                </p>
+                <p>
+                  <strong>Value move:</strong> shorten or move the workout indoors. A higher-rated
+                  mask is not a reason to push through.
+                </p>
+              </article>
+              <article>
+                <span class="band-pill high">High · 151–250 µg/m³</span>
+                <h4>Skip strenuous outdoor activity</h4>
+                <p>
+                  Higher-risk people should avoid all outdoor activity. If exposure is unavoidable,
+                  a well-fitting N95 or equivalent can reduce particles inhaled; this is also
+                  relevant for prolonged exposure.
+                </p>
+                <p>
+                  <strong>Value move:</strong> use a genuine, well-fitting N95 / KN95 / KF94 / FFP2
+                  you can afford.
+                </p>
+              </article>
+              <article>
+                <span class="band-pill very-high">Very high · ≥251 µg/m³</span>
+                <h4>Minimise time outdoors</h4>
+                <p>
+                  Higher-risk people should avoid outdoor activity. For unavoidable time outside,
+                  consider a well-fitting N95 or equivalent.
+                </p>
+                <p>
+                  <strong>Value move:</strong> prioritise less exposure and a reliable seal. MOH
+                  does not require an N99 or P100 upgrade.
+                </p>
+              </article>
+            </div>
+          </div>
+          <div class="mask-care">
+            <h3>Make the protection count</h3>
+            <p>
+              Follow the maker’s use and replacement instructions. Replace a mask when damaged,
+              dirty, damp or difficult to breathe through; do not wash disposable respirators. Do
+              not share them. For children, adult masks may not seal: prioritise staying indoors and
+              ask a healthcare professional about suitable protection. Older adults, pregnant people
+              and people with severe heart or lung problems who have difficulty breathing should
+              consult a doctor about respirator use. If you feel unwell, seek medical advice.
+            </p>
+            <p>
+              Guidance checked 17 October 2026.
+              <a
+                href="https://www.moh.gov.sg/others/haze/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Check MOH for updates.</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="tips-section" aria-labelledby="tips-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="kicker">05 / SMALL, USEFUL MOVES</p>
+              <h2 id="tips-title">A little less exposure.</h2>
+            </div>
+          </div>
+          <div class="tips-grid">
+            <div class="tip">
+              <span class="tip-icon" aria-hidden="true"
+                ><svg viewBox="0 0 32 32">
+                  <path d="M4 15h24M8 15V6h16v9M8 15v12h16V15m-8-9v21" /></svg
+              ></span>
+              <h3>Move the workout in</h3>
+              <p>Swap the run for an indoor session when the air is elevated or high.</p>
+            </div>
+            <div class="tip">
+              <span class="tip-icon" aria-hidden="true"
+                ><svg viewBox="0 0 32 32"><path d="M4 27h24M8 27V7h16v20M8 16h16m-8-9v20" /></svg
+              ></span>
+              <h3>Make indoors more comfortable</h3>
+              <p>During sustained haze, close windows and use air filtration if available.</p>
+            </div>
+            <div class="tip">
+              <span class="tip-icon" aria-hidden="true"
+                ><svg viewBox="0 0 32 32"><path d="M16 4v14m-7-7 7 7 7-7M5 26h22" /></svg
+              ></span>
+              <h3>Check again before leaving</h3>
+              <p>
+                Haze can shift within hours. A fresh reading is more useful than a screenshot from
+                earlier.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sources-section" id="sources" aria-labelledby="sources-title">
+        <div class="shell sources-grid">
+          <div>
+            <p class="kicker">DATA AND GUIDANCE</p>
+            <h2 id="sources-title">Where the numbers<br />come from.</h2>
+            <p>
+              Readings come from Singapore’s NEA through data.gov.sg’s public real-time API. Advice
+              and bands follow NEA and MOH guidance.
+            </p>
+          </div>
+          <div class="source-list">
+            <a
+              href="https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><span><strong>1-hour PM2.5 data</strong><small>NEA · data.gov.sg</small></span
+              ><span aria-hidden="true">↗</span></a
+            ><a
+              href="https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><span><strong>24-hour PSI data</strong><small>NEA · data.gov.sg</small></span
+              ><span aria-hidden="true">↗</span></a
+            ><a
+              href="https://www.haze.gov.sg/resources/1-hr-pm2.5-readings"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><span
+                ><strong>PM2.5 bands & activity guide</strong><small>NEA · haze.gov.sg</small></span
+              ><span aria-hidden="true">↗</span></a
+            ><a href="https://www.moh.gov.sg/others/haze/" target="_blank" rel="noopener noreferrer"
+              ><span><strong>Health & mask guidance</strong><small>Ministry of Health</small></span
+              ><span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <span class="footer-brand">air, actually<span>.</span></span>
+        <p>Independent Singapore haze guide. Not an official government website.</p>
+        <a href="#top">Back to top ↑</a>
       </div>
-    </section>
-
-    <section class="tips-section" aria-labelledby="tips-title"><div class="shell"><div class="section-heading"><div><p class="kicker">05 / SMALL, USEFUL MOVES</p><h2 id="tips-title">A little less exposure.</h2></div></div><div class="tips-grid"><div class="tip"><span class="tip-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 15h24M8 15V6h16v9M8 15v12h16V15m-8-9v21"/></svg></span><h3>Move the workout in</h3><p>Swap the run for an indoor session when the air is elevated or high.</p></div><div class="tip"><span class="tip-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 27h24M8 27V7h16v20M8 16h16m-8-9v20"/></svg></span><h3>Make indoors more comfortable</h3><p>During sustained haze, close windows and use air filtration if available.</p></div><div class="tip"><span class="tip-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v14m-7-7 7 7 7-7M5 26h22"/></svg></span><h3>Check again before leaving</h3><p>Haze can shift within hours. A fresh reading is more useful than a screenshot from earlier.</p></div></div></div></section>
-
-    <section class="sources-section" id="sources" aria-labelledby="sources-title"><div class="shell sources-grid"><div><p class="kicker">THE FINE PRINT, MADE CLEAR</p><h2 id="sources-title">Where the numbers<br>come from.</h2><p>No secret formulas and no hidden sensors. Readings come directly from Singapore’s NEA through data.gov.sg’s public real-time API. Advice and bands follow NEA and MOH guidance.</p></div><div class="source-list"><a href="https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view" target="_blank" rel="noopener noreferrer"><span><strong>1-hour PM2.5 data</strong><small>NEA · data.gov.sg</small></span><span aria-hidden="true">↗</span></a><a href="https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view" target="_blank" rel="noopener noreferrer"><span><strong>24-hour PSI data</strong><small>NEA · data.gov.sg</small></span><span aria-hidden="true">↗</span></a><a href="https://www.haze.gov.sg/resources/1-hr-pm2.5-readings" target="_blank" rel="noopener noreferrer"><span><strong>PM2.5 bands & activity guide</strong><small>NEA · haze.gov.sg</small></span><span aria-hidden="true">↗</span></a><a href="https://www.moh.gov.sg/others/haze/" target="_blank" rel="noopener noreferrer"><span><strong>Health & mask guidance</strong><small>Ministry of Health</small></span><span aria-hidden="true">↗</span></a></div></div></section>
-  </main>
-  <footer class="site-footer"><div class="shell footer-inner"><span class="footer-brand">air, actually<span>.</span></span><p>Made for clearer decisions in Singapore. Independent project; not an official government website.</p><a href="#top">Back to top ↑</a></div></footer>
-</body>
+    </footer>
+  </body>
 </html>
