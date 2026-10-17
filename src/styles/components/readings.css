@@ -18,7 +18,7 @@
   font-size: 0.93rem;
 }
 .kicker {
-  color: #a56c45;
+  color: var(--accent-text);
   margin-bottom: 15px;
 }
 .region-toolbar {

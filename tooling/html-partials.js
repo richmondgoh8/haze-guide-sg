@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { isAbsolute, relative, resolve } from 'node:path';
 import { renderStaticFragments } from './static-fragments.js';
+import { PAGES, pageFile, renderPageFragments, renderSitemap } from './site-pages.js';
 
 export function expandHtmlIncludes(html, sourceRoot, parents = []) {
   return html.replace(/<!--\s*include:\s*([^>]+?)\s*-->/g, (_, includePath) => {
@@ -28,7 +29,18 @@ export function htmlPartials(sourceRoot) {
     name: 'html-partials',
     transformIndexHtml: {
       order: 'pre',
-      handler: (html) => renderStaticFragments(expandHtmlIncludes(html, sourceRoot)),
+      handler(html, context) {
+        const filename = relative(sourceRoot, context.filename).replaceAll('\\', '/');
+        const page = PAGES.find((entry) => pageFile(entry) === filename);
+        if (!page) throw new Error(`Missing page metadata: ${filename}`);
+        return renderPageFragments(
+          renderStaticFragments(expandHtmlIncludes(html, sourceRoot)),
+          page,
+        );
+      },
+    },
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: renderSitemap() });
     },
     handleHotUpdate({ file, server }) {
       if (file.endsWith('.html')) {

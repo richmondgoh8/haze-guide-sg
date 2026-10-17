@@ -67,7 +67,7 @@
   padding: 29px 32px 32px;
 }
 .action-status {
-  color: #a36a3b;
+  color: var(--accent-text);
   font-size: 0.76rem;
   letter-spacing: 0.12em;
   font-weight: 700;

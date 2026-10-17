@@ -43,7 +43,8 @@ No component fetches its own data or calculates its own haze thresholds.
 | `src/sections/masks/`                       | Mask introduction, comparison, band guide and care notes                    |
 | `src/partials/`                             | Document head, navigation and footer                                        |
 | `src/styles/`                               | Theme, shared styles, component styles and dashboard composition            |
-| `public/`                                   | Assets copied unchanged, including favicon, sharing image and sitemap       |
+| `public/`                                   | Assets copied unchanged, including favicon and sharing image                |
+| `tooling/site-pages.js`                     | Page registry, metadata, internal guide links and generated sitemap         |
 | `tooling/`                                  | HTML assembly used by the development server and production build           |
 | `tests/unit/`                               | Fast tests without a browser or external network                            |
 | `tests/e2e/`                                | Browser tests against the production build                                  |
@@ -90,5 +91,7 @@ Window advice is an editorial interpretation of the cited household guidance. It
 `tooling/static-fragments.js` renders region options, regional buttons and the haze scale from the same configuration used by the browser. Their placeholder comments are specific to those repeated components; this is not a general template language. All guides are present in the built HTML, including when JavaScript is disabled.
 
 `src/styles/main.css` declares the import order. All styles share the `site` cascade layer, retaining the existing specificity and order. `theme.css` contains shared design tokens. `components/` holds shared section styles, `guide-components.css` holds detailed guide components, and `dashboard.css` handles the compact dashboard composition. Responsive rules remain with their relevant defaults or in `responsive.css`. Change a component where its existing rule lives; avoid adding a new override file for each edit.
+
+`tooling/site-pages.js` is the registry for the dashboard and dedicated guides. It provides page-specific metadata, guide introductions, relative navigation links and the sitemap. Vite builds every registered HTML entry. Guide entries reuse the sourced content sections but do not load the dashboard script. Shared placeholders are expanded before Vite handles asset paths; metadata is escaped for HTML and JSON-LD. See [SEO.md](SEO.md) for Search Console setup and editorial/ranking policies.
 
 Vite emits hashed JavaScript and CSS filenames into `dist/`. Treat that directory as disposable build output and never edit or commit it.

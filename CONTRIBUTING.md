@@ -28,8 +28,8 @@ The [architecture guide](docs/ARCHITECTURE.md) explains the data flow and module
 | Purifier placement and sizing guide              | `src/sections/purifier.html` and `src/styles/components/purifier.css` |
 | Typography, shared colours or font scale         | `src/styles/theme.css`                                                |
 | Dashboard layout, scale or window card           | `src/styles/dashboard.css`                                            |
-| Canonical URL or social metadata                 | `src/partials/head.html`                                              |
-| Favicon, sharing image or sitemap                | `public/`                                                             |
+| Canonical URL, titles, descriptions or sitemap   | `tooling/site-pages.js`                                               |
+| Favicon or sharing image                         | `public/`                                                             |
 
 Keep the conversational tone in explanatory copy. Keep measurements, official categories, warnings and source attribution precise. For health-content changes, verify the official guidance, update the linked source/review date, and check the static guides as well as the dynamic advice. A threshold update can affect both.
 
@@ -60,6 +60,6 @@ Run `npm run format` to apply the repository's formatting rules. The dependency 
 
 ## Deployment and secrets
 
-The Pages workflow installs dependencies, tests, builds and uploads `dist/`. The generated HTML uses relative asset URLs so the site works at a GitHub project path. Keep the canonical URL and `public/sitemap.xml` aligned with the real public URL when forking or moving the site.
+The Pages workflow installs dependencies, tests, builds and uploads `dist/`. The generated HTML uses relative asset URLs so the site works at a GitHub project path. Update `SITE.url` in `tooling/site-pages.js` when forking or moving the site; canonical URLs and the sitemap are derived from it. The [SEO guide](docs/SEO.md) explains verification, indexing and content maintenance.
 
 The production app is static and uses keyless public NEA endpoints. A browser bundle cannot keep a secret. If a future provider requires a private credential, use a server-side service; do not add it to source, public assets, HTML, or a `VITE_` environment variable. `.env` files are ignored, but that does not make values injected into browser code private.

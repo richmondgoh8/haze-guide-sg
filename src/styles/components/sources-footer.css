@@ -11,7 +11,7 @@
   margin-bottom: 20px;
 }
 .sources-grid > div:first-child > p:last-child {
-  color: #5b6f62;
+  color: var(--source-text);
   max-width: 460px;
   line-height: 1.7;
 }
@@ -40,7 +40,7 @@
 }
 .source-list small {
   font-size: 0.78rem;
-  color: #687d6d;
+  color: var(--source-text);
   margin-top: 3px;
 }
 .site-footer {

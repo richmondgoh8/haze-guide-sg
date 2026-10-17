@@ -175,7 +175,7 @@
 }
 
 .severity-step[data-level='2'] {
-  --level-color: #a26a08;
+  --level-color: var(--caution-text);
 }
 
 .severity-step[data-level='3'] {

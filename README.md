@@ -49,7 +49,9 @@ The cost guidance is editorial: compare price per mask after testing fit, buy ge
 
 The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and expandable mask comparisons and band guides. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript. The observed 24-hour PSI is labelled separately from NEA's forecast for future activities.
 
-SEO includes a descriptive title and description, canonical URL, WebPage structured data, a sitemap, and Open Graph/Twitter metadata with a 1200×630 share image. The sitemap is at `/haze-guide-sg/sitemap.xml`. This prepares the page for indexing; it does not guarantee search rankings or submit the site to Search Console. GitHub project sites do not control the domain-root `robots.txt`; no project-level robots file is used as a substitute.
+The dashboard and three dedicated guides have unique titles, descriptions, canonical URLs, sharing metadata and static HTML. `tooling/site-pages.js` drives the build entries, metadata, related-guide links and generated sitemap at `/haze-guide-sg/sitemap.xml`. Guide pages also have breadcrumb structured data and do not load the dashboard JavaScript.
+
+The [SEO guide](docs/SEO.md) covers Search Console setup, ranking priorities, measurement and GitHub Pages limitations. These changes prepare pages for discovery; they do not guarantee search rankings or submit the site to Search Console. GitHub project sites do not control the domain-root `robots.txt`; no project-level robots file is used as a substitute.
 
 ## Sources and accuracy
 

@@ -14,7 +14,7 @@
   min-height: 310px;
 }
 .guide-number {
-  color: #a87953;
+  color: var(--accent-text);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
