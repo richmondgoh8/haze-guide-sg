@@ -1,6 +1,6 @@
 # Security assessment — 17 October 2026
 
-Status: application checks completed locally; independent CI scans and post-deployment checks pending. This document will be updated with those results. This is not a certified or comprehensive manual VAPT.
+Status: application hardening and functional checks passed. The independent passive scan has open hosting/header findings; this is **not an all-clear**. CodeQL's initial test-assertion findings have been corrected and are awaiting the final rescan. This is not a certified or comprehensive manual VAPT.
 
 ## Scope
 
@@ -14,7 +14,7 @@ The tracked source and reachable Git history, locked npm dependencies, generated
 | Gitleaks 8.30.1, reachable history | 8 commits scanned; no leaks found                   |
 | Gitleaks 8.30.1, working tree      | No leaks found                                      |
 | Gitleaks 8.30.1, production build  | No leaks found                                      |
-| Unit tests                         | 32 passed                                           |
+| Unit tests                         | 34 passed                                           |
 | Browser tests                      | 22 passed                                           |
 
 Gitleaks was downloaded from the upstream release and its archive SHA-256 checked against the release checksum (`551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb`). Scans use the default rules and redact findings. A secret-pattern scan can miss unsupported or obfuscated credentials; zero findings does not prove that no secret ever existed.
@@ -37,7 +37,23 @@ Anti-framing remains an open defence-in-depth gap. This informational site has n
 
 ## Independent and live results
 
-Pending the Security checks workflow and production deployment. Raw ZAP warnings will remain available in the workflow artifact, including any headers that the local preview server does not set. Local HTTP/HSTS alerts must be distinguished from the real HTTPS deployment, not copied blindly into the production risk assessment.
+The [first Security checks run](https://github.com/richmondgoh8/haze-guide-sg/actions/runs/38999175714) completed Gitleaks, CodeQL and ZAP 2.17.0. The unfiltered ZAP artifact contains **0 high, 2 medium, 5 low and 3 informational alert types**. Counts are alert types, not affected-URL counts. The high-risk CI gate passed, but the medium/low findings remain open:
+
+| Risk   | Finding                                                 | Rule  |
+| ------ | ------------------------------------------------------- | ----- |
+| Medium | CSP has no enforceable `frame-ancestors` restriction    | 10055 |
+| Medium | Missing anti-clickjacking response header               | 10020 |
+| Low    | Missing COEP, COOP and CORP headers (three alert types) | 90004 |
+| Low    | Missing Permissions-Policy                              | 10063 |
+| Low    | Missing X-Content-Type-Options                          | 10021 |
+
+The framing findings describe related gaps, not two independent exploits. Frame-ancestors cannot be supplied in an effective meta CSP. Cross-origin isolation headers also need an actual use-case/compatibility review; this app does not use SharedArrayBuffer or authenticated cross-window flows. No alert rules were disabled to obtain a clean result.
+
+The three informational alerts concern JavaScript/no-JavaScript behaviour and cacheability. Static public guides can be cached; they do not contain personalised data. The local preview's HTTP headers are not identical to GitHub Pages, so local cache/HSTS observations must not be blindly reported as production vulnerabilities.
+
+CodeQL initially reported three high-severity rule matches in test code: an unanchored URL assertion and two case-sensitive tag extraction expressions. These are not demonstrated exploitable production findings. The URL assertion now compares the parsed origin exactly, and the metadata expressions match case-insensitively. The tests were corrected instead of excluding the files or dismissing the alerts.
+
+After deployment, all four public pages loaded with the production policy, no CSP violations during normal use, no JavaScript errors and no mobile overflow. East readings loaded from the real public API. `.env`, `.git/config`, `package.json` and the development source path returned 404. Header-only findings remain as described above.
 
 ## Limits
 

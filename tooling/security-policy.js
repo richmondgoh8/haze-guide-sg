@@ -29,7 +29,7 @@ export function securityPolicy() {
     transformIndexHtml: {
       order: 'post',
       handler(html) {
-        // Hash final inline metadata after Vite rewrites assets. Dev HMR uses a separate policy.
+        // Hash final inline metadata after Vite rewrites assets; do not apply this to dev HMR.
         const policy = createContentSecurityPolicy(html);
         return html.replace(
           '<!-- security:policy -->',

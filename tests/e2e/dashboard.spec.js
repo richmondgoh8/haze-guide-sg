@@ -28,7 +28,8 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#pm-category')).toContainText('Band 2');
   await expect(page.locator('#window-card')).toHaveAttribute('data-state', 'reduce');
   await expect(page.locator('#region-towns')).toContainText('Bedok');
-  await expect(page.locator('.status-source a')).toHaveAttribute('href', /data.gov.sg/);
+  const sourceUrl = new URL(await page.locator('.status-source a').getAttribute('href'));
+  expect(sourceUrl.origin).toBe('https://data.gov.sg');
   await expect(page.locator('#mask-comparison-details')).not.toHaveAttribute('open');
   await expect(page.locator('.next-hour-plan, .plan-check')).toHaveCount(0);
 });

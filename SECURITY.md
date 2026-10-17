@@ -10,10 +10,10 @@ Do not probe NEA/data.gov.sg, GitHub's infrastructure, other repositories or lin
 
 ## Checks
 
-The deployment workflow runs a locked-dependency audit, unit tests and production browser tests. The separate Security checks workflow runs:
+The deployment workflow runs a locked-dependency audit, unit tests and production browser tests. It also waits for the reusable Security checks workflow, which runs:
 
 - Gitleaks on reachable Git history and the working tree, with secrets redacted in logs.
-- CodeQL's JavaScript/TypeScript `security-extended` query suite. Findings are published to the repository's code-scanning results. A completed analysis job does not by itself mean zero alerts.
+- CodeQL's JavaScript/TypeScript `security-extended` query suite. Findings are published to the repository's code-scanning results and the raw SARIF is retained. A separate gate requires zero current report findings; scanner execution alone is not treated as success.
 - A digest-pinned ZAP passive baseline against the local build, with the full JSON/HTML evidence retained as a workflow artifact. It does not run an active attack scan or follow the NEA APIs.
 
 The ZAP report gate fails on high-risk findings or unusable scanner output. Medium/low findings remain visible in the job summary and report; they are not changed to IGNORE. Passing that gate is **not** a zero-finding VAPT pass. Review all findings and the [assessment notes](docs/SECURITY-ASSESSMENT.md).
