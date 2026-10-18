@@ -22,7 +22,7 @@ Automated scans are point-in-time checks, not a certified penetration test or a 
 
 ## Local checks and merge protection
 
-Local `npm ci` installs fast pre-commit checks against staged files. Full CodeQL analysis runs before pushes against the actual commits being pushed. `make setup-security` installs the checksum-verified Linux x64 bundle; scanner metadata is shared with CI in `tooling/codeql-config.js`. Missing tools, unsuccessful analysis and findings block pushes. Hook configuration conflicts are reported rather than overwritten. See [Contributing](CONTRIBUTING.md) for setup and manual commands.
+Local `npm ci` installs fast pre-commit checks against staged files. Full CodeQL analysis runs before pushes against the actual commits being pushed. `make setup` also installs the checksum-verified Linux x64 bundle; scanner metadata is shared with CI in `tooling/codeql-config.js`. Missing tools, unsuccessful analysis and findings block pushes. Hook configuration conflicts are reported rather than overwritten. See [Contributing](CONTRIBUTING.md) for setup and manual commands.
 
 Required PR checks on `main` cover verification, CodeQL, secrets and the passive baseline. They apply to administrators and require an up-to-date branch, so local hook bypasses do not bypass the merge checks. Direct pushes, force pushes and branch deletion are blocked. No reviewer approval is required. The existing deployment gate still waits for verification and security success.
 

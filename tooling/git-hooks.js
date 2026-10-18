@@ -33,7 +33,7 @@ export async function installHooks(root, env = process.env) {
   await chmod(join(root, '.githooks/pre-commit'), 0o755);
   await chmod(join(root, '.githooks/pre-push'), 0o755);
   git(root, ['config', '--local', 'core.hooksPath', '.githooks']);
-  console.log('Installed local Git hooks. Run make setup-security before your first push.');
+  console.log('Installed local Git hooks. CodeQL is installed by make setup.');
 }
 
 export async function checkStaged(root) {
