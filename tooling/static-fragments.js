@@ -32,7 +32,7 @@ export function renderStaticFragments(html) {
     const ranges = bands.map((band, index) => {
       const lower = index === 0 ? 0 : bands[index - 1].limit + 1;
       const range = Number.isFinite(band.limit) ? `${lower}–${band.limit}` : `≥${lower}`;
-      return { name: band.name, range };
+      return { name: band.name, range, lower, upper: band.limit, level: band.index };
     });
     const description = ranges.map(({ name, range }) => `${name}: ${range}`).join('; ');
     const segments = bands
@@ -42,18 +42,23 @@ export function renderStaticFragments(html) {
       )
       .join('');
     const rangeLabels = ranges
-      .map(({ range }) => `<span role="listitem">${escapeHtml(range)}</span>`)
+      .map(({ lower, upper, level }) => {
+        const label = Number.isFinite(upper)
+          ? `<span>${lower}</span><wbr>–<wbr><span>${upper}</span>`
+          : `≥<wbr><span>${lower}</span>`;
+        return `<span class="scale-range" role="listitem" data-level="${level}">${label}</span>`;
+      })
       .join('');
     return `<figure class="band-scale" id="${id}" aria-label="${escapeHtml(description)}. No current reading.">
-      <svg viewBox="0 0 ${bands.length * 100} 36" preserveAspectRatio="none" role="img" aria-label="NEA bands, lower to higher">
+      <svg viewBox="0 0 ${bands.length * 100} 36" preserveAspectRatio="none" role="img" aria-label="NEA bands, lower to higher" aria-describedby="${id}-note">
         <defs><clipPath id="${id}-track"><rect x="0" y="18" width="${bands.length * 100}" height="12" rx="6" /></clipPath></defs>
         <g class="scale-track" clip-path="url(#${id}-track)">${segments}</g>
         <path class="scale-marker" d="M-6 2H6L0 12Z" hidden />
       </svg>
       <figcaption>
         <div class="scale-labels"><span>${escapeHtml(bands[0].name)}</span><span>${escapeHtml(bands.at(-1).name)}</span></div>
-        <div class="scale-ranges" data-band-count="${bands.length}" role="list" aria-label="Band ranges">${rangeLabels}</div>
-        <p class="scale-note">Equal-width bands; highest band shows category only.</p>
+        <div class="scale-ranges" role="list" aria-label="Band ranges">${rangeLabels}</div>
+        <p class="scale-note" id="${id}-note">Equal-width bands.</p>
       </figcaption>
     </figure>`;
   };

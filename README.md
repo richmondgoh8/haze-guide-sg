@@ -31,7 +31,7 @@ Read [the architecture guide](docs/ARCHITECTURE.md) for the data flow and [the c
 - A mobile-friendly comparison of cloth, surgical/KF-AD, N95, KN95, KF94 and FFP2 masks, plus KF80, N99/FFP3/KF99, N100/P100, reusable and valved options. The ratings describe laboratory filtration, not guaranteed personal protection.
 - A four-step haze scale, with the current level marked in text and colour. The scale uses NEA's existing bands; it is not a separate risk score.
 - Both reading cards use readable sans-serif numbers and their own labelled colour scales: four PM2.5 bands and five PSI categories. Their colours follow each measurement independently; stale values lose their card tint. These UI colours are not a new health index.
-- Each scale uses equal-width colour bands. Within a finite band, the arrow tracks the reading proportionally; in the open-ended highest band it stays centred as a category indicator. Old readings retain an outlined arrow labelled “Last reported”.
+- Each scale uses equal-width colour bands. Within a finite band, the arrow tracks the reading proportionally and the current range is bold and underlined. In the open-ended highest band, the arrow stays centred and the caption identifies “251+ · Highest band” or “301+ · Highest band”. Range labels wrap between complete numbers on small screens. Old readings retain an outlined arrow labelled “Last reported”, without current-range emphasis.
 
 ## Window advice
 
@@ -71,7 +71,7 @@ The schedule runs at minutes 7, 22, 37 and 52, avoiding the start-of-hour rush. 
 
 `tooling/publish-snapshot.js` retains the latest validated published measurement per feed when a source fails or returns an older timestamp. It never changes the source timestamp to the collection time. If neither live nor previous data is usable, publication fails and the existing deployment stays up. Local builds contain an explicitly empty snapshot: run `node tooling/publish-snapshot.js` after building if you need real data in a local production preview. Never commit live readings.
 
-Band-position context shows distance to adjacent NEA bands, not a trend, forecast or safety margin. For example, 140 is 11 µg/m³ below High, which starts at 151, and 85 above the Normal ceiling of 55. The highest band is open-ended, so it has no artificial meter maximum.
+Band-position context shows one distance to the nearest adjacent NEA band, not a trend, forecast or safety margin. For example, 71 shows “16 µg/m³ above Normal” and 140 shows “11 µg/m³ below High”. An exact midpoint names both neighbouring bands. The highest band is open-ended, so it has no artificial meter maximum.
 
 This is an independent project and is not an official government website. Readings cover five broad regions, not individual streets or indoor air.
 

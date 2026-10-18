@@ -1,16 +1,8 @@
 .band-position {
   margin-block: 0 20px;
   font-size: 0.85rem;
+  font-weight: 600;
 }
-.band-position[hidden],
-.band-position [hidden] {
+.band-position[hidden] {
   display: none;
-}
-.band-distances {
-  display: grid;
-  gap: 3px;
-  margin-block: 6px;
-}
-.band-position small {
-  color: var(--source-text);
 }

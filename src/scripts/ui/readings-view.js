@@ -17,9 +17,6 @@ export function createReadingsView(root) {
     statusDot: '#status-dot',
     statusText: '#data-status-text',
     position: '#band-position',
-    positionTitle: '#band-position-title',
-    positionDown: '#band-distance-down',
-    positionUp: '#band-distance-up',
   });
   const pmScale = createBandScaleView(root, '#pm-scale', PM25_BANDS);
   const psiScale = createBandScaleView(root, '#psi-scale', PSI_BANDS);
@@ -51,11 +48,7 @@ export function createReadingsView(root) {
       elements.statusText.textContent = model.status.text;
       const position = model.severity.position;
       elements.position.hidden = !position;
-      elements.positionTitle.textContent = position?.nearest ?? '';
-      elements.positionDown.textContent = position?.down ?? '';
-      elements.positionUp.textContent = position?.up ?? '';
-      elements.positionDown.hidden = !position?.down;
-      elements.positionUp.hidden = !position?.up;
+      elements.position.textContent = position?.summary ?? '';
 
       for (const region of model.regions) {
         const { button, value, label } = regionButtons.get(region.id);
