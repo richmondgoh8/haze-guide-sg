@@ -273,10 +273,42 @@
   font-weight: 700;
   text-underline-offset: 4px;
 }
-.region-memory {
-  margin: -6px 0 14px;
-  font-size: 0.8rem;
+.info-tooltip {
+  position: relative;
+  flex: none;
+}
+.info-tooltip-trigger {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 0;
+  border-radius: 50%;
   color: var(--source-text);
+  background: transparent;
+  cursor: pointer;
+}
+.info-tooltip-trigger:hover {
+  background: var(--mint);
+}
+.info-tooltip-trigger svg {
+  width: 20px;
+  height: 20px;
+}
+.info-tooltip-content {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  right: 0;
+  width: min(230px, 65vw);
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  box-shadow: 0 4px 16px #173b3420;
 }
 .reading-card:is([data-band='normal'], [data-band='good']),
 .scale-track > rect:is([data-band='normal'], [data-band='good']) {

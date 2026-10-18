@@ -7,6 +7,21 @@ function model(readings, region = 'east', now = TEST_TIME) {
   return createDashboardModel({ readings, region }, now);
 }
 
+test('card time uses the PM2.5 source timestamp, including for old readings', () => {
+  const readings = snapshot();
+  readings.psi.timestamp = '2026-10-17T09:00:00+08:00';
+  const current = model(readings);
+  assert.equal(current.pm25.timestamp, readings.pm25.timestamp);
+  assert.match(current.pm25.timeLabel, /17 Oct.*10:00.*am SGT/);
+  assert.equal(
+    model(readings, 'east', TEST_TIME + 3 * 60 * 60 * 1000).pm25.timeLabel,
+    current.pm25.timeLabel,
+  );
+  readings.pm25 = null;
+  assert.equal(model(readings).pm25.timestamp, null);
+  assert.equal(model(readings).pm25.timeLabel, 'Time unavailable');
+});
+
 test('selected region drives values, advice, windows, town examples and selected button', () => {
   const east = model(snapshot());
   assert.equal(east.pm25.value, 140);

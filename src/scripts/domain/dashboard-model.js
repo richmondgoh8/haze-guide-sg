@@ -44,6 +44,8 @@ export function createDashboardModel(
     region: selectedRegion,
     pm25: {
       value: band ? pm25 : '—',
+      timestamp: band ? readings.pm25.timestamp : null,
+      timeLabel: band ? formatTimestamp(readings.pm25.timestamp) : 'Time unavailable',
       reportedLevel: band?.index ?? null,
       current,
       title: activeBand ? advice.headline : 'Current advice unavailable',
