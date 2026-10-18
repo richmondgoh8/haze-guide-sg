@@ -198,9 +198,9 @@
   text-underline-offset: 3px;
 }
 .regional-block {
-  margin-top: 35px;
+  margin: 0 0 32px;
   border-top: 1px solid var(--line);
-  padding-top: 28px;
+  padding-top: 20px;
   display: grid;
   grid-template-columns: 230px 1fr;
   gap: 40px;
@@ -316,6 +316,7 @@
   display: block;
   width: 100%;
   height: 36px;
+  overflow: visible;
   stroke: none;
 }
 .scale-track > rect {
@@ -343,17 +344,32 @@
   text-align: right;
 }
 .scale-ranges {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+}
+.scale-ranges[data-band-count='4'] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.scale-ranges[data-band-count='5'] {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.scale-ranges > span {
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+.scale-note {
+  margin: 4px 0 0;
   color: var(--source-text);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }
-.scale-ranges summary {
-  cursor: pointer;
-  min-height: 44px;
-  padding-block: 12px 8px;
-  width: fit-content;
-}
-.scale-ranges p {
-  margin-block: 4px 12px;
+@media (max-width: 380px) {
+  .scale-ranges {
+    font-size: 0.62rem;
+  }
 }
 @media (forced-colors: active) {
   .scale-track > rect {

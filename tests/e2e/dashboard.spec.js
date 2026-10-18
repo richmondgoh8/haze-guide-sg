@@ -3,6 +3,14 @@ import { snapshotPayload, TEST_TIME, TEST_TIMESTAMP } from '../fixtures/readings
 
 const pageErrors = new WeakMap();
 
+async function expectMarkerPosition(page, scaleId, expectedX) {
+  const marker = page.locator(`#${scaleId} .scale-marker`);
+  await expect(marker).toBeVisible();
+  await expect
+    .poll(() => marker.evaluate((element) => element.transform.baseVal.getItem(0).matrix.e))
+    .toBeCloseTo(expectedX, 3);
+}
+
 test.beforeEach(async ({ page }) => {
   const errors = [];
   pageErrors.set(page, errors);
@@ -25,10 +33,7 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#pm-card')).toHaveAttribute('data-band', 'elevated');
   await expect(page.locator('#psi-card')).toHaveAttribute('data-band', 'unhealthy');
   await expect(page.locator('#psi-scale')).toHaveAttribute('data-level', '3');
-  await expect(page.locator('#psi-scale .scale-marker')).toHaveAttribute(
-    'transform',
-    'translate(250 0)',
-  );
+  await expectMarkerPosition(page, 'psi-scale', 243);
   await expect(page.locator('#psi-scale')).toHaveAttribute('aria-label', 'Now: 143, Unhealthy.');
   await expect(page.locator('#pm-category')).toContainText('Band 2');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'reduce');
@@ -93,11 +98,9 @@ test('readings use joined colour bars and the oversized activity section is gone
   await expect(page.locator('#action-vulnerable')).toBeVisible();
   await expect(page.locator('#activity-walk-short')).toBeVisible();
   await expect(page.locator('#activity-mask-short')).toBeVisible();
-  const ranges = page.locator('#pm-scale .scale-ranges');
-  await expect(ranges).not.toHaveAttribute('open');
-  await ranges.locator('summary').focus();
-  await page.keyboard.press('Enter');
-  await expect(ranges).toContainText('High: 151–250');
+  await expect(page.locator('#pm-scale .scale-ranges')).toHaveText('0–5556–150151–250≥251');
+  await expect(page.locator('#psi-scale .scale-ranges')).toHaveText('0–5051–100101–200201–300≥301');
+  await expect(page.locator('.scale-note')).toHaveCount(2);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page
     .getByRole('navigation', { name: 'Page sections' })
@@ -244,6 +247,11 @@ test('keyboard region changes update advice, retain focus and survive a reload',
   page,
 }) => {
   await page.goto('/');
+  expect(
+    await page
+      .locator('.regional-block')
+      .evaluate((element) => element.nextElementSibling?.classList.contains('readings-grid')),
+  ).toBe(true);
   await expect(page.locator('#pm-value')).toHaveText('140');
   const north = page.locator('[data-region="north"]');
   await north.focus();
@@ -294,20 +302,68 @@ test('stale readings keep reported values but remove current advice', async ({ p
   await expect(page.locator('#band-position')).not.toBeVisible();
 });
 
+test('arrows track readings within each band across viewport sizes, regions and refreshes', async ({
+  page,
+}) => {
+  const payload = snapshotPayload(71);
+  payload.readings.psi.values.east = 175;
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
+  await page.goto('/');
+  await expect(page.locator('#pm-value')).toHaveText('71');
+  await expect(page.locator('#psi-value')).toHaveText('175');
+
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const [id, fraction] of [
+      ['pm-scale', 0.2921052632],
+      ['psi-scale', 0.55],
+    ]) {
+      const chart = await page.locator(`#${id} svg`).boundingBox();
+      const marker = await page.locator(`#${id} .scale-marker`).boundingBox();
+      expect(
+        Math.abs(marker.x + marker.width / 2 - (chart.x + chart.width * fraction)),
+      ).toBeLessThan(1);
+    }
+  }
+
+  await page.locator('#region').selectOption('north');
+  await expectMarkerPosition(page, 'pm-scale', 36.363636);
+  await page.locator('#region').selectOption('east');
+  payload.readings.pm25.values.east = 149;
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(page.locator('#pm-value')).toHaveText('149');
+  await expectMarkerPosition(page, 'pm-scale', 198.947368);
+
+  payload.readings.pm25.values.east = 0;
+  payload.readings.psi.values.east = 0;
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const id of ['pm-scale', 'psi-scale']) {
+      await expectMarkerPosition(page, id, 0);
+      await expect(page.locator(`#${id} svg`)).toHaveCSS('overflow', 'visible');
+      const marker = await page.locator(`#${id} .scale-marker`).boundingBox();
+      const card = await page.locator(`#${id}`).locator('..').boundingBox();
+      expect(marker.x).toBeGreaterThan(card.x);
+      expect(marker.x + marker.width).toBeLessThan(card.x + card.width);
+    }
+  }
+});
+
 test('all band boundaries update the scale and window state', async ({ page }) => {
   let pm25 = 0;
   await page.route('**/data/latest.json', (route) =>
     route.fulfill({ json: snapshotPayload(pm25, TEST_TIMESTAMP) }),
   );
   await page.goto('/');
-  for (const [value, level] of [
-    [0, 1],
-    [55, 1],
-    [56, 2],
-    [150, 2],
-    [151, 3],
-    [250, 3],
-    [251, 4],
+  for (const [value, level, markerX] of [
+    [0, 1, 0],
+    [55, 1, 100],
+    [56, 2, 101.052632],
+    [150, 2, 200],
+    [151, 3, 201],
+    [250, 3, 300],
+    [251, 4, 350],
   ]) {
     pm25 = value;
     await page.getByRole('button', { name: 'Refresh', exact: true }).click();
@@ -321,11 +377,7 @@ test('all band boundaries update the scale and window state', async ({ page }) =
     if (level === 4) {
       await expect(page.locator('#band-position-title')).toHaveText('Already in the highest band');
     }
-    await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();
-    await expect(page.locator('#pm-scale .scale-marker')).toHaveAttribute(
-      'transform',
-      `translate(${(level - 0.5) * 100} 0)`,
-    );
+    await expectMarkerPosition(page, 'pm-scale', markerX);
   }
 });
 
@@ -335,11 +387,7 @@ test('last-reported arrows become current on refresh and disappear only when val
   const payload = snapshotPayload(159, new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString());
   await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
   await page.goto('/');
-  await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();
-  await expect(page.locator('#pm-scale .scale-marker')).toHaveAttribute(
-    'transform',
-    'translate(250 0)',
-  );
+  await expectMarkerPosition(page, 'pm-scale', 209);
   await expect(page.locator('#pm-scale')).toHaveAttribute(
     'aria-label',
     'Last reported: 159 µg/m³, High.',
@@ -349,6 +397,7 @@ test('last-reported arrows become current on refresh and disappear only when val
   payload.readings.pm25.timestamp = TEST_TIMESTAMP;
   await page.getByRole('button', { name: 'Refresh', exact: true }).click();
   await expect(page.locator('#pm-scale')).toHaveAttribute('data-freshness', 'current');
+  await expectMarkerPosition(page, 'pm-scale', 209);
   await expect(page.locator('#pm-scale')).toHaveAttribute('aria-label', 'Now: 159 µg/m³, High.');
   payload.readings.pm25 = null;
   payload.readings.psi = null;
@@ -366,26 +415,23 @@ test('PSI meter covers every category and labels its last-reported pointer when 
   const payload = snapshotPayload();
   await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
   await page.goto('/');
-  for (const [value, level] of [
-    [0, 1],
-    [50, 1],
-    [51, 2],
-    [100, 2],
-    [101, 3],
-    [200, 3],
-    [201, 4],
-    [300, 4],
-    [301, 5],
-    [2000, 5],
+  for (const [value, level, markerX] of [
+    [0, 1, 0],
+    [50, 1, 100],
+    [51, 2, 102],
+    [100, 2, 200],
+    [101, 3, 201],
+    [200, 3, 300],
+    [201, 4, 301],
+    [300, 4, 400],
+    [301, 5, 450],
+    [2000, 5, 450],
   ]) {
     payload.readings.psi.values.east = value;
     await page.getByRole('button', { name: 'Refresh', exact: true }).click();
     await expect(page.locator('#psi-value')).toHaveText(String(value));
     await expect(page.locator('#psi-scale')).toHaveAttribute('data-level', String(level));
-    await expect(page.locator('#psi-scale .scale-marker')).toHaveAttribute(
-      'transform',
-      `translate(${(level - 0.5) * 100} 0)`,
-    );
+    await expectMarkerPosition(page, 'psi-scale', markerX);
   }
   payload.readings.psi.timestamp = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
   await page.getByRole('button', { name: 'Refresh', exact: true }).click();

@@ -29,18 +29,20 @@ export function renderStaticFragments(html) {
     </button>`;
   }).join('\n');
   const renderScale = (bands, id) => {
-    const description = bands
-      .map((band, index) => {
-        const lower = index === 0 ? 0 : bands[index - 1].limit + 1;
-        const range = Number.isFinite(band.limit) ? `${lower}–${band.limit}` : `≥${lower}`;
-        return `${band.name}: ${range}`;
-      })
-      .join('; ');
+    const ranges = bands.map((band, index) => {
+      const lower = index === 0 ? 0 : bands[index - 1].limit + 1;
+      const range = Number.isFinite(band.limit) ? `${lower}–${band.limit}` : `≥${lower}`;
+      return { name: band.name, range };
+    });
+    const description = ranges.map(({ name, range }) => `${name}: ${range}`).join('; ');
     const segments = bands
       .map(
         (band, index) =>
           `<rect x="${index * 100}" y="18" width="100" height="12" data-band="${band.className}" />`,
       )
+      .join('');
+    const rangeLabels = ranges
+      .map(({ range }) => `<span role="listitem">${escapeHtml(range)}</span>`)
       .join('');
     return `<figure class="band-scale" id="${id}" aria-label="${escapeHtml(description)}. No current reading.">
       <svg viewBox="0 0 ${bands.length * 100} 36" preserveAspectRatio="none" role="img" aria-label="NEA bands, lower to higher">
@@ -50,7 +52,8 @@ export function renderStaticFragments(html) {
       </svg>
       <figcaption>
         <div class="scale-labels"><span>${escapeHtml(bands[0].name)}</span><span>${escapeHtml(bands.at(-1).name)}</span></div>
-        <details class="scale-ranges"><summary>Band ranges</summary><p>${escapeHtml(description)}. Equal-width bands, not a linear numeric axis.</p></details>
+        <div class="scale-ranges" data-band-count="${bands.length}" role="list" aria-label="Band ranges">${rangeLabels}</div>
+        <p class="scale-note">Equal-width bands; highest band shows category only.</p>
       </figcaption>
     </figure>`;
   };

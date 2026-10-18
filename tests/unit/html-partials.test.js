@@ -43,6 +43,18 @@ test('static region controls and scale use the same configuration as the client'
   assert.match(result, /id="psi-scale"/);
   assert.match(result, /Very high: ≥251/);
   assert.match(result, /Hazardous: ≥301/);
+  assert.match(
+    result,
+    /data-band-count="4" role="list" aria-label="Band ranges"><span role="listitem">0–55<\/span><span role="listitem">56–150<\/span><span role="listitem">151–250<\/span><span role="listitem">≥251<\/span>/,
+  );
+  assert.match(
+    result,
+    /data-band-count="5" role="list" aria-label="Band ranges"><span role="listitem">0–50<\/span><span role="listitem">51–100<\/span><span role="listitem">101–200<\/span><span role="listitem">201–300<\/span><span role="listitem">≥301<\/span>/,
+  );
+  assert.equal(
+    (result.match(/Equal-width bands; highest band shows category only\./g) || []).length,
+    2,
+  );
   assert.equal((result.match(/class="scale-marker"[^>]* hidden/g) || []).length, 2);
   assert.ok(result.includes('Hazardous'));
   assert.ok(!result.includes('<!--'));
