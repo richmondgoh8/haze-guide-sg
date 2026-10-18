@@ -21,6 +21,12 @@ export function createReadingsView(root) {
   });
   const pmScale = createBandScaleView(root, '#pm-scale', PM25_BANDS);
   const psiScale = createBandScaleView(root, '#psi-scale', PSI_BANDS);
+  const illustrations = ['pm', 'psi'].map((id) => ({
+    measurement: id === 'pm' ? 'pm25' : 'psi',
+    variants: Array.from(
+      requireElement(root, `#${id}-illustration`).querySelectorAll('[data-illustration]'),
+    ),
+  }));
   const regionButtons = new Map(
     REGIONS.map(({ id }) => {
       const button = requireElement(root, `[data-region="${id}"]`);
@@ -46,6 +52,10 @@ export function createReadingsView(root) {
       elements.psiValue.textContent = model.psi.value;
       elements.psiLabel.textContent = model.psi.label;
       elements.psiCard.dataset.band = model.psi.className;
+      for (const { measurement, variants } of illustrations) {
+        for (const variant of variants)
+          variant.hidden = variant.dataset.illustration !== model[measurement].illustration;
+      }
       pmScale.render({ ...model.pm25, valueLabel: `${model.pm25.value} µg/m³` });
       psiScale.render(model.psi);
       elements.statusDot.className = `status-dot ${model.status.warning ? 'warn' : 'ok'}`;

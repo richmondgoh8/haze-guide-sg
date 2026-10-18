@@ -73,33 +73,61 @@
     </div>
     <div class="readings-grid">
       <article class="reading-card primary-card" id="pm-card">
-        <div class="reading-top">
+        <div class="reading-status">
           <span class="reading-label"
             >AIR OUTSIDE · <time id="pm-time">Waiting for reading</time></span
-          ><span class="band-pill" id="pm-band">Checking the air…</span>
+          >
+          <div class="reading-summary">
+            <div class="reading-metric">
+              <div class="reading-value">
+                <span id="pm-value">—</span><span class="unit">µg/m³</span>
+              </div>
+              <p class="reading-caption">1-hour PM2.5 · Fine particles in the air</p>
+            </div>
+            <div class="reading-illustration" id="pm-illustration" aria-hidden="true">
+              <span data-illustration="clear" hidden><!-- icon: airclear --></span>
+              <span data-illustration="caution" hidden><!-- icon: aircaution --></span>
+              <span data-illustration="mask" hidden><!-- icon: airmask --></span>
+              <span data-illustration="warning" hidden
+                ><!-- icon: airmask --><span class="illustration-warning"
+                  ><!-- icon: airwarning --></span
+                ></span
+              >
+              <span data-illustration="unknown"><!-- icon: airunknown --></span>
+            </div>
+          </div>
+          <span class="band-pill" id="pm-band">Checking the air…</span>
+          <p id="pm-category" class="official-category">Waiting for the NEA reading</p>
         </div>
-        <div class="reading-value"><span id="pm-value">—</span><span class="unit">µg/m³</span></div>
-        <p class="reading-caption">1-hour PM2.5 · Fine particles in the air</p>
-        <p id="pm-category" class="official-category">Waiting for the NEA reading</p>
-        <!-- haze: scale -->
-        <p class="band-position" id="band-position" hidden></p>
-        <div class="reading-divider"></div>
-        <p class="reading-foot">
-          Higher numbers mean <strong>more fine particles to breathe in.</strong>
-        </p>
+        <div class="reading-context">
+          <!-- haze: scale -->
+          <p class="band-position" id="band-position" hidden></p>
+          <div class="reading-divider"></div>
+          <p class="reading-foot">
+            Higher numbers mean <strong>more fine particles to breathe in.</strong>
+          </p>
+        </div>
       </article>
       <article class="reading-card psi-card" id="psi-card">
-        <div class="reading-top">
-          <span class="reading-label">24-HOUR PSI</span
-          ><span class="mini-icon" aria-hidden="true"
-            ><svg viewBox="0 0 24 24"><path d="M3 17h18M5 12h14M8 7h8" /></svg
-          ></span>
+        <div class="reading-status">
+          <span class="reading-label">24-HOUR PSI</span>
+          <div class="reading-summary">
+            <div class="reading-metric">
+              <div class="reading-value"><span id="psi-value">—</span></div>
+              <p class="reading-caption">24-hour rolling reading</p>
+            </div>
+            <div class="reading-illustration" id="psi-illustration" aria-hidden="true">
+              <span data-illustration="air" hidden><!-- icon: airstream --></span>
+              <span data-illustration="unknown"><!-- icon: airunknown --></span>
+            </div>
+          </div>
+          <p class="reading-status-title" id="psi-band">Checking…</p>
         </div>
-        <div class="reading-value"><span id="psi-value">—</span></div>
-        <p class="reading-caption" id="psi-band">Checking…</p>
-        <!-- psi: scale -->
-        <div class="reading-divider"></div>
-        <p class="reading-foot">A rolling reading, <strong>not tomorrow’s forecast.</strong></p>
+        <div class="reading-context">
+          <!-- psi: scale -->
+          <div class="reading-divider"></div>
+          <p class="reading-foot">A rolling reading, <strong>not tomorrow’s forecast.</strong></p>
+        </div>
       </article>
     </div>
     <p class="reading-method">
@@ -125,14 +153,14 @@
     <div class="outdoor-advice" id="what-to-do" role="region" aria-label="Outdoor activity advice">
       <div class="outdoor-summary" id="outdoor-summary">
         <div>
-          <!-- icon: walk -->
+          <!-- icon: dashwalk -->
           <div>
             <strong>Walk / errands</strong>
             <p id="activity-walk-short">Check the current reading first.</p>
           </div>
         </div>
         <div>
-          <!-- icon: mask -->
+          <!-- icon: dashmask -->
           <div>
             <strong>Mask</strong>
             <p id="activity-mask-short">Check the official advisory first.</p>
@@ -171,16 +199,14 @@
     </div>
     <div class="daily-decisions">
       <article class="decision-card" id="window-guide">
-        <div class="decision-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32">
-            <path d="M5 4h22v24H5zM16 4v24M5 16h22m-11-5-5-2v14l5-2" />
-          </svg>
+        <div class="decision-heading">
+          <div class="decision-icon" aria-hidden="true"><!-- icon: dashwindow --></div>
+          <p class="decision-label">WINDOWS · OUR SUGGESTION</p>
         </div>
-        <p class="decision-label">WINDOWS · OUR SUGGESTION</p>
         <h3 id="window-verdict">Check the air before opening</h3>
         <p id="window-detail">Waiting for the latest outdoor reading.</p>
         <div class="decision-reminder">
-          <!-- icon: heat -->
+          <!-- icon: dashheat -->
           <p>
             <strong>Too hot? Don’t tahan.</strong> Cooler indoor spot first. Must open to cool down?
             Close once comfortable; purifier if available.
@@ -190,13 +216,10 @@
         <a href="{{site.home}}guides/windows-during-haze/">Full ventilation guide ↗</a>
       </article>
       <article class="decision-card">
-        <div class="decision-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32">
-            <circle cx="20" cy="5" r="3" />
-            <path d="m10 13 5-5 6 7 6 1M17 11l-4 9-7 7m8-10 8 5 2 6M4 13h6" />
-          </svg>
+        <div class="decision-heading">
+          <div class="decision-icon" aria-hidden="true"><!-- icon: dashrun --></div>
+          <p class="decision-label">OUTDOOR WORKOUT STILL ON?</p>
         </div>
-        <p class="decision-label">OUTDOOR WORKOUT STILL ON?</p>
         <h3 id="exercise-verdict">Check before exercising outside</h3>
         <p class="activity-alternative">
           <strong>Instead</strong

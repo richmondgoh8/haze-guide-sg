@@ -1,68 +1,141 @@
-<details class="visual-details mask-buying" id="mask-buying-details">
-  <summary>Buying online? Spot fake masks & scams</summary>
-  <div class="mask-buying-grid">
-    <div>
-      <!-- icon: home -->
-      <h3>Seller first</h3>
-      <p>Choose an established pharmacy or retailer. Unknown seller? Skip the gamble.</p>
-    </div>
-    <div>
-      <!-- icon: check -->
-      <h3>N95? Check proof</h3>
-      <p>
-        Match the maker, model and TC approval number in the
+<div class="mask-buying">
+  <ul class="mask-buying-strip" aria-label="Before buying masks">
+    <li><!-- icon: home --><span>Trusted seller</span></li>
+    <li><!-- icon: mask --><span>Check the model</span></li>
+    <li><!-- icon: coins --><span>Buy what you need</span></li>
+  </ul>
+  <details class="visual-details" id="mask-buying-details">
+    <summary>Genuine mask? Check your type.</summary>
+    <p class="visual-caveat">
+      <strong>A listed model can still be copied.</strong> Buy through a traceable seller; a good
+      seal still matters. Check the pack’s batch details and expiry too.
+    </p>
+    <div class="mask-buying-grid">
+      <article aria-labelledby="mask-check-n95">
+        <h3 id="mask-check-n95">N95</h3>
+        <p class="mask-check-route">NIOSH · US</p>
+        <ul>
+          <li>Find the manufacturer, model and TC approval number.</li>
+          <li>Match them in the official list—not just a seller’s certificate photo.</li>
+        </ul>
         <a href="https://wwwn.cdc.gov/niosh-cel/" target="_blank" rel="noopener noreferrer"
-          >NIOSH list ↗</a
-        >. Check expiry too.
-      </p>
+          >Check NIOSH list ↗</a
+        >
+      </article>
+      <article aria-labelledby="mask-check-kn95">
+        <h3 id="mask-check-kn95">KN95</h3>
+        <p class="mask-check-route">GB 2626 · China</p>
+        <ul>
+          <li>Check the maker, model and stated standard. Current production: GB 2626-2019.</li>
+          <li>
+            Ask for matching test evidence. Verify doubtful reports with the issuing lab through its
+            own website.
+          </li>
+        </ul>
+        <p class="mask-check-note">The standard number is a claim, not an authenticity code.</p>
+        <a
+          href="https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=16D8935B45AD7AE40228801B7FADFC6C"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Official KN95 standard ↗</a
+        >
+      </article>
+      <article aria-labelledby="mask-check-kf94">
+        <h3 id="mask-check-kf94">KF94</h3>
+        <p class="mask-check-route">MFDS · Korea</p>
+        <ul>
+          <li>
+            Match the exact product, manufacturer, KF94 grade and size in Korea’s approval list.
+          </li>
+          <li>
+            Use the Korean product name from the pack. Browser translation helps with the menus.
+          </li>
+        </ul>
+        <a
+          href="https://nedrug.mfds.go.kr/pbp/CCBCC01/getList"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Check MFDS list ↗</a
+        >
+      </article>
     </div>
-    <div>
-      <!-- icon: coins -->
-      <h3>Pay in-app</h3>
-      <p>
-        Use the platform’s protected checkout. Avoid direct transfers, seller-sent payment links and
-        app downloads.
-      </p>
-    </div>
-  </div>
-  <p class="mask-notes">
-    A copied approval number isn’t proof of authenticity. NIOSH checks apply to N95 claims—not KN95,
-    KF94 or FFP2.
-  </p>
-  <p class="mask-notes">
-    Unsure about a deal? Call <a href="tel:1799">ScamShield 1799</a>. Already paid a scammer?
-    Contact your bank immediately and report to police.
-  </p>
-  <p class="mask-buying-sources">
-    Checked 18 October 2026 ·
-    <a
-      href="https://www.hsa.gov.sg/announcements/guide-to-masks-and-respirators/"
-      target="_blank"
-      rel="noopener noreferrer"
-      >HSA buying advice ↗</a
-    >
-    ·
-    <a
-      href="https://www.scamshield.gov.sg/i-want-protection-from-scams/learn-to-recognise-scams/e-commerce-scams/"
-      target="_blank"
-      rel="noopener noreferrer"
-      >ScamShield shopping checks ↗</a
-    >
-    ·
-    <a
-      href="https://www.cdc.gov/niosh/ppe/counterfeit_respirators/index.html"
-      target="_blank"
-      rel="noopener noreferrer"
-      >NIOSH counterfeit warnings ↗</a
-    >
-  </p>
-  <p class="mask-buying-sources">
-    Local news: CASE cautioned against unverified social-media sellers of haze supplies.
-    <a
-      href="https://www.straitstimes.com/singapore/buying-masks-or-haze-related-items-on-the-secondary-market-be-careful-says-case"
-      target="_blank"
-      rel="noopener noreferrer"
-      >The Straits Times, 17 October 2026 ↗</a
-    >
-  </p>
-</details>
+    <p class="mask-notes">
+      Different routes, not one universal checker. NIOSH checks don’t verify KN95, KF94 or FFP2
+      claims.
+    </p>
+    <h3 class="mask-shopping-title">Before you pay</h3>
+    <ul class="mask-shopping-checks">
+      <li>
+        <!-- icon: home -->
+        <p>
+          <strong>Seller first.</strong> Use an established retailer or a seller the manufacturer
+          confirms. A marketplace badge isn’t a guarantee.
+        </p>
+      </li>
+      <li>
+        <!-- icon: coins -->
+        <p>
+          <strong>Pay in-app.</strong> Use protected checkout. Avoid direct transfers, seller-sent
+          payment links and app downloads.
+        </p>
+      </li>
+      <li>
+        <!-- icon: check -->
+        <p>
+          <strong>Compare, don’t stockpile.</strong> Try a small pack for fit. Compare retailer
+          prices and
+          <a
+            href="https://www.case.org.sg/media_centre/case-launches-price-kaki-nationwide-to-empower-consumers-to-make-informed-purchasing-decisions/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Price Kaki ↗</a
+          >
+          where listed; prices and coverage can vary.
+        </p>
+      </li>
+    </ul>
+    <p class="mask-notes">
+      Unsure about a deal? Call <a href="tel:1799">ScamShield 1799</a>. Already paid a scammer?
+      Contact your bank immediately and report to police.
+    </p>
+    <p class="mask-buying-sources">
+      Buying guidance checked <time datetime="2026-10-18">18 October 2026</time> ·
+      <a
+        href="https://www.hsa.gov.sg/announcements/guide-to-masks-and-respirators/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >HSA buying advice ↗</a
+      >
+      ·
+      <a
+        href="https://www.cdc.gov/niosh/ppe/niosh-approved-respirators/index.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        >NIOSH markings ↗</a
+      >
+      ·
+      <a
+        href="https://www.cdc.gov/niosh/ppe/counterfeit_respirators/index.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Counterfeit warnings ↗</a
+      >
+      ·
+      <a
+        href="https://www.scamshield.gov.sg/i-want-protection-from-scams/learn-to-recognise-scams/e-commerce-scams/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >ScamShield shopping checks ↗</a
+      >
+    </p>
+    <p class="mask-buying-sources">
+      News context: CASE cautioned against unverified haze-supply sellers and overbuying.
+      <a
+        href="https://www.asiaone.com/singapore/haze-n95-masks-air-purifiers-advisory-case"
+        target="_blank"
+        rel="noopener noreferrer"
+        >AsiaOne report · October 2026 ↗</a
+      >
+    </p>
+  </details>
+</div>

@@ -7,6 +7,25 @@ function model(readings, region = 'east', now = TEST_TIME) {
   return createDashboardModel({ readings, region }, now);
 }
 
+test('illustrations follow validated bands and never reassure from old data', () => {
+  for (const [value, illustration] of [
+    [0, 'clear'],
+    [56, 'caution'],
+    [151, 'mask'],
+    [251, 'warning'],
+  ]) {
+    const readings = snapshot(value);
+    assert.equal(model(readings).pm25.illustration, illustration);
+    assert.equal(model(readings).psi.illustration, 'air');
+    const old = model(readings, 'east', TEST_TIME + 3 * 60 * 60 * 1000);
+    assert.equal(old.pm25.illustration, 'unknown');
+    assert.equal(old.psi.illustration, 'unknown');
+  }
+  const missing = model({ pm25: null, psi: null });
+  assert.equal(missing.pm25.illustration, 'unknown');
+  assert.equal(missing.psi.illustration, 'unknown');
+});
+
 test('card time uses the PM2.5 source timestamp, including for old readings', () => {
   const readings = snapshot();
   readings.psi.timestamp = '2026-10-17T09:00:00+08:00';

@@ -17,3 +17,4 @@
 @import url('./dashboard.css') layer(site);
 @import url('./components/visual-guide.css') layer(site);
 @import url('./components/band-position.css') layer(site);
+@import url('./components/reading-status.css') layer(site);

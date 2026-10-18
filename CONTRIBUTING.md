@@ -23,6 +23,8 @@ The development server prints its local URL. HTML partials, styles and scripts r
 
 The [architecture guide](docs/ARCHITECTURE.md) explains the data flow and module boundaries.
 
+Dashboard artwork uses the allowlist in `tooling/dashboard-icons.js`. The existing icon renderer converts selected Flaticon WOFF glyphs to SVG through `tooling/uicons.js` at build time; neither the font nor OpenType.js belongs in browser imports. Use semantic icon names, keep the visible footer credit, and see [third-party notices](THIRD_PARTY_NOTICES.md) before changing the artwork or its distribution. Guide illustrations outside this dashboard refresh remain unchanged.
+
 ## Where to make common changes
 
 | Change                                           | Start here                                                            |
