@@ -138,7 +138,7 @@ test('pre-push rejects missing tools but permits a deletion-only update', async 
   const { root, remote } = await fixture(context);
   const pushed = command(root, ['push', 'origin', 'HEAD:main']);
   assert.notEqual(pushed.status, 0);
-  assert.match(pushed.stderr, /make setup-security/);
+  assert.match(pushed.stderr, /Run make setup, then retry/);
   assert.equal(git(remote, ['for-each-ref', '--format=%(refname)']), '');
   await checkPush(root, `refs/heads/main ${'0'.repeat(40)} refs/heads/main ${'1'.repeat(40)}\n`);
 });

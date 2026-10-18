@@ -17,13 +17,10 @@ export function codeqlBinary(root) {
 
 export function requireCodeql(root) {
   const binary = codeqlBinary(root);
-  if (!existsSync(binary))
-    throw new Error('CodeQL is not installed. Run make setup-security, then retry.');
+  if (!existsSync(binary)) throw new Error('CodeQL is not installed. Run make setup, then retry.');
   const version = JSON.parse(run(binary, ['version', '--format=json'], { capture: true })).version;
   if (version !== CODEQL.version)
-    throw new Error(
-      `Expected CodeQL ${CODEQL.version}; found ${version}. Run make setup-security.`,
-    );
+    throw new Error(`Expected CodeQL ${CODEQL.version}; found ${version}. Run make setup.`);
   return binary;
 }
 
