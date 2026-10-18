@@ -151,7 +151,7 @@ test('mask buying checks are compact, source-linked and available on the standal
   );
   await expect(details.getByRole('link', { name: 'HSA buying advice ↗' })).toHaveAttribute(
     'href',
-    /^https:\/\/www.hsa.gov.sg\//,
+    'https://www.hsa.gov.sg/announcements/guide-to-masks-and-respirators/',
   );
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
