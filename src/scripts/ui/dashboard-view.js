@@ -1,6 +1,7 @@
 import { getElements } from './dom.js';
 import { createReadingsView } from './readings-view.js';
 import { createAdviceView } from './advice-view.js';
+import { bindTooltips } from './tooltips.js';
 
 export function createDashboardView(root) {
   const elements = getElements(root, {
@@ -19,6 +20,7 @@ export function createDashboardView(root) {
       elements.refresh.classList.toggle('is-loading', model.loading);
     },
     bind({ onRegionChange, onRefresh }) {
+      const unbindTooltips = bindTooltips(root);
       const select = () => onRegionChange(elements.region.value);
       const choose = (event) => {
         const button = event.target.closest?.('[data-region]');
@@ -30,6 +32,7 @@ export function createDashboardView(root) {
       elements.refresh.addEventListener('click', refresh);
 
       return () => {
+        unbindTooltips();
         elements.region.removeEventListener('change', select);
         elements.regions.removeEventListener('click', choose);
         elements.refresh.removeEventListener('click', refresh);

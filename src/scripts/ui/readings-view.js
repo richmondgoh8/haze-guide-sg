@@ -8,6 +8,7 @@ export function createReadingsView(root) {
     region: '#region',
     towns: '#region-towns',
     pmValue: '#pm-value',
+    pmTime: '#pm-time',
     pmTitle: '#pm-band',
     pmCard: '#pm-card',
     pmCategory: '#pm-category',
@@ -35,6 +36,9 @@ export function createReadingsView(root) {
       elements.region.value = model.region.id;
       elements.towns.textContent = `${model.region.name} includes ${model.region.towns}.`;
       elements.pmValue.textContent = model.pm25.value;
+      elements.pmTime.textContent = model.pm25.timeLabel;
+      if (model.pm25.timestamp) elements.pmTime.setAttribute('datetime', model.pm25.timestamp);
+      else elements.pmTime.removeAttribute('datetime');
       elements.pmTitle.textContent = model.pm25.title;
       elements.pmTitle.className = `band-pill ${model.pm25.className}`;
       elements.pmCard.dataset.band = model.pm25.className;

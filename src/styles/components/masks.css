@@ -118,6 +118,37 @@
 .mask-infographic .mask-details > summary {
   padding-inline: 0;
 }
+.mask-buying-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 12px;
+  margin-block: 16px;
+}
+.mask-buying-grid > div {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.mask-buying-grid .visual-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--source-text);
+}
+.mask-buying-grid h3 {
+  margin: 8px 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+.mask-buying-grid p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+.mask-buying-sources {
+  color: var(--source-text);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
 @container (min-width: 36rem) {
   .mask-fit-figure {
     grid-template-columns: 1fr;

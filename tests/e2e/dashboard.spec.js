@@ -68,6 +68,99 @@ test('dropdown choice is remembered without cookies', async ({ page, context }) 
   expect(await context.cookies()).toEqual([]);
 });
 
+test('region hint supports hover, keyboard and dismissal without a text row', async ({ page }) => {
+  await page.goto('/');
+  const trigger = page.getByRole('button', { name: 'Remembering your region' });
+  const tooltip = page.getByRole('tooltip', { includeHidden: true });
+  await expect(tooltip).toBeHidden();
+  await expect(page.locator('p.region-memory')).toHaveCount(0);
+  await trigger.hover();
+  await expect(tooltip).toBeVisible();
+  await tooltip.hover();
+  await expect(tooltip).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(tooltip).toBeHidden();
+  await page.locator('#region').focus();
+  await page.keyboard.press('Tab');
+  await expect(trigger).toBeFocused();
+  await expect(tooltip).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(tooltip).toBeHidden();
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.mouse.move(0, 0);
+  await page.locator('#region').focus();
+  await trigger.dispatchEvent('click');
+  await expect(tooltip).toBeVisible();
+  const box = await tooltip.boundingBox();
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(320);
+  await page.locator('#readings-title').click();
+  await expect(tooltip).toBeHidden();
+});
+
+test.describe('touch region hint', () => {
+  test.use({ hasTouch: true, viewport: { width: 320, height: 800 } });
+
+  test('taps open and dismiss the hint, including with enlarged text', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Remembering your region' });
+    const tooltip = page.getByRole('tooltip', { includeHidden: true });
+    for (const size of ['100%', '200%']) {
+      await page.evaluate((value) => {
+        document.documentElement.style.fontSize = value;
+      }, size);
+      await trigger.tap();
+      await expect(tooltip).toBeVisible();
+      const box = await tooltip.boundingBox();
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(320);
+      await page.locator('#readings-title').tap();
+      await expect(tooltip).toBeHidden();
+    }
+  });
+});
+
+test('reading header shows source time in Singapore, not the browser clock', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#pm-time')).toHaveAttribute('datetime', TEST_TIMESTAMP);
+  await expect(page.locator('#pm-time')).toContainText('17 Oct');
+  await expect(page.locator('#pm-time')).toContainText('10:00 am SGT');
+  await expect(page.getByText('AIR OUTSIDE · PAST HOUR', { exact: true })).toHaveCount(0);
+  await page.route('**/data/latest.json', (route) => {
+    const payload = snapshotPayload();
+    payload.readings.pm25 = null;
+    return route.fulfill({ json: payload });
+  });
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(page.locator('#pm-time')).toHaveText('Time unavailable');
+  await expect(page.locator('#pm-time')).not.toHaveAttribute('datetime');
+});
+
+test('mask buying checks are compact, source-linked and available on the standalone guide', async ({
+  page,
+}) => {
+  await page.goto('/guides/haze-masks/');
+  const details = page.locator('#mask-buying-details');
+  await expect(details).not.toHaveAttribute('open');
+  await details.locator('summary').click();
+  await expect(details.getByRole('heading')).toHaveCount(3);
+  await expect(details).toContainText('not KN95, KF94 or FFP2');
+  await expect(details.getByRole('link', { name: 'ScamShield 1799' })).toHaveAttribute(
+    'href',
+    'tel:1799',
+  );
+  await expect(details.getByRole('link', { name: 'HSA buying advice ↗' })).toHaveAttribute(
+    'href',
+    'https://www.hsa.gov.sg/announcements/guide-to-masks-and-respirators/',
+  );
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+  }
+});
+
 test('band-specific phrases appear in the main card and stay stable during use', async ({
   page,
 }) => {
@@ -537,6 +630,7 @@ test('expanded guides fit phone, tablet, desktop and enlarged text', async ({ pa
   await page.locator('#mask-comparison-details > summary').click();
   await page.locator('#mask-comparison-details .mask-details > summary').click();
   await page.locator('#mask-use-details > summary').click();
+  await page.locator('#mask-buying-details > summary').click();
   await page.locator('#purifier-setup-details > summary').click();
   for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });

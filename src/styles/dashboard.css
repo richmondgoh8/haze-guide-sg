@@ -2,6 +2,10 @@
   padding-top: 42px;
 }
 
+.region-toolbar {
+  flex-wrap: wrap;
+}
+
 .region-hint {
   display: grid;
   grid-template-columns: 19px minmax(0, 1fr) auto;

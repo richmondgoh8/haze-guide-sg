@@ -27,6 +27,21 @@
       <label for="region">I’m in</label
       ><select id="region" aria-label="Singapore region">
         <!-- regions: options --></select
+      ><span class="info-tooltip" data-tooltip>
+        <button
+          type="button"
+          class="info-tooltip-trigger"
+          aria-label="Remembering your region"
+          aria-describedby="region-memory"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 11v6m0-10v1" />
+          </svg>
+        </button>
+        <span class="info-tooltip-content" id="region-memory" role="tooltip" hidden
+          >Your region is remembered on this browser when storage is available.</span
+        > </span
       ><span class="toolbar-spacer"></span
       ><button class="refresh-button" id="refresh" type="button">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -35,9 +50,6 @@
         Refresh
       </button>
     </div>
-    <p class="region-memory">
-      Your region is remembered on this browser when storage is available.
-    </p>
     <p class="region-hint">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z" />
@@ -62,7 +74,8 @@
     <div class="readings-grid">
       <article class="reading-card primary-card" id="pm-card">
         <div class="reading-top">
-          <span class="reading-label">AIR OUTSIDE · PAST HOUR</span
+          <span class="reading-label"
+            >AIR OUTSIDE · <time id="pm-time">Waiting for reading</time></span
           ><span class="band-pill" id="pm-band">Checking the air…</span>
         </div>
         <div class="reading-value"><span id="pm-value">—</span><span class="unit">µg/m³</span></div>
