@@ -433,7 +433,7 @@ test('visual summaries keep safety caveats visible and explanations keyboard acc
 }) => {
   await page.goto('/');
   await expect(page.locator('.mask-lab-ratings dl > div')).toHaveCount(4);
-  await expect(page.locator('.mask-snapshot .visual-caveat')).toBeVisible();
+  await expect(page.locator('.mask-snapshot .mask-rating-note')).toBeVisible();
   await expect(page.locator('#window-guide .decision-reminder')).toBeVisible();
   await expect(page.locator('#purifier-guide .visual-caveat')).toBeVisible();
   const summary = page.locator('#activity-reasoning > summary');

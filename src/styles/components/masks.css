@@ -78,63 +78,67 @@
   font-variant-numeric: tabular-nums;
   line-height: 1.2;
 }
-.mask-value-line,
-.mask-care-summary {
-  display: flex;
-  gap: 12px;
-  align-items: start;
+.mask-rating-note {
+  margin: 16px 0 24px;
+  color: var(--source-text);
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
-.mask-value-line .visual-icon,
-.mask-care-summary .visual-icon {
-  width: 28px;
-  height: 28px;
-  flex: 0 0 28px;
-}
-.mask-value-line {
-  padding-block: 14px;
-  border-block: 1px solid var(--line);
-}
-.mask-commute,
 .mask-notes {
   font-size: 0.9rem;
   line-height: 1.6;
 }
-.mask-care .visual-details {
-  margin-bottom: 0;
-}
-.mask-infographic .mask-care {
-  padding: 0;
-  margin-top: 20px;
-  border-radius: 0;
-  background: transparent;
-}
-.mask-infographic .mask-details {
-  border: 0;
+.mask-infographic .mask-guidance-block {
+  margin: 0;
+  padding: 24px 0;
   border-top: 1px solid var(--line);
   border-radius: 0;
-  margin-top: 0;
   background: transparent;
 }
-.mask-infographic .mask-details > summary {
-  padding-inline: 0;
-}
-.mask-buying-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  list-style: none;
-  margin: 20px 0 0;
-  padding: 0;
-  font-size: 0.85rem;
+.mask-guidance-block > h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
   font-weight: 700;
+  line-height: 1.4;
 }
-.mask-buying-strip li,
+.mask-infographic .mask-guidance-block > p {
+  max-width: 75ch;
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.mask-infographic .mask-comparison {
+  margin: 0;
+}
+.mask-infographic :is(.visual-details, .mask-details) {
+  border: 0;
+  border-radius: 0;
+  margin: 8px 0 0;
+  background: transparent;
+}
+.mask-infographic :is(.visual-details, .mask-details) > summary {
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.mask-infographic :is(.visual-details, .mask-details)[open] > summary {
+  margin-bottom: 12px;
+}
+.mask-infographic .comparison-body {
+  padding: 0;
+}
+.mask-infographic > .mask-guidance-block:last-child {
+  padding-bottom: 0;
+}
 .mask-shopping-checks li {
   display: flex;
   align-items: start;
   gap: 8px;
 }
-.mask-buying-strip .visual-icon,
 .mask-shopping-checks .visual-icon {
   width: 24px;
   height: 24px;
