@@ -6,6 +6,10 @@
     "node": ">=24"
   },
   "scripts": {
+    "prepare": "node tooling/git-hooks.js install",
+    "check": "npm run format:check && npm test",
+    "security:setup": "node tooling/codeql.js setup",
+    "security:codeql": "node tooling/codeql.js scan",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",

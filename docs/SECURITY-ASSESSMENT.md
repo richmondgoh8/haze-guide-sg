@@ -55,6 +55,12 @@ CodeQL initially reported three high-severity rule matches in test code: an unan
 
 After deployment, all four public pages loaded with the production policy, no CSP violations during normal use, no JavaScript errors and no mobile overflow. East readings loaded from the real public API. `.env`, `.git/config`, `package.json` and the development source path returned 404. Header-only findings remain as described above.
 
+## Follow-up: local checks, 18 October 2026
+
+[CodeQL alert 6](https://github.com/richmondgoh8/haze-guide-sg/security/code-scanning/6) identified `js/incomplete-multi-character-sanitization` in a unit test's HTML-stripping expression. That expression was removed; browser tests continue checking the actual rendered range labels through the DOM. No production sanitizer was added and no query, source file or alert was suppressed.
+
+The pinned CodeQL 2.27.2 `security-extended` suite reproduced the finding on commit `df7871c` and reported zero findings on the repaired source. Local hooks now check staged formatting/tests and scan the commits being pushed. Integration tests exercise rejected commits, rejected pushes, partial staging, missing tools, checksum failure and existing-hook preservation using temporary repositories. GitHub required PR checks provide enforcement independently of those local hooks. CodeQL report failures now include the file and line number.
+
 ## Limits
 
 No independent human penetration tester, formal attestation, exhaustive business-logic testing, supply-chain proof or ongoing monitoring is provided. Dependency advisories and browser/hosting behaviour can change after this date. Review new features and provider changes, and rerun scans after dependency updates. See [SECURITY.md](../SECURITY.md) for the repeatable checks and disclosure route.

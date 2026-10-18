@@ -43,19 +43,6 @@ test('static region controls and scale use the same configuration as the client'
   assert.match(result, /id="psi-scale"/);
   assert.match(result, /Very high: ≥251/);
   assert.match(result, /Hazardous: ≥301/);
-  const scales = [...result.matchAll(/<figure class="band-scale"[\s\S]*?<\/figure>/g)];
-  for (const [index, ranges] of [
-    ['0–55', '56–150', '151–250', '≥251'],
-    ['0–50', '51–100', '101–200', '201–300', '≥301'],
-  ].entries()) {
-    const labels = [
-      ...scales[index][0].matchAll(/class="scale-range"[^>]*>(.*?)<\/span><\/span>/g),
-    ];
-    assert.deepEqual(
-      labels.map(([, label]) => label.replace(/<[^>]+>/g, '')),
-      ranges,
-    );
-  }
   assert.equal((result.match(/Equal-width bands\./g) || []).length, 2);
   assert.match(result, /aria-describedby="pm-scale-note"/);
   assert.match(result, /aria-describedby="psi-scale-note"/);

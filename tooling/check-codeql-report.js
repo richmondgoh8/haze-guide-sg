@@ -16,7 +16,12 @@ for (const file of files) {
     }
     for (const result of run.results) {
       findings += 1;
-      console.log(`${result.ruleId}: ${result.message?.text || 'Security finding'}`);
+      const location = result.locations?.[0]?.physicalLocation;
+      const file = location?.artifactLocation?.uri ?? 'unknown file';
+      const line = location?.region?.startLine;
+      console.log(
+        `${file}${line ? `:${line}` : ''} ${result.ruleId}: ${result.message?.text || 'Security finding'}`,
+      );
     }
   }
 }

@@ -9,6 +9,16 @@ npm ci
 npm run dev
 ```
 
+Local `npm ci` installs the repository's Git hooks. Existing hook configurations are preserved; if one is present, integrate the commands in `.githooks/` rather than replacing your hooks. CI skips installation.
+
+Before your first push on Linux x64, run `make setup-security`. This downloads the official CodeQL 2.27.2 bundle (about 693 MB), verifies its pinned SHA-256 checksum, and stores it in ignored `.cache/`. No global installation or API credential is required. The pinned version, download and query suite live in `tooling/codeql-config.js`; CI uses the same bundle. Other platforms can use GitHub's required PR checks until a local bundle is added.
+
+The pre-commit hook checks formatting and unit tests against a temporary copy of the Git index. It does not stash changes or stage formatting fixes. The pre-push hook runs the full CodeQL `security-extended` suite against each distinct commit being pushed, rather than the working tree. A missing scanner, failed analysis or finding blocks the push. Deletion-only pushes need no analysis.
+
+Run `make check` for formatting and unit tests or `make check-security` for CodeQL against local source. `npm run security:codeql -- <commit>` checks a particular commit. Local reports are written to ignored `security-reports/codeql-local/`; source snapshots and databases are removed after each check. Initial analysis may compile query caches; subsequent scans can reuse those caches.
+
+Changes to `main` go through a PR with passing `verify`, `security / codeql`, `security / secrets` and `security / passive-baseline` checks. Branch protection also applies to administrators, requires an up-to-date branch and blocks force pushes and deletion. Reviewer approval is not required for this solo project. Local hooks provide early feedback; required GitHub checks enforce the merge policy even when local hooks are bypassed.
+
 The development server prints its local URL. HTML partials, styles and scripts reload when edited. `npm run preview` serves the most recent production build; run `npm run build` first.
 
 The [architecture guide](docs/ARCHITECTURE.md) explains the data flow and module boundaries.

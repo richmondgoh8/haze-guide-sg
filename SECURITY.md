@@ -20,6 +20,12 @@ The ZAP report gate fails on high-risk findings or unusable scanner output. Medi
 
 Automated scans are point-in-time checks, not a certified penetration test or a guarantee of security. Authentication/authorization and database attacks are not applicable to this architecture; they have not been “passed” by testing a nonexistent backend.
 
+## Local checks and merge protection
+
+Local `npm ci` installs fast pre-commit checks against staged files. Full CodeQL analysis runs before pushes against the actual commits being pushed. `make setup-security` installs the checksum-verified Linux x64 bundle; scanner metadata is shared with CI in `tooling/codeql-config.js`. Missing tools, unsuccessful analysis and findings block pushes. Hook configuration conflicts are reported rather than overwritten. See [Contributing](CONTRIBUTING.md) for setup and manual commands.
+
+Required PR checks on `main` cover verification, CodeQL, secrets and the passive baseline. They apply to administrators and require an up-to-date branch, so local hook bypasses do not bypass the merge checks. Direct pushes, force pushes and branch deletion are blocked. No reviewer approval is required. The existing deployment gate still waits for verification and security success.
+
 ## Browser policy
 
 Production HTML has an early meta-delivered Content Security Policy. It limits scripts, styles, fonts and connections to this origin, blocks embedded objects/frames/forms and uses hashes for the exact inline structured metadata. It does not permit `unsafe-inline` or `unsafe-eval`. Trusted Types is enforced in supporting browsers; older browsers still receive the rest of the CSP and the app continues to use text-only DOM updates.

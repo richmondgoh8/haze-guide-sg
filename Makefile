@@ -4,13 +4,22 @@ DEV_PORT ?= 5173
 PREVIEW_PORT ?= 4173
 LOCAL_PORTS := $(DEV_PORT) $(PREVIEW_PORT)
 
-.PHONY: help setup deps dev build snapshot preview local test test-e2e format-check free-ports
+.PHONY: help setup setup-security check check-security deps dev build snapshot preview local test test-e2e format-check free-ports
 
 help: ## Show the common local-development commands
 	@awk 'BEGIN { FS = ":.*## " } /^[a-zA-Z0-9_-]+:.*## / { printf "  make %-14s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
 setup: ## Install the pinned Node dependencies from the lockfile
 	npm ci
+
+setup-security: ## Install the checksum-pinned local CodeQL bundle (Linux x64)
+	npm run security:setup
+
+check: deps ## Run formatting and unit checks manually
+	npm run check
+
+check-security: ## Run the full CodeQL suite against a snapshot of local source
+	npm run security:codeql
 
 deps: ## Install dependencies only when the local Vite binary is missing
 	@if [ ! -x node_modules/.bin/vite ]; then \
