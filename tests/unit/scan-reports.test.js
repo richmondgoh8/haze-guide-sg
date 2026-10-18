@@ -26,6 +26,32 @@ test('CodeQL gate rejects findings, missing reports and unsuccessful analyses', 
     writeFileSync(join(directory, 'javascript.sarif'), JSON.stringify({ runs: [run] }));
     assert.equal(check().status, expected);
   }
+  writeFileSync(
+    join(directory, 'javascript.sarif'),
+    JSON.stringify({
+      runs: [
+        {
+          results: [
+            {
+              ruleId: 'test-rule',
+              message: { text: 'Finding' },
+              locations: [
+                {
+                  physicalLocation: {
+                    artifactLocation: { uri: 'tests/example.js' },
+                    region: { startLine: 55 },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    }),
+  );
+  const finding = check();
+  assert.equal(finding.status, 1);
+  assert.match(finding.stdout, /tests\/example\.js:55 test-rule: Finding/);
 });
 
 test('ZAP gate preserves medium warnings and rejects high-risk or unusable reports', (context) => {

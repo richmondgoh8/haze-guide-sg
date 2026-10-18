@@ -19,6 +19,8 @@ Run `make help` to see the local commands. `make local` builds the production si
 
 Read [the architecture guide](docs/ARCHITECTURE.md) for the data flow and [the contributor guide](CONTRIBUTING.md) for common changes, tests and deployment. The browser app uses native JavaScript modules and has no runtime package dependencies. Vite, Playwright and Prettier are development tools.
 
+Local Git checks are installed by `make setup` / `npm ci`. Before the first push on Linux x64, run `make setup-security` to install the pinned CodeQL scanner. `make check` runs formatting and unit tests; `make check-security` runs the full CodeQL suite. See [Contributing](CONTRIBUTING.md) for staged-file checks and the required-PR workflow.
+
 ## What it shows
 
 - NEA's **1-hour PM2.5 concentration** (µg/m³) for North, South, East, West and Central, with NEA's four official bands. This is the measure to use for immediate outdoor activities.
