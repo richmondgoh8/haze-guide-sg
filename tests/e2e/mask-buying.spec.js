@@ -19,11 +19,8 @@ for (const path of ['/', '/guides/haze-masks/']) {
     const buying = page.locator('.mask-buying');
     const details = buying.locator('details');
     const summary = details.locator('summary');
-    await expect(buying.locator('.mask-buying-strip li')).toHaveText([
-      'Trusted seller',
-      'Check the model',
-      'Buy what you need',
-    ]);
+    await expect(buying.getByRole('heading', { name: 'Buy with confidence' })).toBeVisible();
+    await expect(buying).toContainText('Use a trusted seller and check the exact model.');
     await expect(details).not.toHaveAttribute('open');
     await expect(buying.getByRole('heading', { name: 'KN95', exact: true })).toBeHidden();
     await summary.tap();
