@@ -19,7 +19,9 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "@flaticon/flaticon-uicons": "3.3.1",
     "@playwright/test": "1.64.1",
+    "opentype.js": "2.0.0",
     "prettier": "3.9.10",
     "vite": "8.3.4"
   }

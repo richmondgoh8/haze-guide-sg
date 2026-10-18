@@ -52,3 +52,15 @@ test('guide links resolve from nested directories and preserve homepage anchors'
   assert.ok(!guide.includes('href="../../guides/haze-masks/"'));
   assert.ok(!guide.includes('{{'));
 });
+
+test('buying checklist links resolve without duplicating the shared guide', () => {
+  const template = '{{link.mask-buying}}';
+  assert.equal(renderPageFragments(template, PAGES[0]), '#mask-buying-details');
+  for (const page of PAGES.filter((entry) => entry.path)) {
+    const link = renderPageFragments(template, page);
+    assert.equal(
+      new URL(link, new URL(page.path, SITE.url)).href,
+      new URL('guides/haze-masks/#mask-buying-details', SITE.url).href,
+    );
+  }
+});

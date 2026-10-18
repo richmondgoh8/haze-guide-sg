@@ -1,3 +1,6 @@
+import { DASHBOARD_ICONS, ICON_CREDIT } from './dashboard-icons.js';
+import { renderUicon } from './uicons.js';
+
 const paths = {
   coins:
     '<ellipse cx="9" cy="6" rx="6" ry="3"/><path d="M3 6v5c0 2 3 3 6 3m6-8v5M3 11v5c0 2 3 3 6 3"/><ellipse cx="16" cy="15" rx="5" ry="3"/><path d="M11 15v4c0 2 2 3 5 3s5-1 5-3v-4"/>',
@@ -19,10 +22,16 @@ const paths = {
 };
 
 export function renderIcon(name) {
+  if (Object.hasOwn(DASHBOARD_ICONS, name)) return renderUicon(name);
   if (!Object.hasOwn(paths, name)) throw new Error(`Unknown guide icon: ${name}`);
   return `<svg class="visual-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name]}</svg>`;
 }
 
 export function renderIcons(html) {
-  return html.replace(/<!--\s*icon:\s*([a-z]+)\s*-->/g, (_, name) => renderIcon(name));
+  return html
+    .replace(/<!--\s*icon:\s*([a-z]+)\s*-->/g, (_, name) => renderIcon(name))
+    .replace(
+      '<!-- icons: credit -->',
+      `<a href="${ICON_CREDIT.url}" target="_blank" rel="noopener noreferrer">${ICON_CREDIT.label}</a>`,
+    );
 }

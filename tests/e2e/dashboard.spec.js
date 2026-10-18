@@ -68,6 +68,95 @@ test('dropdown choice is remembered without cookies', async ({ page, context }) 
   expect(await context.cookies()).toEqual([]);
 });
 
+test('illustrations follow fresh readings independently and turn neutral when stale or missing', async ({
+  page,
+}) => {
+  let payload = snapshotPayload();
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
+  await page.goto('/');
+  const pm = page.locator('#pm-illustration > [data-illustration]:visible');
+  const psi = page.locator('#psi-illustration > [data-illustration]:visible');
+  for (const [value, key] of [
+    [20, 'clear'],
+    [100, 'caution'],
+    [200, 'mask'],
+    [300, 'warning'],
+  ]) {
+    payload = snapshotPayload(value);
+    await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+    await expect(page.locator('#pm-value')).toHaveText(String(value));
+    await expect(pm).toHaveCount(1);
+    await expect(pm).toHaveAttribute('data-illustration', key);
+    await expect(pm.locator('svg')).toHaveCount(key === 'warning' ? 2 : 1);
+    await expect(psi).toHaveAttribute('data-illustration', 'air');
+  }
+  payload = snapshotPayload(20);
+  payload.readings.psi.timestamp = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(pm).toHaveAttribute('data-illustration', 'clear');
+  await expect(psi).toHaveAttribute('data-illustration', 'unknown');
+  payload.readings.pm25.timestamp = payload.readings.psi.timestamp;
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(pm).toHaveAttribute('data-illustration', 'unknown');
+  await expect(page.locator('#pm-card')).toHaveAttribute('data-band', '');
+  payload.readings.pm25 = null;
+  payload.readings.psi = null;
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(page.locator('#pm-value')).toHaveText('—');
+  await expect(pm).toHaveAttribute('data-illustration', 'unknown');
+  await expect(psi).toHaveAttribute('data-illustration', 'unknown');
+});
+
+test('dashboard icons are inline decoration with no icon-font or vendor requests', async ({
+  page,
+}) => {
+  const requests = [];
+  page.on('request', (request) => requests.push(request.url()));
+  await page.goto('/');
+  await expect(page.locator('#pm-value')).toHaveText('140');
+  await expect(page.locator('.reading-status .uicon')).toHaveCount(8);
+  await expect(page.locator('.decision-heading .uicon')).toHaveCount(2);
+  const icons = await page.locator('.uicon').evaluateAll((nodes) =>
+    nodes.map((node) => ({
+      hidden: node.getAttribute('aria-hidden'),
+      focusable: node.getAttribute('focusable'),
+      fill: getComputedStyle(node).fill,
+      stroke: getComputedStyle(node).stroke,
+      paths: node.querySelectorAll('path[d]').length,
+    })),
+  );
+  for (const icon of icons) {
+    expect(icon.hidden).toBe('true');
+    expect(icon.focusable).toBe('false');
+    expect(icon.fill).not.toBe('none');
+    expect(icon.stroke).toBe('none');
+    expect(icon.paths).toBe(1);
+  }
+  expect(requests.filter((url) => /flaticon|uicons|opentype/i.test(url))).toEqual([]);
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    if (width >= 768) {
+      const pmMeter = await page.locator('#pm-scale').boundingBox();
+      const psiMeter = await page.locator('#psi-scale').boundingBox();
+      expect(pmMeter.y).toBeCloseTo(psiMeter.y, 0);
+    }
+    for (const selector of ['#pm-scale', '#psi-scale']) {
+      const colours = await page.locator(selector).evaluate((scale) => ({
+        status: getComputedStyle(scale.closest('.reading-card').querySelector('.reading-status'))
+          .backgroundColor,
+        context: getComputedStyle(scale.closest('.reading-context')).backgroundColor,
+      }));
+      expect(colours.status).not.toBe('rgba(0, 0, 0, 0)');
+      expect(colours.status).not.toBe(colours.context);
+      const illustration = await page.locator('#pm-illustration').boundingBox();
+      const value = await page.locator('#pm-value').boundingBox();
+      expect(
+        illustration.x >= value.x + value.width || illustration.y >= value.y + value.height,
+      ).toBe(true);
+    }
+  }
+});
+
 test('region hint supports hover, keyboard and dismissal without a text row', async ({ page }) => {
   await page.goto('/');
   const trigger = page.getByRole('button', { name: 'Remembering your region' });
@@ -143,8 +232,8 @@ test('mask buying checks are compact, source-linked and available on the standal
   const details = page.locator('#mask-buying-details');
   await expect(details).not.toHaveAttribute('open');
   await details.locator('summary').click();
-  await expect(details.getByRole('heading')).toHaveCount(3);
-  await expect(details).toContainText('not KN95, KF94 or FFP2');
+  await expect(details.locator('.mask-buying-grid article')).toHaveCount(3);
+  await expect(details).toContainText('don’t verify KN95, KF94 or FFP2 claims');
   await expect(details.getByRole('link', { name: 'ScamShield 1799' })).toHaveAttribute(
     'href',
     'tel:1799',

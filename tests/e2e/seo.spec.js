@@ -24,6 +24,11 @@ for (const entry of PAGES) {
     );
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', entry.title);
     await expect(page.locator('#about')).toContainText('not affiliated');
+    await expect(page.locator('.icon-credit a')).toHaveText('Uicons by Flaticon');
+    await expect(page.locator('.icon-credit a')).toHaveAttribute(
+      'href',
+      'https://www.flaticon.com/uicons',
+    );
     expect(await page.locator('body').textContent()).not.toMatch(/\{\{|<!-- (include|page):/);
     const schema = JSON.parse(
       await page.locator('script[type="application/ld+json"]').textContent(),

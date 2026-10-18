@@ -10,6 +10,8 @@ import {
 } from './air-quality.js';
 import { describeBandPosition } from './band-position.js';
 
+const PM25_ILLUSTRATIONS = Object.freeze({ 1: 'clear', 2: 'caution', 3: 'mask', 4: 'warning' });
+
 /** Select advice and display values without depending on the browser or NEA's payload format. */
 export function createDashboardModel(
   { readings, region, loading = false, phraseChoices = {} },
@@ -48,6 +50,7 @@ export function createDashboardModel(
       timeLabel: band ? formatTimestamp(readings.pm25.timestamp) : 'Time unavailable',
       reportedLevel: band?.index ?? null,
       current,
+      illustration: activeBand ? PM25_ILLUSTRATIONS[activeBand.index] : 'unknown',
       title: activeBand ? advice.headline : 'Current advice unavailable',
       className: activeBand?.className || '',
       category: band
@@ -58,6 +61,7 @@ export function createDashboardModel(
       value: psiBand ? psi : '—',
       reportedLevel: psiBand?.index ?? null,
       current: psiCurrent,
+      illustration: psiCurrent ? 'air' : 'unknown',
       label: psiBand ? `${psiBand.name}${psiCurrent ? '' : ' · Last reported'}` : 'Unavailable',
       className: psiCurrent ? psiBand.className : '',
       activeLevel: psiCurrent ? psiBand.index : null,

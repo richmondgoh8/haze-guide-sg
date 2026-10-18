@@ -143,6 +143,10 @@ export function renderPageFragments(html, page) {
     .replace('<!-- page:guide-links -->', links)
     .replaceAll('{{site.home}}', home)
     .replaceAll(
+      '{{link.mask-buying}}',
+      page.path ? `${home}guides/haze-masks/#mask-buying-details` : '#mask-buying-details',
+    )
+    .replaceAll(
       '{{link.windows}}',
       page.path ? `${home}guides/windows-during-haze/` : '#window-guide',
     )
