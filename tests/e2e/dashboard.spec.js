@@ -366,7 +366,9 @@ test('section navigation stays available and anchors clear it, including enlarge
   await page.goto('/');
   const navigation = page.getByRole('navigation', { name: 'Page sections' });
   await expect(navigation.getByRole('link')).toHaveCount(8);
+  await expect(page.getByText('01 / THE AIR RIGHT NOW', { exact: true })).toHaveCount(0);
   await expect(page.getByText('02 / YOUR NEXT MOVE', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('03 / THE SHORT GUIDE', { exact: true })).toHaveCount(0);
   await expect(page.locator('.hero-art')).toHaveCount(0);
   await expect(page.locator('.official-advisory')).toBeVisible();
   const font = await page

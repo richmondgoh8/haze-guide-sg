@@ -2,10 +2,18 @@
   <div class="shell">
     <div class="section-heading">
       <div>
-        <p class="kicker">01 / THE AIR RIGHT NOW</p>
+        <p class="kicker">THE AIR RIGHT NOW</p>
         <h2 id="readings-title">The air in your area</h2>
       </div>
-      <p>Choose a region for official readings and practical next steps.</p>
+      <div class="advisory-link-row">
+        <a
+          class="official-advisory"
+          href="https://www.haze.gov.sg/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Official NEA advisory & forecast ↗</a
+        >
+      </div>
     </div>
     <noscript
       ><p>
@@ -14,15 +22,6 @@
         still read the activity and mask guides below.
       </p></noscript
     >
-    <div class="advisory-link-row">
-      <a
-        class="official-advisory"
-        href="https://www.haze.gov.sg/"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Official NEA advisory & forecast ↗</a
-      >
-    </div>
     <div class="region-toolbar">
       <label for="region">I’m in</label
       ><select id="region" aria-label="Singapore region">
@@ -65,7 +64,6 @@
     <div class="regional-block">
       <div>
         <h3>Across the island</h3>
-        <p>Tap a region to see its advice.</p>
       </div>
       <div class="regional-list" id="regional-list" aria-label="One-hour PM2.5 by region">
         <!-- regions: cards -->
@@ -82,7 +80,7 @@
               <div class="reading-value">
                 <span id="pm-value">—</span><span class="unit">µg/m³</span>
               </div>
-              <p class="reading-caption">1-hour PM2.5 · Fine particles in the air</p>
+              <p class="reading-caption">1-hour PM2.5</p>
             </div>
             <div class="reading-illustration" id="pm-illustration" aria-hidden="true">
               <span data-illustration="clear" hidden><!-- icon: airclear --></span>
@@ -114,7 +112,7 @@
           <div class="reading-summary">
             <div class="reading-metric">
               <div class="reading-value"><span id="psi-value">—</span></div>
-              <p class="reading-caption">24-hour rolling reading</p>
+              <p class="reading-caption">24-hour average</p>
             </div>
             <div class="reading-illustration" id="psi-illustration" aria-hidden="true">
               <span data-illustration="air" hidden><!-- icon: airstream --></span>
@@ -201,7 +199,7 @@
       <article class="decision-card" id="window-guide">
         <div class="decision-heading">
           <div class="decision-icon" aria-hidden="true"><!-- icon: dashwindow --></div>
-          <p class="decision-label">WINDOWS · OUR SUGGESTION</p>
+          <p class="decision-label">WINDOWS & VENTILATION</p>
         </div>
         <h3 id="window-verdict">Check the air before opening</h3>
         <p id="window-detail">Waiting for the latest outdoor reading.</p>
@@ -218,7 +216,7 @@
       <article class="decision-card">
         <div class="decision-heading">
           <div class="decision-icon" aria-hidden="true"><!-- icon: dashrun --></div>
-          <p class="decision-label">OUTDOOR WORKOUT STILL ON?</p>
+          <p class="decision-label">OUTDOOR EXERCISE</p>
         </div>
         <h3 id="exercise-verdict">Check before exercising outside</h3>
         <p class="activity-alternative">
