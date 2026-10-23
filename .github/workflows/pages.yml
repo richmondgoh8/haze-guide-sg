@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   security:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     permissions:
       contents: read
       security-events: write
@@ -33,24 +34,19 @@ jobs:
           node-version: 24
           cache: npm
       - name: Install locked development dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
       - name: Check formatting
         run: npm run format:check
       - name: Audit locked dependencies
         run: npm audit --audit-level=low
       - name: Test rules, data handling and controller
         run: npm test
-      - name: Cache Playwright browser
-        id: playwright-cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
-      - name: Install browser
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install chromium
       - name: Build and test the production site
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: npm run test:e2e
+      - name: Build production site for scheduled snapshot
+        if: github.event_name != 'push' && github.event_name != 'pull_request'
+        run: npm run build
       - name: Collect validated public readings for publication
         if: github.event_name != 'pull_request'
         run: node tooling/publish-snapshot.js
@@ -60,7 +56,7 @@ jobs:
           path: dist
 
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && !failure() && !cancelled()
     needs: [verify, security]
     runs-on: ubuntu-latest
     permissions:
