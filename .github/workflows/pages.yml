@@ -25,7 +25,7 @@ jobs:
 
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -40,8 +40,15 @@ jobs:
         run: npm audit --audit-level=low
       - name: Test rules, data handling and controller
         run: npm test
+      - name: Cache Playwright browser
+        id: playwright-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
       - name: Install browser
-        run: npx playwright install --with-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
       - name: Build and test the production site
         run: npm run test:e2e
       - name: Collect validated public readings for publication
