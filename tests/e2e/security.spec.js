@@ -73,9 +73,11 @@ test('malicious API fields are rejected and do not generate advice or DOM elemen
 }) => {
   const payload = snapshotPayload();
   payload.readings.pm25.values.east = '<img src=x onerror=alert(1)>';
+  payload.readings.uv.value = '<img src=x onerror=alert(1)>';
   await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
   await page.goto('/');
   await expect(page.locator('#pm-value')).toHaveText('—');
+  await expect(page.locator('#uv-value')).toHaveText('—');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'unknown');
   await expect(page.locator('img[onerror]')).toHaveCount(0);
   expect(await page.evaluate(() => window.securityViolations)).toEqual([]);

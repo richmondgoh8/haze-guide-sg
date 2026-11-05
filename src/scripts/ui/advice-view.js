@@ -6,6 +6,7 @@ export function createAdviceView(root) {
     walk: '#activity-walk',
     walkShort: '#activity-walk-short',
     maskShort: '#activity-mask-short',
+    sunblockShort: '#activity-sunblock-short',
     exercise: '#activity-exercise',
     mask: '#activity-mask',
     exerciseTitle: '#exercise-verdict',
@@ -17,7 +18,7 @@ export function createAdviceView(root) {
   });
 
   return {
-    render({ activity, windows }) {
+    render({ activity, windows, uv }) {
       for (const key of [
         'vulnerable',
         'walk',
@@ -29,6 +30,7 @@ export function createAdviceView(root) {
       ]) {
         elements[key].textContent = activity[key];
       }
+      elements.sunblockShort.textContent = uv.sunblockShort;
       elements.alternative.textContent = activity.alternativeShort;
       elements.exerciseDetail.textContent = activity.exerciseDetail;
       elements.windowCard.dataset.state = windows.state;

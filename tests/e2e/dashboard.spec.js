@@ -30,11 +30,20 @@ test('East loads official values, current advice and source links', async ({ pag
   await expect(page.locator('#region')).toHaveValue('east');
   await expect(page.locator('#pm-value')).toHaveText('140');
   await expect(page.locator('#psi-value')).toHaveText('143');
+  await expect(page.locator('#uv-value')).toHaveText('7');
   await expect(page.locator('#pm-card')).toHaveAttribute('data-band', 'elevated');
   await expect(page.locator('#psi-card')).toHaveAttribute('data-band', 'unhealthy');
+  await expect(page.locator('#uv-card')).toHaveAttribute('data-band', 'high');
   await expect(page.locator('#psi-scale')).toHaveAttribute('data-level', '3');
+  await expect(page.locator('#uv-scale')).toHaveAttribute('data-level', '3');
   await expectMarkerPosition(page, 'psi-scale', 243);
+  await expectMarkerPosition(page, 'uv-scale', 300);
   await expect(page.locator('#psi-scale')).toHaveAttribute('aria-label', 'Now: 143, Unhealthy.');
+  await expect(page.locator('#uv-scale')).toHaveAttribute('aria-label', 'Now: 7, High.');
+  await expect(page.locator('#uv-band')).toHaveText('High');
+  await expect(page.locator('#uv-long-outing')).toContainText('11am–3pm');
+  await expect(page.locator('#uv-sunblock')).toContainText('SPF 30+');
+  await expect(page.locator('#activity-sunblock-short')).toContainText('SPF 30+');
   await expect(page.locator('#pm-category')).toContainText('Band 2');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'reduce');
   await expect(page.locator('#region-towns')).toContainText('Bedok');
@@ -114,7 +123,7 @@ test('dashboard icons are inline decoration with no icon-font or vendor requests
   page.on('request', (request) => requests.push(request.url()));
   await page.goto('/');
   await expect(page.locator('#pm-value')).toHaveText('140');
-  await expect(page.locator('.reading-status .uicon')).toHaveCount(8);
+  await expect(page.locator('.reading-status .uicon')).toHaveCount(11);
   await expect(page.locator('.decision-heading .uicon')).toHaveCount(2);
   const icons = await page.locator('.uicon').evaluateAll((nodes) =>
     nodes.map((node) => ({
@@ -140,7 +149,7 @@ test('dashboard icons are inline decoration with no icon-font or vendor requests
       const psiMeter = await page.locator('#psi-scale').boundingBox();
       expect(pmMeter.y).toBeCloseTo(psiMeter.y, 0);
     }
-    for (const selector of ['#pm-scale', '#psi-scale']) {
+    for (const selector of ['#pm-scale', '#psi-scale', '#uv-scale']) {
       const colours = await page.locator(selector).evaluate((scale) => ({
         status: getComputedStyle(scale.closest('.reading-card').querySelector('.reading-status'))
           .backgroundColor,
@@ -282,12 +291,15 @@ test('readings use joined colour bars and the oversized activity section is gone
   await expect(page.getByText('Still going out?', { exact: false })).toHaveCount(0);
   await expect(page.locator('#pm-scale .scale-track > rect')).toHaveCount(4);
   await expect(page.locator('#psi-scale .scale-track > rect')).toHaveCount(5);
+  await expect(page.locator('#uv-scale .scale-track > rect')).toHaveCount(5);
   await expect(page.locator('#action-vulnerable')).toBeVisible();
   await expect(page.locator('#activity-walk-short')).toBeVisible();
   await expect(page.locator('#activity-mask-short')).toBeVisible();
+  await expect(page.locator('#activity-sunblock-short')).toBeVisible();
   await expect(page.locator('#pm-scale .scale-ranges')).toHaveText('0–5556–150151–250≥251');
   await expect(page.locator('#psi-scale .scale-ranges')).toHaveText('0–5051–100101–200201–300≥301');
-  await expect(page.locator('.scale-note')).toHaveCount(2);
+  await expect(page.locator('#uv-scale .scale-ranges')).toHaveText('0–23–56–78–10≥11');
+  await expect(page.locator('.scale-note')).toHaveCount(3);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page
     .getByRole('navigation', { name: 'Page sections' })
@@ -299,7 +311,7 @@ test('readings use joined colour bars and the oversized activity section is gone
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
-    for (const id of ['pm-scale', 'psi-scale']) {
+    for (const id of ['pm-scale', 'psi-scale', 'uv-scale']) {
       const dimensions = await page.locator(`#${id} svg`).boundingBox();
       expect(dimensions.height).toBeLessThan(60);
     }
@@ -321,7 +333,7 @@ test('range labels stay aligned and readable at phone widths and enlarged text',
     }, baseFontSize * zoom);
     for (const width of [320, 390, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      for (const id of ['pm-scale', 'psi-scale']) {
+      for (const id of ['pm-scale', 'psi-scale', 'uv-scale']) {
         const layout = await page.locator(`#${id}`).evaluate((figure) => {
           const chart = figure.querySelector('svg').getBoundingClientRect();
           const labels = [...figure.querySelectorAll('.scale-range')];
@@ -525,6 +537,19 @@ for (const failedResource of ['pm25', 'psi']) {
   });
 }
 
+test('a UV failure does not discard the air-quality readings', async ({ page }) => {
+  const payload = snapshotPayload();
+  payload.readings.uv = null;
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
+  await page.goto('/');
+  await expect(page.locator('#pm-value')).toHaveText('140');
+  await expect(page.locator('#psi-value')).toHaveText('143');
+  await expect(page.locator('#uv-value')).toHaveText('—');
+  await expect(page.locator('#uv-band')).toHaveText('Unavailable');
+  await expect(page.locator('#data-status-text')).toContainText('UV index unavailable');
+  await expect(page.locator('#refresh')).toBeEnabled();
+});
+
 test('stale readings keep reported values but remove current advice', async ({ page }) => {
   const stale = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
   await page.route('**/data/latest.json', (route) =>
@@ -540,6 +565,12 @@ test('stale readings keep reported values but remove current advice', async ({ p
     'Last reported: 140 µg/m³, Elevated.',
   );
   await expect(page.locator('#pm-card')).toHaveAttribute('data-band', '');
+  await expect(page.locator('#uv-value')).toHaveText('7');
+  await expect(page.locator('#uv-band')).toHaveText('High · Last reported');
+  await expect(page.locator('#uv-scale')).toHaveAttribute('data-freshness', 'reported');
+  await expect(page.locator('#uv-scale')).toHaveAttribute('aria-label', 'Last reported: 7, High.');
+  await expect(page.locator('#uv-card')).toHaveAttribute('data-band', '');
+  await expect(page.locator('#activity-sunblock-short')).toHaveText('Check the UV reading first.');
   await expect(page.locator('#window-guide')).toHaveAttribute('data-state', 'unknown');
   await expect(page.locator('[data-region="east"] .region-band')).toHaveText('Old reading');
   await expect(page.locator('#band-position')).not.toBeVisible();
@@ -713,6 +744,82 @@ test('PSI meter covers every category and labels its last-reported pointer when 
   await expect(page.locator('#psi-band')).toContainText('Last reported');
   await expect(page.locator('#psi-card')).toHaveAttribute('data-band', '');
   await expect(page.locator('#pm-scale .scale-marker')).toBeVisible();
+});
+
+test('UV meter covers every category and labels its last-reported pointer when stale', async ({
+  page,
+}) => {
+  const payload = snapshotPayload();
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
+  await page.goto('/');
+  for (const [value, level, markerX] of [
+    [0, 1, 0],
+    [2, 1, 100],
+    [3, 2, 133.333333],
+    [5, 2, 200],
+    [6, 3, 250],
+    [7, 3, 300],
+    [8, 4, 333.333333],
+    [10, 4, 400],
+    [11, 5, 450],
+    [15, 5, 450],
+  ]) {
+    payload.readings.uv.value = value;
+    await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+    await expect(page.locator('#uv-value')).toHaveText(String(value));
+    await expect(page.locator('#uv-scale')).toHaveAttribute('data-level', String(level));
+    await expect(page.locator('#uv-scale [aria-current="true"]')).toHaveAttribute(
+      'data-level',
+      String(level),
+    );
+    await expect(page.locator('#uv-scale .scale-note')).toHaveText(
+      level === 5 ? '11+ · Highest band' : 'Equal-width bands.',
+    );
+    await expectMarkerPosition(page, 'uv-scale', markerX);
+  }
+  payload.readings.uv.timestamp = new Date(TEST_TIME - 3 * 60 * 60 * 1000).toISOString();
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect(page.locator('#uv-scale .scale-marker')).toBeVisible();
+  await expect(page.locator('#uv-scale')).toHaveAttribute('data-freshness', 'reported');
+  await expect(page.locator('#uv-scale [aria-current]')).toHaveCount(0);
+  await expect(page.locator('#uv-scale')).toHaveAttribute(
+    'aria-label',
+    'Last reported: 15, Extreme.',
+  );
+  await expect(page.locator('#uv-band')).toContainText('Last reported');
+  await expect(page.locator('#uv-card')).toHaveAttribute('data-band', '');
+});
+
+test('UV stays island-wide when the region changes', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#uv-value')).toHaveText('7');
+  await page.locator('#region').selectOption('north');
+  await expect(page.locator('#pm-value')).toHaveText('20');
+  await expect(page.locator('#uv-value')).toHaveText('7');
+  await expect(page.locator('#uv-band')).toHaveText('High');
+  await expect(page.locator('#uv-scale')).toHaveAttribute('data-level', '3');
+});
+
+test('after sunset, UV becomes a neutral no-concern state without a stale warning', async ({
+  page,
+}) => {
+  const evening = Date.parse('2026-10-17T20:00:00+08:00');
+  const payload = snapshotPayload(140, new Date(evening - 30 * 60 * 1000).toISOString());
+  await page.addInitScript((now) => {
+    Date.now = () => now;
+  }, evening);
+  await page.route('**/data/latest.json', (route) => route.fulfill({ json: payload }));
+  await page.goto('/');
+  await expect(page.locator('#pm-value')).toHaveText('140');
+  await expect(page.locator('#uv-value')).toHaveText('—');
+  await expect(page.locator('#uv-band')).toHaveText('After sunset');
+  await expect(page.locator('#uv-time')).toHaveText('After sunset');
+  await expect(page.locator('#uv-time')).not.toHaveAttribute('datetime');
+  await expect(page.locator('#uv-card')).toHaveAttribute('data-band', '');
+  await expect(page.locator('#uv-scale')).toHaveAttribute('data-freshness', 'unavailable');
+  await expect(page.locator('#uv-scale .scale-marker')).not.toBeVisible();
+  await expect(page.locator('#activity-sunblock-short')).toHaveText('No sunblock needed now.');
+  await expect(page.locator('#status-dot')).toHaveClass(/ok/);
 });
 
 test('expanded guides fit phone, tablet, desktop and enlarged text', async ({ page }) => {

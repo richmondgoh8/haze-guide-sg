@@ -20,6 +20,18 @@ export function normalizeMeasurement(value) {
   return { timestamp: value.timestamp, values };
 }
 
+export function normalizeUv(value) {
+  if (
+    !value ||
+    typeof value.timestamp !== 'string' ||
+    !Number.isFinite(Date.parse(value.timestamp)) ||
+    !Number.isFinite(value.value) ||
+    value.value < 0
+  )
+    return null;
+  return { timestamp: value.timestamp, value: value.value };
+}
+
 export function parseSnapshot(payload) {
   if (payload?.version !== 1 || !payload.readings || typeof payload.readings !== 'object') {
     throw new Error('Unsupported reading snapshot');
@@ -27,6 +39,7 @@ export function parseSnapshot(payload) {
   return {
     pm25: normalizeMeasurement(payload.readings.pm25),
     psi: normalizeMeasurement(payload.readings.psi),
+    uv: normalizeUv(payload.readings.uv),
     errors: [],
   };
 }

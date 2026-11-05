@@ -17,7 +17,7 @@ Open http://127.0.0.1:5173. Source changes reload automatically. Edit `src/` and
 
 Run setup first, then use these everyday commands:
 
-- `make dev` — edit with live reload, without live readings.
+- `make dev` — edit with live reload and current NEA readings, refreshed in the background every 15 minutes.
 - `make local` — build, fetch current NEA readings and preview at http://127.0.0.1:4173 (needs internet).
 - `make check` — check formatting and run unit tests.
 - `make free-ports` — stop only this checkout's Vite servers on ports 5173 and 4173, leaving unrelated listeners alone.
@@ -39,8 +39,9 @@ On Linux x64, `make setup` installs dependencies, repository-local Git hooks and
 - A next-hour outdoor activity recommendation, with separate everyday activity, strenuous exercise, mask and higher-risk guidance. Unavailable, stale and invalid timestamps withhold the recommendation.
 - A mobile-friendly comparison of cloth, surgical/KF-AD, N95, KN95, KF94 and FFP2 masks, plus KF80, N99/FFP3/KF99, N100/P100, reusable and valved options. The ratings describe laboratory filtration, not guaranteed personal protection.
 - A four-step haze scale, with the current level marked in text and colour. The scale uses NEA's existing bands; it is not a separate risk score.
-- Both reading cards use readable sans-serif numbers and their own labelled colour scales: four PM2.5 bands and five PSI categories. Their colours follow each measurement independently; stale values lose their card tint. These UI colours are not a new health index.
+- The reading cards use readable sans-serif numbers and their own labelled colour scales: four PM2.5 bands, five PSI categories and five UV categories. Their colours follow each measurement independently; stale values lose their card tint. These UI colours are not a new health index. UV is island-wide at Changi and is shown separately from the regional PM2.5 reading.
 - Each scale uses equal-width colour bands. Within a finite band, the arrow tracks the reading proportionally and the current range is bold and underlined. In the open-ended highest band, the arrow stays centred and the caption identifies “251+ · Highest band” or “301+ · Highest band”. Range labels wrap between complete numbers on small screens. Old readings retain an outlined arrow labelled “Last reported”, without current-range emphasis.
+- A web app manifest, maskable icons and an Apple touch icon let Add to Home Screen use the same rounded brand mark without clipping its corners. The site remains a static page with no offline service worker.
 
 ## Window advice
 
@@ -60,7 +61,7 @@ The cost guidance is editorial: compare price per mask after testing fit, buy ge
 
 ## Mobile and search
 
-The page has responsive reading cards, navigation and mask comparisons, readable mobile body text, and expandable mask-rating and safe-use details. A single mask infographic combines a fit illustration, four rating rows and concise care/value notes. The homepage has one live window card; the full ventilation explanation lives on its dedicated guide page. There is no repeated tips section. Activity-specific mask advice remains with the current reading. Guide links sit in a compact footer. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript. The observed 24-hour PSI is labelled separately from NEA's forecast for future activities.
+The page has responsive PM2.5, PSI and UV reading cards, navigation and mask comparisons, readable mobile body text, and expandable mask-rating and safe-use details. A single mask infographic combines a fit illustration, four rating rows and concise care/value notes. The homepage has one live window card; the full ventilation explanation lives on its dedicated guide page. There is no repeated tips section. Activity-specific mask advice remains with the current reading. Guide links sit in a compact footer. Core guidance is in the HTML so it remains readable without JavaScript; live readings require JavaScript. The observed 24-hour PSI is labelled separately from NEA's forecast for future activities.
 
 Guides lead with labelled icons, short activity verdicts, mask-rating cards and placement diagrams. Longer explanations use native disclosures; heat, higher-risk and filtration caveats stay visible. There are no autoplay effects or additional health scores. This follows cognitive-accessibility principles, not a claim of clinical ADHD suitability.
 
@@ -74,11 +75,11 @@ The [SEO guide](docs/SEO.md) covers Search Console setup, ranking priorities, me
 
 ## Sources and accuracy
 
-A scheduled GitHub Action fetches the public [PM2.5 API](https://api-open.data.gov.sg/v2/real-time/api/pm25) and [PSI API](https://api-open.data.gov.sg/v2/real-time/api/psi), validates them, and publishes `/haze-guide-sg/data/latest.json` with the site. Browsers request that same-site snapshot; visitor traffic cannot trigger government API calls. Both datasets are supplied by NEA: [PM2.5 dataset](https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view), [PSI dataset](https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view). The page displays the original source timestamps in Singapore time. If data is missing or more than two hours old, it withholds reading-specific activity advice and band-position context.
+A scheduled GitHub Action fetches the public [PM2.5 API](https://api-open.data.gov.sg/v2/real-time/api/pm25), [PSI API](https://api-open.data.gov.sg/v2/real-time/api/psi) and [UV API](https://api-open.data.gov.sg/v2/real-time/api/uv), validates them, and publishes `/haze-guide-sg/data/latest.json` with the site. Browsers request that same-site snapshot; visitor traffic cannot trigger government API calls. The datasets are supplied by NEA: [PM2.5 dataset](https://data.gov.sg/datasets/d_e1058d6974c877257e32048ab128ad83/view), [PSI dataset](https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view), [UV dataset](https://data.gov.sg/datasets/d_1b676cd174a9af4704fdb3f9aa58ff5e/view). The page displays the original source timestamps in Singapore time. If data is missing or more than two hours old, it withholds reading-specific activity advice and band-position context. UV is island-wide at Changi, reported between 7am and 7pm; its sun-protection advice is kept separate from the PM2.5-based haze advice.
 
 The schedule runs at minutes 7, 22, 37 and 52, avoiding the start-of-hour rush. GitHub can delay or drop scheduled runs, and public-repository schedules can be disabled after 60 days without repository activity. CDN caching and deployment time add latency too. This is not an exact 15-minute freshness guarantee. Monitor Actions and the displayed source timestamps; use the official site when current advice is unavailable.
 
-`tooling/publish-snapshot.js` retains the latest validated published measurement per feed when a source fails or returns an older timestamp. It never changes the source timestamp to the collection time. If neither live nor previous data is usable, publication fails and the existing deployment stays up. Local builds contain an explicitly empty snapshot: run `node tooling/publish-snapshot.js` after building if you need real data in a local production preview. Never commit live readings.
+`tooling/publish-snapshot.js` retains the latest validated published measurement per feed when a source fails or returns an older timestamp. It never changes the source timestamp to the collection time. If neither live nor previous data is usable, publication fails and the existing deployment stays up. The Vite development server fetches live readings for local use and caches them for 15 minutes; local production builds still contain an explicitly empty snapshot, so run `node tooling/publish-snapshot.js` after building if you need real data in `npm run preview`. Never commit live readings.
 
 Band-position context shows one distance to the nearest adjacent NEA band, not a trend, forecast or safety margin. For example, 71 shows “16 µg/m³ above Normal” and 140 shows “11 µg/m³ below High”. An exact midpoint names both neighbouring bands. The highest band is open-ended, so it has no artificial meter maximum.
 

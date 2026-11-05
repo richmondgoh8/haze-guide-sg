@@ -3,10 +3,16 @@
 }
 .outdoor-summary {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
   padding: 22px 0;
   border-block: 1px solid var(--line);
+}
+@media (max-width: 900px) {
+  .outdoor-summary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
 }
 .outdoor-summary > div {
   display: flex;

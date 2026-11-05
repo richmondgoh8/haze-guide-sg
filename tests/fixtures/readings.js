@@ -5,13 +5,22 @@ export function measurement(east = 140, timestamp = TEST_TIMESTAMP) {
   return { timestamp, values: { north: 20, south: 30, east, west: 80, central: 100 } };
 }
 
+export function uvMeasurement(value = 7, timestamp = TEST_TIMESTAMP) {
+  return { timestamp, value };
+}
+
 export function snapshot(east = 140, timestamp = TEST_TIMESTAMP) {
-  return { pm25: measurement(east, timestamp), psi: measurement(143, timestamp), errors: [] };
+  return {
+    pm25: measurement(east, timestamp),
+    psi: measurement(143, timestamp),
+    uv: uvMeasurement(7, timestamp),
+    errors: [],
+  };
 }
 
 export function snapshotPayload(east = 140, timestamp = TEST_TIMESTAMP) {
-  const { pm25, psi } = snapshot(east, timestamp);
-  return { version: 1, generatedAt: TEST_TIMESTAMP, readings: { pm25, psi } };
+  const { pm25, psi, uv } = snapshot(east, timestamp);
+  return { version: 1, generatedAt: TEST_TIMESTAMP, readings: { pm25, psi, uv } };
 }
 
 export function neaPayload(resource, east = 140, timestamp = TEST_TIMESTAMP) {
@@ -19,5 +28,12 @@ export function neaPayload(resource, east = 140, timestamp = TEST_TIMESTAMP) {
   return {
     code: 0,
     data: { items: [{ timestamp, readings: { [field]: measurement(east, timestamp).values } }] },
+  };
+}
+
+export function neaUvPayload(value = 7, timestamp = TEST_TIMESTAMP) {
+  return {
+    code: 0,
+    data: { records: [{ timestamp, index: [{ hour: timestamp, value }] }] },
   };
 }

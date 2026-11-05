@@ -1,5 +1,6 @@
 import { DEFAULT_REGION, REGIONS } from '../src/scripts/config.js';
 import { PM25_BANDS, PSI_BANDS } from '../src/scripts/domain/air-quality.js';
+import { UV_BANDS } from '../src/scripts/domain/uv.js';
 
 function escapeHtml(value) {
   return String(value).replace(
@@ -69,9 +70,10 @@ export function renderStaticFragments(html) {
     'regions: hint': escapeHtml(`${region.name} includes ${region.towns}.`),
     'haze: scale': renderScale(PM25_BANDS, 'pm-scale'),
     'psi: scale': renderScale(PSI_BANDS, 'psi-scale'),
+    'uv: scale': renderScale(UV_BANDS, 'uv-scale'),
   };
   return html.replace(
-    /<!--\s*(regions: (?:options|cards|hint)|(?:haze|psi): scale)\s*-->/g,
+    /<!--\s*(regions: (?:options|cards|hint)|(?:haze|psi|uv): scale)\s*-->/g,
     (_, name) => fragments[name],
   );
 }

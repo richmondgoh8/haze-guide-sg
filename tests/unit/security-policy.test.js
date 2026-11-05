@@ -10,6 +10,7 @@ test('production CSP denies executable inline code, arbitrary connections and em
     "script-src-attr 'none'",
     "style-src 'self'",
     "style-src-attr 'none'",
+    "manifest-src 'self'",
     "connect-src 'self'",
     "object-src 'none'",
     "frame-src 'none'",

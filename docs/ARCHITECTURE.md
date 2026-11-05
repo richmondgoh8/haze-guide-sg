@@ -22,7 +22,7 @@ flowchart LR
 `src/scripts/main.js` connects the pieces. Start there when explaining the code to someone new.
 
 1. The controller reads the saved region and asks the client for readings.
-2. The browser client requests one same-site JSON snapshot. The scheduled publisher requests and validates the two upstream feeds independently before deployment.
+2. The browser client requests one same-site JSON snapshot. The scheduled publisher requests and validates the three upstream feeds independently before deployment.
 3. The controller passes the current snapshot, region and time to `createDashboardModel`.
 4. The model selects the readings, freshness state, advice and regional labels. It does not access the DOM, browser storage or network.
 5. The views put those values into existing elements. User interactions go back to the controller.
@@ -42,6 +42,7 @@ No component fetches its own data or calculates its own haze thresholds.
 | `tooling/publish-snapshot.js`               | Collect source feeds, merge last-good data, write generated deployment JSON |
 | `src/scripts/services/region-preference.js` | Read/write the selected region; handle blocked browser storage              |
 | `src/scripts/domain/air-quality.js`         | Official band boundaries, PSI labels, freshness and window-advice selection |
+| `src/scripts/domain/uv.js`                  | UV bands, island-wide freshness and after-sunset state                      |
 | `src/scripts/domain/dashboard-model.js`     | Convert state into the data each view needs                                 |
 | `src/scripts/content/`                      | Activity and household advice copy                                          |
 | `src/scripts/ui/`                           | DOM references, rendering and event binding                                 |
@@ -49,7 +50,7 @@ No component fetches its own data or calculates its own haze thresholds.
 | `src/sections/masks/`                       | Compact rating overview, expandable comparisons and safe-use notes          |
 | `src/partials/`                             | Document head, navigation and footer                                        |
 | `src/styles/`                               | Theme, shared styles, component styles and dashboard composition            |
-| `public/`                                   | Assets copied unchanged, including favicon and sharing image                |
+| `public/`                                   | Assets copied unchanged, including favicon, manifest and sharing image      |
 | `tooling/site-pages.js`                     | Page registry, metadata, internal guide links and generated sitemap         |
 | `tooling/`                                  | HTML assembly used by the development server and production build           |
 | `tests/unit/`                               | Fast tests without a browser or external network                            |
@@ -66,11 +67,12 @@ Only the build-time NEA adapter knows raw property names such as `pm25_one_hourl
     values: { north: 20, south: 30, east: 140, west: 80, central: 100 }
   },
   psi: null,
+  uv: { timestamp: '2026-11-05T10:00:00+08:00', value: 7 },
   errors: [{ resource: 'psi', message: 'psi: HTTP 503' }]
 }
 ```
 
-Each measurement can be `null` independently. Individual missing or invalid regional values become `null`; zero is a valid reading. The client rejects malformed responses and selects the newest timestamp if multiple items arrive out of order.
+Each measurement can be `null` independently. Individual missing or invalid regional values become `null`; zero is a valid reading. The client rejects malformed responses and selects the newest timestamp if multiple items arrive out of order. UV is a single island-wide value from Changi rather than a regional object, and it is reported between 7am and 7pm.
 
 The model accepts only normalized measurements. A provider change belongs in the client adapter and its tests, rather than being patched into the rendering code.
 
@@ -88,7 +90,7 @@ The views cache their element references. Regional buttons remain in the DOM whe
 
 `domain/activity-phrases.js` only allows those two fields to vary. Exercise, mask, walking and higher-risk guidance remain fixed. The model ignores phrase choices when readings are stale or missing. Randomness is injected into the controller so the model stays deterministic and tests can cover every variant.
 
-The one-hour PM2.5 bands and the rolling 24-hour PSI remain separate. Current activity and window advice depend on PM2.5; the app never substitutes PSI when PM2.5 is missing.
+The one-hour PM2.5 bands and the rolling 24-hour PSI remain separate. Current activity and window advice depend on PM2.5; the app never substitutes PSI when PM2.5 is missing. UV advice is also separate: it answers whether to use sun protection and how to plan long outings, but it never overrides or averages with the haze verdict. When UV is unavailable after 7pm, the card shows an after-sunset state instead of a stale warning.
 
 The two-hour freshness limit and clock-skew allowance are application policies in `config.js`, not NEA health thresholds. Old measurements remain visible with an old-reading label, but current recommendations are withheld.
 
@@ -98,9 +100,9 @@ Window advice is an editorial interpretation of the cited household guidance. It
 
 `src/index.html` lists sections in reading order. A comment such as `<!-- include: sections/windows.html -->` is expanded before Vite processes the document. Includes are relative to `src/`; nested includes are supported. Missing, out-of-root or circular includes fail the build with a useful error.
 
-`tooling/static-fragments.js` renders region options, regional buttons, the four PM2.5 bands and five PSI categories from the same configuration used by the browser. The model classifies each reading independently and the view updates only text, data attributes and current markers. Their placeholder comments are specific to those repeated components; this is not a general template language. All guides are present in the built HTML, including when JavaScript is disabled.
+`tooling/static-fragments.js` renders region options, regional buttons, the four PM2.5 bands, five PSI categories and five UV categories from the same configuration used by the browser. The model classifies each reading independently and the view updates only text, data attributes and current markers. Their placeholder comments are specific to those repeated components; this is not a general template language. All guides are present in the built HTML, including when JavaScript is disabled.
 
-Each reading has one joined SVG colour bar. `domain/band-scale.js` calculates a normalized position within equal-width categories; `ui/band-scale-view.js` maps it to the SVG's declared width. The open-ended highest category uses a centred pointer and an explicit caption. Range labels form automatic equal-width columns, with the current range bold and underlined. One PM2.5 summary gives the distance to the nearest neighbouring band, without implying a trend or safe exposure margin. Stale readings retain an outlined pointer labelled as last reported, without current-range emphasis, distance context, advice or card tint. Missing values hide the pointer. Walk, mask and higher-risk advice share a compact block below the readings; the longer explanation is a native disclosure.
+Each reading has one joined SVG colour bar. `domain/band-scale.js` calculates a normalized position within equal-width categories; `ui/band-scale-view.js` maps it to the SVG's declared width. The open-ended highest category uses a centred pointer and an explicit caption. Range labels form automatic equal-width columns, with the current range bold and underlined. One PM2.5 summary gives the distance to the nearest neighbouring band, without implying a trend or safe exposure margin. Stale readings retain an outlined pointer labelled as last reported, without current-range emphasis, distance context, advice or card tint. Missing values hide the pointer. Walk, mask, sunblock and higher-risk advice share a compact block below the readings; the longer explanation is a native disclosure.
 
 The shared section navigation is a native sticky bar, not a scroll listener or client-side router. Responsive anchor offsets account for its wrapped mobile layout and enlarged text. The Top link and all section links work without JavaScript. Number readouts use the existing bundled body font with tabular figures; decorative display type is reserved for headings.
 

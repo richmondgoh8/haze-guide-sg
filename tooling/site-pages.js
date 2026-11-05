@@ -7,9 +7,9 @@ export const SITE = {
 export const PAGES = [
   {
     path: '',
-    title: 'Singapore Haze: Live PSI & 1-Hour PM2.5 | Air, Actually',
+    title: 'Singapore Haze & UV: Live PSI, PM2.5 & UV Index | Air, Actually',
     description:
-      'Check NEA 1-hour PM2.5 and 24-hour PSI for Singapore. Plan outdoor activities, compare haze masks, and get practical window and air purifier advice.',
+      'Check NEA 1-hour PM2.5, 24-hour PSI and the UV index for Singapore. Plan outdoor activities, sun protection, haze masks, and window or purifier use.',
     name: 'Singapore haze readings and practical advice',
   },
   {
