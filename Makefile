@@ -16,7 +16,7 @@ setup: ## Install pinned dependencies, Git hooks and local CodeQL (Linux x64)
 check: ## Run formatting and unit tests
 	npm run check
 
-dev: ## Start Vite with live reload (no live readings)
+dev: ## Start Vite with live reload and current NEA readings
 	npm run dev -- --host 127.0.0.1 --port $(DEV_PORT)
 
 local: ## Build and preview with current NEA readings (needs network)

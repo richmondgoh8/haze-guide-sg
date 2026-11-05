@@ -127,10 +127,43 @@
           <p class="reading-foot">A rolling reading, <strong>not tomorrow’s forecast.</strong></p>
         </div>
       </article>
+      <article class="reading-card uv-card" id="uv-card">
+        <div class="reading-status">
+          <span class="reading-label"
+            >UV INDEX · <time id="uv-time">Waiting for reading</time></span
+          >
+          <div class="reading-summary">
+            <div class="reading-metric">
+              <div class="reading-value"><span id="uv-value">—</span></div>
+              <p class="reading-caption">Island-wide · Changi</p>
+            </div>
+            <div class="reading-illustration" id="uv-illustration" aria-hidden="true">
+              <span data-illustration="sun" hidden><!-- icon: uvsun --></span>
+              <span data-illustration="night" hidden><!-- icon: uvnight --></span>
+              <span data-illustration="unknown"><!-- icon: airunknown --></span>
+            </div>
+          </div>
+          <p class="reading-status-title" id="uv-band">Checking…</p>
+        </div>
+        <div class="reading-context">
+          <!-- uv: scale -->
+          <div class="reading-divider"></div>
+          <p class="reading-foot uv-answer">
+            <strong>Long outing</strong
+            ><span id="uv-long-outing">Check the current UV index first.</span>
+          </p>
+          <p class="reading-foot uv-answer">
+            <strong>Sunblock</strong><span id="uv-sunblock">Check the UV reading first.</span>
+          </p>
+          <p class="uv-source-note">
+            Measured at Changi. Cloud and rain can lower UV elsewhere on the island.
+          </p>
+        </div>
+      </article>
     </div>
     <p class="reading-method">
       Hourly source readings. Shared snapshot updates are scheduled every 15 minutes; delays can
-      happen. For tomorrow’s plans,
+      happen. UV is island-wide at Changi and is reported between 7am and 7pm. For tomorrow’s plans,
       <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer"
         >check NEA’s PSI forecast ↗</a
       >.
@@ -164,6 +197,13 @@
             <p id="activity-mask-short">Check the official advisory first.</p>
           </div>
         </div>
+        <div>
+          <!-- icon: uvsun -->
+          <div>
+            <strong>Sunblock</strong>
+            <p id="activity-sunblock-short">Check the UV reading first.</p>
+          </div>
+        </div>
       </div>
       <p class="vulnerable-note">
         <strong>Higher risk?</strong>
@@ -178,6 +218,10 @@
         <p>
           Higher-risk groups include children, older adults, pregnant people, and people with
           chronic heart or lung conditions.
+        </p>
+        <p>
+          UV is separate from air quality. It is measured once at Changi for the whole island, so
+          the region choice and outdoor haze advice do not change it.
         </p>
         <dl class="activity-list">
           <div>

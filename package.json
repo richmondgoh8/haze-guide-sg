@@ -13,6 +13,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "icons:app": "node tooling/generate-app-icons.js",
     "test": "node --test tests/unit/*.test.js",
     "test:e2e": "npm run build && playwright test",
     "format": "prettier --write .",

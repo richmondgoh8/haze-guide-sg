@@ -5,6 +5,8 @@ export const DASHBOARD_ICONS = Object.freeze({
   airwarning: 'exclamation',
   airunknown: 'question',
   airstream: 'wind',
+  uvsun: 'sun',
+  uvnight: 'moon',
   dashwalk: 'walking',
   dashrun: 'running',
   dashwindow: 'window-frame',

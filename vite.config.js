@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
+import { devReadingsPlugin } from './tooling/dev-readings.js';
 import { htmlPartials } from './tooling/html-partials.js';
 import { PAGES, pageFile } from './tooling/site-pages.js';
 import { securityPolicy } from './tooling/security-policy.js';
@@ -11,7 +12,7 @@ export default defineConfig({
   appType: 'mpa',
   base: './',
   publicDir: fileURLToPath(new URL('./public', import.meta.url)),
-  plugins: [htmlPartials(sourceRoot), securityPolicy()],
+  plugins: [devReadingsPlugin(), htmlPartials(sourceRoot), securityPolicy()],
   build: {
     outDir: fileURLToPath(new URL('./dist', import.meta.url)),
     emptyOutDir: true,

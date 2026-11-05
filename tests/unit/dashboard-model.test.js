@@ -123,6 +123,70 @@ test('PM2.5 and PSI colors are independent; old PSI keeps its value but not a cu
   assert.equal(stale.pm25.className, 'normal');
 });
 
+test('UV is island-wide, independent of the selected region, and carries sun advice', () => {
+  const east = model(snapshot());
+  const north = model(snapshot(), 'north');
+  assert.equal(east.uv.value, 7);
+  assert.equal(north.uv.value, 7);
+  assert.equal(east.uv.label, 'High');
+  assert.equal(east.uv.current, true);
+  assert.equal(east.uv.className, 'high');
+  assert.equal(east.uv.illustration, 'sun');
+  assert.match(east.uv.longOuting, /11am–3pm/);
+  assert.match(east.uv.sunblock, /SPF 30\+/);
+  assert.equal(east.uv.sunblockShort, north.uv.sunblockShort);
+  assert.equal(east.status.warning, false);
+});
+
+test('stale daytime UV keeps last reported value but withholds advice and adds a warning', () => {
+  const result = model(snapshot(), 'east', TEST_TIME + 3 * 60 * 60 * 1000);
+  assert.equal(result.uv.value, 7);
+  assert.equal(result.uv.reportedLevel, 3);
+  assert.equal(result.uv.current, false);
+  assert.equal(result.uv.label, 'High · Last reported');
+  assert.equal(result.uv.className, '');
+  assert.equal(result.uv.illustration, 'unknown');
+  assert.match(result.uv.sunblock, /Check the UV reading/);
+  assert.match(result.status.text, /UV reading is out of date/);
+});
+
+test('night and early morning show no UV concern instead of a stale warning', () => {
+  const evening = '2026-10-17T19:30:00+08:00';
+  const eveningReadings = snapshot(140, evening);
+  const night = createDashboardModel(
+    { readings: eveningReadings, region: 'east' },
+    Date.parse('2026-10-17T20:00:00+08:00'),
+  );
+  assert.equal(night.uv.value, '—');
+  assert.equal(night.uv.label, 'After sunset');
+  assert.equal(night.uv.illustration, 'night');
+  assert.equal(night.uv.timestamp, null);
+  assert.equal(night.status.warning, false);
+  assert.match(night.uv.sunblock, /No sunblock needed/);
+
+  const morningReadings = snapshot(140, '2026-10-18T06:00:00+08:00');
+  const morning = createDashboardModel(
+    { readings: morningReadings, region: 'east' },
+    Date.parse('2026-10-18T06:30:00+08:00'),
+  );
+  assert.equal(morning.uv.label, 'Before 7am');
+  assert.equal(morning.uv.illustration, 'night');
+  assert.equal(morning.status.warning, false);
+});
+
+test('missing UV is unavailable without suppressing the other readings', () => {
+  const readings = snapshot();
+  readings.uv = null;
+  const result = model(readings);
+  assert.equal(result.uv.value, '—');
+  assert.equal(result.uv.label, 'Unavailable');
+  assert.equal(result.uv.className, '');
+  assert.equal(result.uv.reportedLevel, null);
+  assert.match(result.uv.sunblock, /Check the UV reading/);
+  assert.match(result.status.text, /UV index unavailable/);
+  assert.equal(result.pm25.value, 140);
+});
+
 test('short activity verdicts follow the same freshness and band decisions as full advice', () => {
   const readings = snapshot();
   for (const value of [0, 56, 151, 251]) {

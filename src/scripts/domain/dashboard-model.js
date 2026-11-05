@@ -9,6 +9,7 @@ import {
   isCurrentReading,
 } from './air-quality.js';
 import { describeBandPosition } from './band-position.js';
+import { resolveUvState } from './uv.js';
 
 const PM25_ILLUSTRATIONS = Object.freeze({ 1: 'clear', 2: 'caution', 3: 'mask', 4: 'warning' });
 
@@ -27,13 +28,18 @@ export function createDashboardModel(
   const psiBand = classifyPsi(psi);
   const psiCurrent = Boolean(psiBand && isCurrentReading(readings.psi?.timestamp, now));
   const advice = resolveActivityGuidance(activeBand?.index, phraseChoices[activeBand?.index]);
+  const uv = resolveUvState(readings.uv, now);
+  const uvOffHours = uv.state === 'after-sunset' || uv.state === 'before-sunrise';
 
   const status = [];
   const warnings = [];
   if (readings.pm25) status.push(`PM2.5: ${formatTimestamp(readings.pm25.timestamp)}`);
   if (readings.psi) status.push(`PSI: ${formatTimestamp(readings.psi.timestamp)}`);
+  if (readings.uv && !uvOffHours) status.push(`UV: ${formatTimestamp(readings.uv.timestamp)}`);
   if (!band) warnings.push('PM2.5 unavailable');
   if (describePsi(psi) === 'Unavailable') warnings.push('PSI unavailable');
+  if (uv.state === 'unavailable') warnings.push('UV index unavailable');
+  if (uv.state === 'reported') warnings.push('UV reading is out of date');
   if (readings.pm25 && !isCurrentReading(readings.pm25.timestamp, now)) {
     warnings.push('PM2.5 reading is out of date');
   }
@@ -65,6 +71,28 @@ export function createDashboardModel(
       label: psiBand ? `${psiBand.name}${psiCurrent ? '' : ' · Last reported'}` : 'Unavailable',
       className: psiCurrent ? psiBand.className : '',
       activeLevel: psiCurrent ? psiBand.index : null,
+    },
+    uv: {
+      value: uv.value ?? '—',
+      timestamp: readings.uv && !uvOffHours ? readings.uv.timestamp : null,
+      timeLabel: uvOffHours
+        ? uv.label
+        : readings.uv
+          ? formatTimestamp(readings.uv.timestamp)
+          : 'Time unavailable',
+      reportedLevel: uv.band?.index ?? null,
+      current: uv.current,
+      state: uv.state,
+      illustration: uv.current ? 'sun' : uvOffHours ? 'night' : 'unknown',
+      label: uvOffHours
+        ? uv.label
+        : uv.band
+          ? `${uv.band.name}${uv.current ? '' : ' · Last reported'}`
+          : 'Unavailable',
+      className: uv.current ? uv.band.className : '',
+      longOuting: uv.longOuting,
+      sunblock: uv.sunblock,
+      sunblockShort: uv.sunblockShort,
     },
     status: {
       warning: warnings.length > 0,

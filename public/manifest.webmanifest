@@ -1,0 +1,32 @@
+{
+  "name": "Air, Actually — Singapore Haze & UV",
+  "short_name": "Air, Actually",
+  "description": "Live NEA haze, PM2.5, PSI and UV readings with practical advice for Singapore.",
+  "lang": "en-SG",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f6f1",
+  "theme_color": "#f7f6f1",
+  "categories": ["weather", "health"],
+  "icons": [
+    {
+      "src": "icons/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/app-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -32,22 +32,25 @@ test('HTML includes support nested sections and report missing or circular files
 
 test('static region controls and scale use the same configuration as the client', () => {
   const result = renderStaticFragments(
-    '<!-- regions: options --><!-- regions: cards --><!-- regions: hint --><!-- haze: scale --><!-- psi: scale -->',
+    '<!-- regions: options --><!-- regions: cards --><!-- regions: hint --><!-- haze: scale --><!-- psi: scale --><!-- uv: scale -->',
   );
   assert.match(result, /value="east" selected/);
   assert.match(result, /data-region="east" aria-pressed="true"/);
   assert.match(result, /East includes Bedok/);
-  assert.equal((result.match(/<figure class="band-scale"/g) || []).length, 2);
-  assert.equal((result.match(/height="12" data-band=/g) || []).length, 9);
+  assert.equal((result.match(/<figure class="band-scale"/g) || []).length, 3);
+  assert.equal((result.match(/height="12" data-band=/g) || []).length, 14);
   assert.match(result, /id="pm-scale"/);
   assert.match(result, /id="psi-scale"/);
+  assert.match(result, /id="uv-scale"/);
   assert.match(result, /Very high: ≥251/);
   assert.match(result, /Hazardous: ≥301/);
-  assert.equal((result.match(/Equal-width bands\./g) || []).length, 2);
+  assert.match(result, /Extreme: ≥11/);
+  assert.equal((result.match(/Equal-width bands\./g) || []).length, 3);
   assert.match(result, /aria-describedby="pm-scale-note"/);
   assert.match(result, /aria-describedby="psi-scale-note"/);
+  assert.match(result, /aria-describedby="uv-scale-note"/);
   assert.doesNotMatch(result, /aria-current/);
-  assert.equal((result.match(/class="scale-marker"[^>]* hidden/g) || []).length, 2);
+  assert.equal((result.match(/class="scale-marker"[^>]* hidden/g) || []).length, 3);
   assert.ok(result.includes('Hazardous'));
   assert.ok(!result.includes('<!--'));
 });
