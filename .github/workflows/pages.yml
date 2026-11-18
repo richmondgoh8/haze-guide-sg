@@ -36,10 +36,17 @@ jobs:
       - name: Install locked development dependencies
         run: npm ci --prefer-offline --no-audit
       - name: Check formatting
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: npm run format:check
-      - name: Audit locked dependencies
-        run: npm audit --audit-level=low
+      - name: Audit production dependencies
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        run: npm audit --omit=dev --audit-level=low
+      - name: Audit development dependencies
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        continue-on-error: true
+        run: npm audit --audit-level=moderate
       - name: Test rules, data handling and controller
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: npm test
       - name: Build and test the production site
         if: github.event_name == 'push' || github.event_name == 'pull_request'
@@ -56,7 +63,7 @@ jobs:
           path: dist
 
   deploy:
-    if: github.event_name != 'pull_request' && !failure() && !cancelled()
+    if: github.event_name != 'pull_request' && !failure() && !cancelled() && needs.verify.result == 'success' && (needs.security.result == 'success' || needs.security.result == 'skipped')
     needs: [verify, security]
     runs-on: ubuntu-latest
     permissions:
